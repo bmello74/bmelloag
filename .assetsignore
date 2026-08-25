@@ -1,0 +1,7 @@
+# Files in the repository that should not be served as part of the website.
+.git
+.gitignore
+.assetsignore
+wrangler.toml
+README.md
+tools

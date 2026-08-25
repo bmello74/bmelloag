@@ -1,0 +1,17 @@
+# Cloudflare deploy configuration.
+#
+# This project is a plain static site — no build step, no server code. These
+# settings tell `wrangler deploy` to upload the folder as static assets.
+#
+#   directory            = "./"  — the repository root is the website
+#   html_handling        = default "auto-trailing-slash", so /hay serves hay.html
+#   not_found_handling   = serve 404.html for anything that doesn't exist
+#
+# _redirects at the repo root is honoured as well.
+
+name = "bmelloag"
+compatibility_date = "2026-08-25"
+
+[assets]
+directory = "./"
+not_found_handling = "404-page"

@@ -617,9 +617,42 @@ def sitemap(items):
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + '</urlset>\n')
 
 
+def page_404(items):
+    latest = items[0] if items else None
+    tip = ""
+    if latest:
+        url = "/" + latest["path"].removesuffix(".html")
+        tip = (f'<p>The newest thing we published is '
+               f'<a href="{url}">{e(latest["headline"])}</a>.</p>')
+    h = head(f"Page not found — {BIZ}",
+             "That page doesn't exist. Try the reports archive or the home page.",
+             "/404")
+    return h + masthead("") + f"""
+<header class="pagehead">
+  <div class="wrap">
+    <div class="eyebrow">404</div>
+    <h1>That page isn't here</h1>
+    <p class="tag">The link may be old, or we may have moved it. Everything we publish lives in
+       the reports archive.</p>
+  </div>
+</header>
+<section>
+  <div class="wrap prose">
+    {tip}
+    <p style="display:flex;gap:11px;flex-wrap:wrap;margin-top:22px">
+      <a class="btn btn-gold" href="/reports">Browse all reports</a>
+      <a class="btn" style="border-color:var(--hairline);color:var(--ink)" href="/">Home</a>
+      <a class="btn" style="border-color:var(--hairline);color:var(--ink)" href="tel:{PHONE_TEL}">Call {e(PHONE_TXT)}</a>
+    </p>
+  </div>
+</section>
+""" + footer()
+
+
 def build_site():
     items = load_catalog()
     write("index.html", page_home(items))
+    write("404.html", page_404(items))
     write("hay.html", page_hay())
     write("tractor-spreaders.html", page_tractor())
     write("spreader-trucks.html", page_trucks())
