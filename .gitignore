@@ -1,0 +1,22 @@
+# The 2020 saved copy of the old GoDaddy site — kept on disk for reference,
+# never published.
+B Mello About Us.html
+B Mello Hay.html
+B Mello Home Page.html
+B Mello Spreading.html
+B Mello About Us_files/
+B Mello Hay_files/
+B Mello Home Page_files/
+B Mello Spreading_files/
+
+# Personal photos that live in this folder — not part of the website.
+4.jpg
+5.jpg
+
+# Source logo (the web copy is assets/logo.png)
+B Mello Logo.jpg
+
+# Build/transfer leftovers
+_site-build.tar.gz
+.DS_Store
+Thumbs.db

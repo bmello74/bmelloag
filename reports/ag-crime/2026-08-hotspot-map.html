@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>California Ag Crime Hotspot Map — August 2026 — B. Mello Ag Services</title>
+<meta name="description" content="The interactive county watch list that ships with the August report — click a county and see what is being hit.">
+<link rel="canonical" href="https://bmelloag.com/reports/ag-crime/2026-08-hotspot-map">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="B. Mello Ag Services">
+<meta property="og:title" content="California Ag Crime Hotspot Map — August 2026 — B. Mello Ag Services">
+<meta property="og:description" content="The interactive county watch list that ships with the August report — click a county and see what is being hit.">
+<meta property="og:url" content="https://bmelloag.com/reports/ag-crime/2026-08-hotspot-map">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/logo.png">
+<link rel="alternate" type="application/rss+xml" title="B. Mello Ag Services Reports" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.emailbody *{box-sizing:border-box}
+.emailbody{margin:0;background:#f2ead9;font-family:Arial,Helvetica,sans-serif;color:#141414}
+.emailbody .wrap{max-width:1040px;margin:0 auto;padding:20px 16px 48px}
+.emailbody header{background:#1f3a5f;border-bottom:5px solid #f5c400;padding:22px 24px;text-align:center}
+.emailbody header .k{margin:0 0 4px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#f5c400}
+.emailbody header h1{margin:0 0 4px;font-family:Georgia,serif;font-size:24px;text-transform:uppercase;color:#fff;letter-spacing:1px}
+.emailbody header p{margin:0;font-size:12px;color:#999;font-style:italic}
+.emailbody .grid{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px}
+.emailbody .mapbox{flex:1 1 420px;background:#fdf8f0;border:1px solid #d8cfa8;padding:14px}
+.emailbody .side{flex:1 1 300px;background:#fdf8f0;border:1px solid #d8cfa8;padding:14px}
+.emailbody svg{width:100%;height:auto;display:block}
+.emailbody .ca{fill:#fdf8f0;stroke:#1f3a5f;stroke-width:2.4}
+.emailbody .c{cursor:pointer;stroke:#1f3a5f;stroke-width:.9;opacity:.92;transition:opacity .15s}
+.emailbody .c:hover{opacity:1;stroke-width:2.2}
+.emailbody .c.dim{opacity:.12}
+.emailbody .lb{font:bold 7px Arial,Helvetica,sans-serif;fill:#1f3a5f;pointer-events:none}
+.emailbody .legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.emailbody .pill{border:1px solid #d8cfa8;background:#fdf8f0;padding:6px 11px;font-size:10px;font-weight:bold;
+letter-spacing:1px;text-transform:uppercase;cursor:pointer;color:#5a4a2a}
+.emailbody .pill.on{background:#1f3a5f;color:#f5c400;border-color:#1f3a5f}
+.emailbody .dot{display:inline-block;width:9px;height:9px;border:1px solid #1a1a1a;margin-right:6px;border-radius:50%;vertical-align:-1px}
+.emailbody h2{font-family:Georgia,serif;font-size:15px;text-transform:uppercase;margin:0 0 10px;
+padding-bottom:7px;border-bottom:3px solid #f5c400}
+.emailbody #info{background:#fffbe6;border-left:4px solid #1f3a5f;padding:11px 13px;font-size:12.5px;
+line-height:1.55;min-height:74px;margin-bottom:14px}
+.emailbody #info b{display:block;font-size:14px;margin-bottom:3px}
+.emailbody table{width:100%;border-collapse:collapse;font-size:11.5px}
+.emailbody th{background:#1f3a5f;color:#f5c400;text-align:left;padding:7px 8px;font-size:9.5px;
+letter-spacing:1px;text-transform:uppercase}
+.emailbody td{padding:6px 8px;border:1px solid #e8e0d0;vertical-align:top}
+.emailbody tr:nth-child(even) td{background:#fdf8e3}
+.emailbody .tag{font-size:9px;font-weight:bold;padding:1px 6px;text-transform:uppercase;white-space:normal}
+.emailbody .t1{background:#f5cece;color:#8b0000}
+.emailbody .t2{background:#f8dcbc;color:#7a3e00}
+.emailbody .t3{background:#faefc0;color:#6b5200}
+.emailbody .t4{background:#efefef;color:#444}
+.emailbody footer{margin-top:22px;padding-top:14px;border-top:1px solid #d8cfa8;font-size:11px;color:#5a5a5a;line-height:1.6}
+.emailbody footer a{color:#a8860a}
+</style>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "California Ag Crime Hotspot Map", "datePublished": "2026-08-12", "description": "The interactive county watch list that ships with the August report — click a county and see what is being hit.", "author": {"@type": "Organization", "name": "B. Mello Ag Services"}, "publisher": {"@type": "Organization", "name": "B. Mello Ag Services"}, "mainEntityOfPage": "https://bmelloag.com/reports/ag-crime/2026-08-hotspot-map"}</script>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/logo.png" alt="B. Mello Ag Services" width="148"></a>
+    <nav class="mainnav" aria-label="Main">
+      <a href="/">Home</a><a href="/hay">Hay</a><a href="/tractor-spreaders">Tractor Spreaders</a><a href="/spreader-trucks">Spreader Trucks</a><a href="/reports" aria-current="page">Reports</a><a href="/about">About</a><a href="/contact">Contact</a>
+      <a class="callbtn" href="tel:+15598163889">(559) 816-3889</a>
+    </nav>
+  </div>
+</header>
+
+<header class="pagehead issuehead">
+  <div class="wrap">
+    <div class="eyebrow"><a href="/reports/ag-crime" style="color:var(--gold)">Ag Crime Report</a></div>
+    <h1>California Ag Crime Hotspot Map</h1>
+    <p class="dek">The interactive county watch list that ships with the August report — click a county and see what is being hit.</p>
+    <p class="meta">Published August 12, 2026 &middot; Interactive · Companion to the August report</p>
+  </div>
+</header>
+<div class="emailbody">
+  <div class="inner">
+<div class="wrap">
+<header>
+  <p class="k">B Mello Ag Services</p>
+  <h1>California Ag Crime Hotspot Map</h1>
+  <p>August 2026 &bull; Interactive edition &mdash; tap or hover any county</p>
+</header>
+<div class="grid">
+  <div class="mapbox">
+    <div class="legend">
+      <span class="pill on" data-f="all">All</span>
+      <span class="pill" data-f="CRITICAL"><i class="dot" style="background:#c0392b"></i>Critical</span>
+      <span class="pill" data-f="HIGH"><i class="dot" style="background:#e67e22"></i>High</span>
+      <span class="pill" data-f="ELEVATED"><i class="dot" style="background:#f5c400"></i>Elevated</span>
+      <span class="pill" data-f="MONITOR"><i class="dot" style="background:#b9ad8e"></i>Monitor</span>
+    </div>
+    <svg viewBox="0 0 640 900" xmlns="http://www.w3.org/2000/svg">
+      <polygon class="ca" points="47.6,120.1 281.2,120.1 281.2,328.4 579.1,606.3 582.4,615.3 606.2,654.9 589.6,670.2 584.6,707.0 574.1,717.4 585.2,743.1 574.1,764.6 440.4,777.8 429.8,738.3 404.3,707.7 381.6,691.7 369.4,693.8 363.3,673.7 321.1,657.0 287.8,647.3 255.1,644.5 245.7,635.5 246.8,597.3 231.2,588.9 210.2,559.7 175.8,516.0 173.6,496.5 181.9,481.3 146.9,467.4 141.4,425.7 140.8,397.9 114.2,377.1 74.3,331.9 68.7,272.9 53.2,252.0 36.5,228.4 50.4,189.5 47.6,137.4 47.6,120.1"></polygon>
+      <circle class="c t4" cx="206.3" cy="309.7" r="5" fill="#b9ad8e" data-n="Yuba" data-t="MONITOR" data-d="Equipment and metal theft"></circle>
+      <circle class="c t4" cx="156.9" cy="250.0" r="5" fill="#b9ad8e" data-n="Tehama" data-t="MONITOR" data-d="Cattle, orchard equipment"></circle>
+      <circle class="c t4" cx="170.8" cy="206.2" r="5" fill="#b9ad8e" data-n="Shasta" data-t="MONITOR" data-d="Cattle, hay, equipment"></circle>
+      <circle class="c t4" cx="140.3" cy="148.6" r="5" fill="#b9ad8e" data-n="Siskiyou" data-t="MONITOR" data-d="Cattle and hay theft"></circle>
+      <circle class="c t4" cx="90.9" cy="297.9" r="5" fill="#b9ad8e" data-n="Mendocino" data-t="MONITOR" data-d="Vineyard and rural property crime"></circle>
+      <circle class="c t4" cx="128.6" cy="321.5" r="5" fill="#b9ad8e" data-n="Lake" data-t="MONITOR" data-d="Walnut and pear orchard theft"></circle>
+      <circle class="c t4" cx="66.5" cy="210.4" r="5" fill="#b9ad8e" data-n="Humboldt" data-t="MONITOR" data-d="Livestock and rural property crime"></circle>
+      <circle class="c t4" cx="241.2" cy="148.6" r="5" fill="#b9ad8e" data-n="Modoc" data-t="MONITOR" data-d="Cattle and hay theft"></circle>
+      <circle class="c t4" cx="248.4" cy="212.5" r="5" fill="#b9ad8e" data-n="Lassen" data-t="MONITOR" data-d="Cattle and hay theft"></circle>
+      <circle class="c t4" cx="234.6" cy="259.0" r="5" fill="#b9ad8e" data-n="Plumas" data-t="MONITOR" data-d="Livestock and rural property crime"></circle>
+      <circle class="c t4" cx="241.2" cy="324.3" r="5" fill="#b9ad8e" data-n="Placer" data-t="MONITOR" data-d="Rural equipment theft"></circle>
+      <circle class="c t4" cx="238.5" cy="307.6" r="5" fill="#b9ad8e" data-n="Nevada" data-t="MONITOR" data-d="Rural equipment theft"></circle>
+      <circle class="c t4" cx="252.3" cy="343.7" r="5" fill="#b9ad8e" data-n="El Dorado" data-t="MONITOR" data-d="Vineyard and rural property crime"></circle>
+      <circle class="c t4" cx="245.1" cy="367.3" r="5" fill="#b9ad8e" data-n="Amador" data-t="MONITOR" data-d="Vineyard and livestock"></circle>
+      <circle class="c t4" cx="250.7" cy="384.0" r="5" fill="#b9ad8e" data-n="Calaveras" data-t="MONITOR" data-d="Livestock and equipment"></circle>
+      <circle class="c t4" cx="283.9" cy="396.5" r="5" fill="#b9ad8e" data-n="Tuolumne" data-t="MONITOR" data-d="Livestock and rural property crime"></circle>
+      <circle class="c t4" cx="286.2" cy="427.1" r="5" fill="#b9ad8e" data-n="Mariposa" data-t="MONITOR" data-d="Cattle theft"></circle>
+      <circle class="c t4" cx="181.9" cy="422.2" r="5" fill="#b9ad8e" data-n="Alameda" data-t="MONITOR" data-d="Cargo and equipment diversion"></circle>
+      <circle class="c t4" cx="175.8" cy="403.5" r="5" fill="#b9ad8e" data-n="Contra Costa" data-t="MONITOR" data-d="Equipment and metal theft"></circle>
+      <circle class="c t4" cx="187.4" cy="451.4" r="5" fill="#b9ad8e" data-n="Santa Clara" data-t="MONITOR" data-d="Nursery and equipment theft"></circle>
+      <circle class="c t4" cx="379.4" cy="646.6" r="5" fill="#b9ad8e" data-n="Los Angeles" data-t="MONITOR" data-d="Nursery stock, cargo diversion"></circle>
+      <circle class="c t4" cx="405.4" cy="698.0" r="5" fill="#b9ad8e" data-n="Orange" data-t="MONITOR" data-d="Nursery stock theft"></circle>
+      <circle class="c t4" cx="424.8" cy="501.4" r="5" fill="#b9ad8e" data-n="Inyo" data-t="MONITOR" data-d="Livestock and hay theft"></circle>
+      <circle class="c t4" cx="343.9" cy="402.1" r="5" fill="#b9ad8e" data-n="Mono" data-t="MONITOR" data-d="Cattle theft"></circle>
+      <circle class="c t4" cx="128.6" cy="393.0" r="5" fill="#b9ad8e" data-n="Marin" data-t="MONITOR" data-d="Dairy and livestock"></circle>
+      <circle class="c t4" cx="108.7" cy="213.8" r="5" fill="#b9ad8e" data-n="Trinity" data-t="MONITOR" data-d="Rural property crime"></circle>
+      <circle class="c t4" cx="64.8" cy="138.1" r="5" fill="#b9ad8e" data-n="Del Norte" data-t="MONITOR" data-d="Livestock and rural property crime"></circle>
+      <circle class="c t4" cx="252.3" cy="288.2" r="5" fill="#b9ad8e" data-n="Sierra" data-t="MONITOR" data-d="Livestock"></circle>
+      <circle class="c t4" cx="292.3" cy="356.2" r="5" fill="#b9ad8e" data-n="Alpine" data-t="MONITOR" data-d="Livestock"></circle>
+      <circle class="c t4" cx="150.3" cy="438.2" r="5" fill="#b9ad8e" data-n="San Mateo" data-t="MONITOR" data-d="Nursery and coastal field theft"></circle>
+      <circle class="c t3" cx="256.2" cy="579.2" r="8" fill="#f5c400" data-n="San Luis Obispo" data-t="ELEVATED" data-d="Wine grape and equipment theft"></circle>
+      <circle class="c t3" cx="279.0" cy="625.7" r="8" fill="#f5c400" data-n="Santa Barbara" data-t="ELEVATED" data-d="Berry and vegetable field theft, tools"></circle>
+      <circle class="c t3" cx="538.6" cy="742.4" r="8" fill="#f5c400" data-n="Imperial" data-t="ELEVATED" data-d="Irrigation hardware, sprinkler heads, hay"></circle>
+      <circle class="c t3" cx="503.6" cy="693.1" r="8" fill="#f5c400" data-n="Riverside" data-t="ELEVATED" data-d="Hay, date and citrus theft, trespass"></circle>
+      <circle class="c t3" cx="493.1" cy="617.4" r="8" fill="#f5c400" data-n="San Bernardino" data-t="ELEVATED" data-d="Dairy and desert-edge equipment theft"></circle>
+      <circle class="c t3" cx="462.0" cy="743.1" r="8" fill="#f5c400" data-n="San Diego" data-t="ELEVATED" data-d="Avocado and citrus theft, nursery stock"></circle>
+      <circle class="c t3" cx="206.8" cy="366.7" r="8" fill="#f5c400" data-n="Sacramento" data-t="ELEVATED" data-d="Equipment, trailers, metal theft"></circle>
+      <circle class="c t3" cx="175.8" cy="350.0" r="8" fill="#f5c400" data-n="Yolo" data-t="ELEVATED" data-d="Orchard equipment, ATVs, sprayers"></circle>
+      <circle class="c t3" cx="173.6" cy="379.2" r="8" fill="#f5c400" data-n="Solano" data-t="ELEVATED" data-d="Equipment and fuel theft"></circle>
+      <circle class="c t3" cx="156.9" cy="315.9" r="8" fill="#f5c400" data-n="Colusa" data-t="ELEVATED" data-d="Rice equipment, beehives, fuel"></circle>
+      <circle class="c t3" cx="148.6" cy="286.8" r="8" fill="#f5c400" data-n="Glenn" data-t="ELEVATED" data-d="Beehive theft, orchard equipment"></circle>
+      <circle class="c t3" cx="192.4" cy="281.9" r="8" fill="#f5c400" data-n="Butte" data-t="ELEVATED" data-d="Beehive theft, nut hauls, copper"></circle>
+      <circle class="c t3" cx="186.9" cy="326.4" r="8" fill="#f5c400" data-n="Sutter" data-t="ELEVATED" data-d="Orchard equipment and fuel"></circle>
+      <circle class="c t3" cx="221.3" cy="494.5" r="8" fill="#f5c400" data-n="San Benito" data-t="ELEVATED" data-d="Field crop and equipment theft"></circle>
+      <circle class="c t3" cx="169.7" cy="463.2" r="8" fill="#f5c400" data-n="Santa Cruz" data-t="ELEVATED" data-d="Berry field and irrigation theft"></circle>
+      <circle class="c t3" cx="119.2" cy="361.1" r="8" fill="#f5c400" data-n="Sonoma" data-t="ELEVATED" data-d="Vineyard equipment, wine and barrel theft"></circle>
+      <circle class="c t3" cx="151.9" cy="362.5" r="8" fill="#f5c400" data-n="Napa" data-t="ELEVATED" data-d="Vineyard equipment and wine theft"></circle>
+      <circle class="c t2" cx="291.2" cy="532.0" r="11" fill="#e67e22" data-n="Kings" data-t="HIGH" data-d="Copper from ag well pumps; multi-county burglary crews"></circle>
+      <circle class="c t2" cx="294.5" cy="452.1" r="11" fill="#e67e22" data-n="Madera" data-t="HIGH" data-d="Ag chemical burglaries, red diesel"></circle>
+      <circle class="c t2" cx="241.2" cy="454.2" r="11" fill="#e67e22" data-n="Merced" data-t="HIGH" data-d="Red diesel theft, dairy and equipment"></circle>
+      <circle class="c t2" cx="226.3" cy="428.5" r="11" fill="#e67e22" data-n="Stanislaus" data-t="HIGH" data-d="Nut hauls, equipment, irrigation hardware"></circle>
+      <circle class="c t2" cx="210.7" cy="402.8" r="11" fill="#e67e22" data-n="San Joaquin" data-t="HIGH" data-d="Equipment and trailer theft, cargo diversion"></circle>
+      <circle class="c t2" cx="212.4" cy="520.2" r="11" fill="#e67e22" data-n="Monterey" data-t="HIGH" data-d="Rental-fraud equipment rings, copper wire"></circle>
+      <circle class="c t2" cx="329.4" cy="644.5" r="11" fill="#e67e22" data-n="Ventura" data-t="HIGH" data-d="Tractors, avocado and citrus fruit theft"></circle>
+      <circle class="c t1" cx="300.6" cy="484.7" r="15" fill="#c0392b" data-n="Fresno" data-t="CRITICAL" data-d="Copper wire, ag vehicles, stone fruit, ag chemicals"></circle>
+      <circle class="c t1" cx="347.7" cy="521.5" r="15" fill="#c0392b" data-n="Tulare" data-t="CRITICAL" data-d="Copper wire from well pumps, cattle, tree nuts, fuel"></circle>
+      <circle class="c t1" cx="351.6" cy="582.7" r="15" fill="#c0392b" data-n="Kern" data-t="CRITICAL" data-d="Copper wire, ATVs, tractors, farm vehicles"></circle>
+      <text class="lb" x="322.6" y="487.7" text-anchor="start">FRESNO</text>
+      <text class="lb" x="369.7" y="524.5" text-anchor="start">TULARE</text>
+      <text class="lb" x="373.6" y="585.7" text-anchor="start">KERN</text>
+      <text class="lb" x="271.2" y="541.0" text-anchor="end">KINGS</text>
+      <text class="lb" x="314.5" y="451.1" text-anchor="start">MADERA</text>
+      <text class="lb" x="235.2" y="472.2" text-anchor="end">MERCED</text>
+      <text class="lb" x="208.3" y="427.5" text-anchor="end">STANISLAUS</text>
+      <text class="lb" x="192.7" y="402.8" text-anchor="end">SAN JOAQUIN</text>
+      <text class="lb" x="194.4" y="523.2" text-anchor="end">MONTEREY</text>
+      <text class="lb" x="331.4" y="669.5" text-anchor="end">VENTURA</text>
+      <text class="lb" x="240.2" y="582.2" text-anchor="end">SAN LUIS OBISPO</text>
+      <text class="lb" x="263.0" y="630.7" text-anchor="end">SANTA BARBARA</text>
+      <text class="lb" x="554.6" y="753.4" text-anchor="start">IMPERIAL</text>
+      <text class="lb" x="519.6" y="700.1" text-anchor="start">RIVERSIDE</text>
+      <text class="lb" x="509.1" y="612.4" text-anchor="start">SAN BERNARDINO</text>
+      <text class="lb" x="446.0" y="752.1" text-anchor="end">SAN DIEGO</text>
+      <text class="lb" x="222.8" y="379.7" text-anchor="start">SACRAMENTO</text>
+      <text class="lb" x="190.8" y="350.0" text-anchor="start">YOLO</text>
+      <text class="lb" x="157.6" y="390.2" text-anchor="end">SOLANO</text>
+      <text class="lb" x="140.9" y="318.9" text-anchor="end">COLUSA</text>
+      <text class="lb" x="132.6" y="289.8" text-anchor="end">GLENN</text>
+      <text class="lb" x="208.4" y="284.9" text-anchor="start">BUTTE</text>
+      <text class="lb" x="202.9" y="335.4" text-anchor="start">SUTTER</text>
+      <text class="lb" x="237.3" y="505.5" text-anchor="start">SAN BENITO</text>
+      <text class="lb" x="154.7" y="457.2" text-anchor="end">SANTA CRUZ</text>
+      <text class="lb" x="105.2" y="377.1" text-anchor="end">SONOMA</text>
+      <text class="lb" x="132.9" y="366.5" text-anchor="end">NAPA</text>
+      <text class="lb" x="397.4" y="657.6" text-anchor="start">LOS ANGELES</text>
+    </svg>
+  </div>
+  <div class="side">
+    <div id="info"><b>Select a county</b>Hover or tap a marker to see what is being taken there this season.</div>
+    <h2>County Watch List</h2>
+    <table><thead><tr><th>County</th><th>Level</th><th>Primary targets</th></tr></thead>
+    <tbody id="tb"></tbody></table>
+  </div>
+</div>
+<footer>
+<strong>How to read this map.</strong> Pressure levels are a B Mello editorial ranking built from
+county sheriff and district attorney ag-crime unit reporting, task force case activity, and press
+releases published through early August 2026. Marker placement is the county centroid; markers are
+not to county scale. Reported figures understate actual loss &mdash; a large share of ag crime is
+never reported. Verify any specific case with the responsible agency.<br><br>
+Report ag crime to your county sheriff's ag crime or rural crime unit. Questions on this report:
+Bryan Mello &bull; (559) 816-3889 &bull; <a href="mailto:bryan@bmelloag.com">bryan@bmelloag.com</a>
+</footer>
+</div>
+<script>
+var DATA = [{"n": "Fresno", "t": "CRITICAL", "d": "Copper wire, ag vehicles, stone fruit, ag chemicals"}, {"n": "Kern", "t": "CRITICAL", "d": "Copper wire, ATVs, tractors, farm vehicles"}, {"n": "Tulare", "t": "CRITICAL", "d": "Copper wire from well pumps, cattle, tree nuts, fuel"}, {"n": "Kings", "t": "HIGH", "d": "Copper from ag well pumps; multi-county burglary crews"}, {"n": "Madera", "t": "HIGH", "d": "Ag chemical burglaries, red diesel"}, {"n": "Merced", "t": "HIGH", "d": "Red diesel theft, dairy and equipment"}, {"n": "Monterey", "t": "HIGH", "d": "Rental-fraud equipment rings, copper wire"}, {"n": "San Joaquin", "t": "HIGH", "d": "Equipment and trailer theft, cargo diversion"}, {"n": "Stanislaus", "t": "HIGH", "d": "Nut hauls, equipment, irrigation hardware"}, {"n": "Ventura", "t": "HIGH", "d": "Tractors, avocado and citrus fruit theft"}, {"n": "Butte", "t": "ELEVATED", "d": "Beehive theft, nut hauls, copper"}, {"n": "Colusa", "t": "ELEVATED", "d": "Rice equipment, beehives, fuel"}, {"n": "Glenn", "t": "ELEVATED", "d": "Beehive theft, orchard equipment"}, {"n": "Imperial", "t": "ELEVATED", "d": "Irrigation hardware, sprinkler heads, hay"}, {"n": "Napa", "t": "ELEVATED", "d": "Vineyard equipment and wine theft"}, {"n": "Riverside", "t": "ELEVATED", "d": "Hay, date and citrus theft, trespass"}, {"n": "Sacramento", "t": "ELEVATED", "d": "Equipment, trailers, metal theft"}, {"n": "San Benito", "t": "ELEVATED", "d": "Field crop and equipment theft"}, {"n": "San Bernardino", "t": "ELEVATED", "d": "Dairy and desert-edge equipment theft"}, {"n": "San Diego", "t": "ELEVATED", "d": "Avocado and citrus theft, nursery stock"}, {"n": "San Luis Obispo", "t": "ELEVATED", "d": "Wine grape and equipment theft"}, {"n": "Santa Barbara", "t": "ELEVATED", "d": "Berry and vegetable field theft, tools"}, {"n": "Santa Cruz", "t": "ELEVATED", "d": "Berry field and irrigation theft"}, {"n": "Solano", "t": "ELEVATED", "d": "Equipment and fuel theft"}, {"n": "Sonoma", "t": "ELEVATED", "d": "Vineyard equipment, wine and barrel theft"}, {"n": "Sutter", "t": "ELEVATED", "d": "Orchard equipment and fuel"}, {"n": "Yolo", "t": "ELEVATED", "d": "Orchard equipment, ATVs, sprayers"}, {"n": "Alameda", "t": "MONITOR", "d": "Cargo and equipment diversion"}, {"n": "Alpine", "t": "MONITOR", "d": "Livestock"}, {"n": "Amador", "t": "MONITOR", "d": "Vineyard and livestock"}, {"n": "Calaveras", "t": "MONITOR", "d": "Livestock and equipment"}, {"n": "Contra Costa", "t": "MONITOR", "d": "Equipment and metal theft"}, {"n": "Del Norte", "t": "MONITOR", "d": "Livestock and rural property crime"}, {"n": "El Dorado", "t": "MONITOR", "d": "Vineyard and rural property crime"}, {"n": "Humboldt", "t": "MONITOR", "d": "Livestock and rural property crime"}, {"n": "Inyo", "t": "MONITOR", "d": "Livestock and hay theft"}, {"n": "Lake", "t": "MONITOR", "d": "Walnut and pear orchard theft"}, {"n": "Lassen", "t": "MONITOR", "d": "Cattle and hay theft"}, {"n": "Los Angeles", "t": "MONITOR", "d": "Nursery stock, cargo diversion"}, {"n": "Marin", "t": "MONITOR", "d": "Dairy and livestock"}, {"n": "Mariposa", "t": "MONITOR", "d": "Cattle theft"}, {"n": "Mendocino", "t": "MONITOR", "d": "Vineyard and rural property crime"}, {"n": "Modoc", "t": "MONITOR", "d": "Cattle and hay theft"}, {"n": "Mono", "t": "MONITOR", "d": "Cattle theft"}, {"n": "Nevada", "t": "MONITOR", "d": "Rural equipment theft"}, {"n": "Orange", "t": "MONITOR", "d": "Nursery stock theft"}, {"n": "Placer", "t": "MONITOR", "d": "Rural equipment theft"}, {"n": "Plumas", "t": "MONITOR", "d": "Livestock and rural property crime"}, {"n": "San Mateo", "t": "MONITOR", "d": "Nursery and coastal field theft"}, {"n": "Santa Clara", "t": "MONITOR", "d": "Nursery and equipment theft"}, {"n": "Shasta", "t": "MONITOR", "d": "Cattle, hay, equipment"}, {"n": "Sierra", "t": "MONITOR", "d": "Livestock"}, {"n": "Siskiyou", "t": "MONITOR", "d": "Cattle and hay theft"}, {"n": "Tehama", "t": "MONITOR", "d": "Cattle, orchard equipment"}, {"n": "Trinity", "t": "MONITOR", "d": "Rural property crime"}, {"n": "Tuolumne", "t": "MONITOR", "d": "Livestock and rural property crime"}, {"n": "Yuba", "t": "MONITOR", "d": "Equipment and metal theft"}];
+var tb = document.getElementById('tb');
+DATA.forEach(function(r){
+  var cls = {CRITICAL:'t1',HIGH:'t2',ELEVATED:'t3',MONITOR:'t4'}[r.t];
+  tb.insertAdjacentHTML('beforeend',
+    '<tr><td><strong>'+r.n+'</strong></td><td><span class="tag '+cls+'">'+r.t+
+    '</span></td><td>'+r.d+'</td></tr>');
+});
+var info = document.getElementById('info');
+function show(e){
+  var t = e.currentTarget;
+  info.innerHTML = '<b>'+t.dataset.n+' County &mdash; '+t.dataset.t+'</b>'+t.dataset.d;
+}
+[].forEach.call(document.querySelectorAll('.c'), function(c){
+  c.addEventListener('mouseenter', show);
+  c.addEventListener('click', show);
+});
+[].forEach.call(document.querySelectorAll('.pill'), function(p){
+  p.addEventListener('click', function(){
+    [].forEach.call(document.querySelectorAll('.pill'), function(q){q.classList.remove('on');});
+    p.classList.add('on');
+    var f = p.dataset.f;
+    [].forEach.call(document.querySelectorAll('.c'), function(c){
+      c.classList.toggle('dim', f !== 'all' && c.dataset.t !== f);
+    });
+  });
+});
+</script>
+  </div>
+</div>
+<div class="wrap">
+  <nav class="issuenav" aria-label="Issue navigation"><a href="/reports/ag-crime/2026-08">&larr; Newer issue</a><a href="/reports/ag-crime">All Ag Crime Report issues</a><span></span></nav>
+</div>
+<section class="band signup">
+  <div class="wrap">
+    <div class="txt">
+      <div class="h">Get these in your inbox</div>
+      <div class="p">One list, every title. Unsubscribe anytime.</div>
+    </div>
+    <a class="btn btn-gold" href="mailto:bryan@bmelloag.com?subject=Add%20me%20to%20the%20B%20Mello%20report%20list">Email to subscribe</a>
+  </div>
+</section>
+
+<footer class="sitefoot">
+  <div class="wrap">
+    <div>
+      <h4>B. Mello Ag Services</h4>
+      <a href="tel:+15598163889">(559) 816-3889</a>
+      <a href="mailto:bryan@bmelloag.com">bryan@bmelloag.com</a>
+      <a href="https://maps.google.com/?q=5771+7th+Avenue,+Hanford,+California+93230" rel="noopener">5771 7th Avenue, Hanford, California 93230</a>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <a href="/hay">Hay</a><a href="/tractor-spreaders">Tractor Spreaders</a><a href="/spreader-trucks">Spreader Trucks</a><a href="/reports">Reports</a><a href="/about">About</a><a href="/contact">Contact</a>
+    </div>
+    <div>
+      <h4>Reports</h4>
+      <a href="/reports">All issues</a>
+      <a href="/feed.xml">RSS feed</a>
+    </div>
+    <p class="fine">Copyright &copy; 2026 B. Mello Ag Services &mdash; All rights reserved.
+      Hay sales, roadsiding, retrieving, squeeze work, tractor spreading and spreader trucks
+      across California's Central Valley.</p>
+  </div>
+</footer>
+</body>
+</html>
