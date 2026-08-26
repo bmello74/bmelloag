@@ -240,7 +240,13 @@ section.tight { padding:38px 0; }
   color:var(--gold-lit); margin:0 0 10px; }
 .sitefoot a { color:var(--band-soft); text-decoration:none; display:block; padding:3px 0; font-size:15px; }
 .sitefoot a:hover { color:var(--band-ink); }
-.sitefoot .fine { grid-column:1/-1; border-top:1px solid #2A2718; padding-top:18px;
+/* "Proudly American" sits on its own line above the fine print, set the way it
+   appears on the newsletter banners: cream, then gold italic. */
+.sitefoot .theme { grid-column:1/-1; border-top:1px solid #2A2718; padding-top:22px;
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif; font-size:15px; font-weight:600;
+  font-style:italic; color:var(--band-ink); letter-spacing:.01em; }
+.sitefoot .theme span { color:var(--gold-lit); }
+.sitefoot .fine { grid-column:1/-1; padding-top:2px;
   font-family:Archivo,sans-serif; font-size:12px; line-height:1.6; }
 
 @media (max-width:620px) {

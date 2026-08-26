@@ -30,6 +30,12 @@ CONTACT_ENDPOINT = ""     # Cloudflare Worker / Formspree endpoint for the conta
 SPREAD_AREA = "Bakersfield to Madera"
 SALES_AREA = "all of California and into the western states"
 
+# The two house themes. The soil line is the customer-facing promise and rides in
+# the masthead on every page; the American line closes the footer.
+THEME_SOIL = "Tailored for your soil &middot; Central Valley proven"
+THEME_AMERICAN = ("Proudly American &mdash; "
+                  "<span>Rooted in the American Dream</span>")
+
 SERIES = {
     "field-report":    {"label": "Field Report",          "chip": "Field Report",    "cadence": "Monthly, on the 1st",
                         "banner": "field-report",
@@ -117,7 +123,7 @@ def masthead(current):
       <img src="/assets/logo.png" alt="{e(BIZ)}" width="475" height="243">
     </a>
     <div class="mast-right">
-      <span class="mast-tag">Targeted plant nutrition<br>Soil health &middot; Custom spreading</span>
+      <span class="mast-tag">{THEME_SOIL}</span>
       <a class="callbtn" href="tel:{PHONE_TEL}">{e(PHONE_TXT)}</a>
     </div>
   </div>
@@ -171,6 +177,7 @@ def footer():
       <a href="/reports">All issues</a>
       <a href="/feed.xml">RSS feed</a>
     </div>
+    <p class="theme">{THEME_AMERICAN}</p>
     <p class="fine">Copyright &copy; {year} {e(BIZ)} &mdash; All rights reserved.
       Fertilizer and soil amendment sales, custom tractor spreading and spreader trucks,
       and hay &mdash; out of Hanford, California.</p>
