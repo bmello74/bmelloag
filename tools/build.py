@@ -188,11 +188,45 @@ def footer():
 """
 
 
+# Public URLs are extensionless (/hay, /reports/energy/2026-08-24). Cloudflare
+# resolved those from hay.html by itself; most hosts don't. Writing every page as
+# <path>/index.html makes the same URLs work on GitHub Pages, plain Apache/nginx,
+# cPanel — anywhere. The URLs themselves do not change.
+ROOT_FILES = {"index.html", "404.html"}
+
+
+def out_path(path):
+    if path in ROOT_FILES or path.endswith("/index.html") or not path.endswith(".html"):
+        return path
+    return path[:-len(".html")] + "/index.html"
+
+
 def write(path, content):
-    p = ROOT / path
+    p = ROOT / out_path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(content, encoding="utf-8")
     return p
+
+
+def redirect_page(to, note):
+    """A real page that forwards — _redirects files are Cloudflare-only."""
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moved &mdash; {e(BIZ)}</title>
+<link rel="canonical" href="{SITE}{to}">
+<meta http-equiv="refresh" content="0; url={to}">
+<meta name="robots" content="noindex">
+<style>body{{font-family:system-ui,sans-serif;margin:16vh auto;max-width:34em;padding:0 24px;
+line-height:1.6;color:#16150F;background:#FBF9F3}}a{{color:#A8860A}}</style>
+</head>
+<body>
+<p>{e(note)} This page has moved to <a href="{to}">{SITE}{to}</a>.</p>
+<script>location.replace("{to}");</script>
+</body>
+</html>
+"""
 
 
 # ---------------------------------------------------------------- static pages
@@ -826,12 +860,24 @@ def build_site():
         write(path, content)
     write("feed.xml", feed(items))
     write("sitemap.xml", sitemap(items))
+    for old, new, note in [
+        ("monthly-newsletter", "/reports",         "The newsletter page is now the full report archive."),
+        ("newsletter",         "/reports",         "The newsletter page is now the full report archive."),
+        ("about-us",           "/about",           "About Us moved."),
+        ("contact-us",         "/contact",         "Contact moved."),
+        ("fertilizer",         "/plant-nutrition", "Fertilizer is now Targeted Plant Nutrition."),
+    ]:
+        write(f"{old}/index.html", redirect_page(new, note))
+    # Cloudflare honours this; other hosts ignore it. Harmless either way.
     write("_redirects",
           "/monthly-newsletter  /reports           301\n"
           "/newsletter          /reports           301\n"
           "/about-us            /about             301\n"
           "/contact-us          /contact           301\n"
           "/fertilizer          /plant-nutrition   301\n")
+    # GitHub Pages: skip Jekyll (it drops files beginning with _), and claim the domain.
+    write(".nojekyll", "")
+    write("CNAME", "bmelloag.com\n")
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     print(f"site: {len(items)} issues in catalog, static pages rebuilt")
 
