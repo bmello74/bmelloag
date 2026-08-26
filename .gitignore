@@ -17,7 +17,7 @@ B Mello Spreading_files/
 B Mello Logo.jpg
 
 # Build/transfer leftovers
-_site-build.tar.gz
+*.tar.gz
 .DS_Store
 Thumbs.db
 

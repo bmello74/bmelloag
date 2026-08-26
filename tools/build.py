@@ -31,13 +31,26 @@ SPREAD_AREA = "Bakersfield to Madera"
 SALES_AREA = "all of California and into the western states"
 
 SERIES = {
-    "field-report":    {"label": "Field Report",         "chip": "Field Report",    "cadence": "Monthly, on the 1st"},
-    "ag-crime":        {"label": "Ag Crime Report",      "chip": "Ag Crime",        "cadence": "Monthly"},
-    "economic-update": {"label": "Economic Update",      "chip": "Economic Update", "cadence": "Monthly, mid-month"},
-    "energy":          {"label": "Weekly Energy Update", "chip": "Weekly Energy",   "cadence": "Every Monday"},
-    "fishing":         {"label": "Weekly Fishing Report","chip": "Weekly Fishing",  "cadence": "Every Wednesday"},
-    "special":         {"label": "Special Report",       "chip": "Special Report",  "cadence": "As conditions warrant"},
-    "holiday":         {"label": "Holiday",              "chip": "Holiday",         "cadence": "Per holiday"},
+    "field-report":    {"label": "Field Report",          "chip": "Field Report",    "cadence": "Monthly, on the 1st",
+                        "banner": "field-report",
+                        "blurb": "Crop stage, what should be going on the ground, and the market behind it."},
+    "ag-crime":        {"label": "Ag Crime Report",       "chip": "Ag Crime",        "cadence": "Monthly",
+                        "banner": "ag-crime",
+                        "blurb": "County briefs, statewide trends and the hotspot map."},
+    "economic-update": {"label": "Economic Update",       "chip": "Economic Update", "cadence": "Monthly, mid-month",
+                        "banner": "economic-update",
+                        "blurb": "Milk and dairy, grain futures, fuel, water and Valley weather."},
+    "energy":          {"label": "Weekly Energy Update",  "chip": "Weekly Energy",   "cadence": "Every Monday",
+                        "banner": "energy",
+                        "blurb": "Fuel prices, energy markets and what they mean for your budget."},
+    "fishing":         {"label": "Weekly Fishing Report", "chip": "Weekly Fishing",  "cadence": "Every Wednesday",
+                        "banner": "fishing",
+                        "blurb": "Lake conditions, best bites and where they're biting."},
+    "special":         {"label": "Special Report",        "chip": "Special Report",  "cadence": "As conditions warrant",
+                        "banner": "special",
+                        "blurb": "One subject, in depth, when the market makes it urgent."},
+    "holiday":         {"label": "Holiday",               "chip": "Holiday",         "cadence": "Per holiday",
+                        "blurb": "Greetings from the B. Mello family."},
 }
 SERIES_ORDER = ["field-report", "ag-crime", "economic-update", "energy", "fishing", "special", "holiday"]
 
@@ -573,6 +586,23 @@ def reports_index(items):
   <a class="iact" href="{url}">Read</a>
 </article>''')
 
+    titlecards = []
+    for k in SERIES_ORDER:
+        sub = [i for i in items if i["series"] == k]
+        if not sub or not SERIES[k].get("banner"):
+            continue
+        titlecards.append(
+            f'<a class="titlecard" href="/reports/{k}">'
+            f'<img src="/assets/img/reports/{SERIES[k]["banner"]}.jpg" alt="" '
+            f'width="1200" loading="lazy">'
+            f'<div class="tc-body">'
+            f'<div class="tc-name">{e(SERIES[k]["label"])}</div>'
+            f'<div class="tc-blurb">{e(SERIES[k].get("blurb", ""))}</div>'
+            f'<div class="tc-meta">{e(SERIES[k]["cadence"])} &middot; '
+            f'{len(sub)} issue{"s" if len(sub) != 1 else ""}</div>'
+            f'</div></a>')
+    titlegrid = "".join(titlecards)
+
     h = head(f"Reports — {BIZ}",
              "Field conditions, ag crime, commodity and fuel markets, water and weather — every "
              "issue B. Mello Ag Services publishes, free and searchable.",
@@ -586,6 +616,12 @@ def reports_index(items):
        markets, and the water and weather that move them. Free, and on the web the day it goes out.</p>
   </div>
 </header>
+<section class="tight">
+  <div class="wrap">
+    <div class="sechead"><h2>What we publish</h2></div>
+    <div class="titlegrid">{titlegrid}</div>
+  </div>
+</section>
 {signup_band()}
 <div class="controls">
   <div class="wrap">
@@ -681,14 +717,20 @@ def series_pages(items):
         h = head(f"{label} — {BIZ}",
                  f"Every issue of the {label} from B. Mello Ag Services. {SERIES[k]['cadence']}.",
                  f"/reports/{k}")
+        banner = SERIES[k].get("banner")
+        banner_html = (f'<div class="wrap"><img class="series-banner" '
+                       f'src="/assets/img/reports/{banner}.jpg" alt="{e(label)}" '
+                       f'width="1200" loading="lazy"></div>') if banner else ""
         page = h + masthead("/reports") + f"""
 <header class="pagehead">
   <div class="wrap">
     <div class="eyebrow"><a href="/reports" style="color:var(--gold)">Reports</a></div>
     <h1>{e(label)}</h1>
-    <p class="tag">{e(SERIES[k]['cadence'])} &middot; {len(subset)} issue{"s" if len(subset) != 1 else ""} published.</p>
+    <p class="tag">{e(SERIES[k].get('blurb', ''))}</p>
+    <p class="meta-line">{e(SERIES[k]['cadence'])} &middot; {len(subset)} issue{"s" if len(subset) != 1 else ""} published</p>
   </div>
 </header>
+{banner_html}
 {signup_band()}
 <main class="wrap" style="padding:22px 26px 10px">
 {chr(10).join(rows)}
