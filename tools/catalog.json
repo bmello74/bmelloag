@@ -1,5 +1,18 @@
 [
   {
+    "id": "fishing/2026-08-26",
+    "series": "fishing",
+    "slug": "2026-08-26",
+    "date": "2026-08-26",
+    "date_display": "Aug 26–Sep 2",
+    "title": "Weekly Fishing Report — August 26 – September 2, 2026",
+    "headline": "San Francisco salmon closed a week early",
+    "summary": "Fisheries service took inseason action on August 19 and shut the area after Sunday the 23rd. Monterey has six days left, the fall season opens September 1, and the bottom went 16 for 17 at limits.",
+    "meta": "Issue 26-34",
+    "source": "26 Fishing Report/B Mello Weekly Fishing Report - Aug 26-Sep 2 2026.html",
+    "path": "reports/fishing/2026-08-26.html"
+  },
+  {
     "id": "energy/2026-08-24",
     "series": "energy",
     "slug": "2026-08-24",
@@ -21,7 +34,7 @@
     "title": "Weekly Fishing Report — August 19–26, 2026",
     "headline": "Rockfish and lingcod still wide open",
     "summary": "Thirteen days left on the salmon season, only 2 of 10 trips at limits, and the fall striper run is pouring into the Delta.",
-    "meta": "Issue 26-34",
+    "meta": "Issue 26-33",
     "source": "26 Fishing Report/B Mello Weekly Fishing Report - Aug 19-26 2026.html",
     "path": "reports/fishing/2026-08-19.html"
   },
