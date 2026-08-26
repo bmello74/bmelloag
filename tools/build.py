@@ -23,9 +23,12 @@ PHONE_TEL = "+15598163889"
 EMAIL = "bryan@bmelloag.com"
 ADDRESS = "5771 7th Avenue, Hanford, California 93230"
 
-# Fill these in once the accounts are wired up; pages degrade gracefully when blank.
-MAILCHIMP_ACTION = ""     # Mailchimp embedded-form action URL
+# Mailchimp's hosted signup landing page. Blank falls back to a mailto link.
+MAILCHIMP_SIGNUP_URL = "https://mailchi.mp/bmelloag/subscribe-to-b-mello-newsletter"
 CONTACT_ENDPOINT = ""     # Cloudflare Worker / Formspree endpoint for the contact form
+
+SPREAD_AREA = "Bakersfield to Madera"
+SALES_AREA = "all of California and into the western states"
 
 SERIES = {
     "field-report":    {"label": "Field Report",         "chip": "Field Report",    "cadence": "Monthly, on the 1st"},
@@ -38,8 +41,9 @@ SERIES = {
 }
 SERIES_ORDER = ["field-report", "ag-crime", "economic-update", "energy", "fishing", "special", "holiday"]
 
-NAV = [("/", "Home"), ("/hay", "Hay"), ("/tractor-spreaders", "Tractor Spreaders"),
-       ("/spreader-trucks", "Spreader Trucks"), ("/reports", "Reports"),
+NAV = [("/", "Home"), ("/fertilizer", "Fertilizer"),
+       ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Spreader Trucks"),
+       ("/hay", "Hay"), ("/reports", "Reports"),
        ("/about", "About"), ("/contact", "Contact")]
 
 e = html.escape
@@ -107,22 +111,20 @@ def masthead(current):
 
 
 def signup_band():
-    if MAILCHIMP_ACTION:
-        form = (f'<form class="signupform" action="{e(MAILCHIMP_ACTION)}" method="post" '
-                f'target="_blank" novalidate>'
-                f'<input type="email" name="EMAIL" required placeholder="you@yourfarm.com" '
-                f'aria-label="Email address">'
-                f'<button type="submit">Subscribe</button></form>')
+    if MAILCHIMP_SIGNUP_URL:
+        cta = (f'<a class="btn btn-gold" href="{e(MAILCHIMP_SIGNUP_URL)}" '
+               f'target="_blank" rel="noopener">Subscribe free</a>')
     else:
-        form = (f'<a class="btn btn-gold" href="mailto:{EMAIL}'
-                f'?subject=Add%20me%20to%20the%20B%20Mello%20report%20list">Email to subscribe</a>')
+        cta = (f'<a class="btn btn-gold" href="mailto:{EMAIL}'
+               f'?subject=Add%20me%20to%20the%20B%20Mello%20report%20list">Email to subscribe</a>')
     return f"""<section class="band signup">
   <div class="wrap">
     <div class="txt">
       <div class="h">Get these in your inbox</div>
-      <div class="p">One list, every title. Unsubscribe anytime.</div>
+      <div class="p">Field conditions, ag crime, fuel and commodity markets. One list, every
+        title, unsubscribe anytime.</div>
     </div>
-    {form}
+    {cta}
   </div>
 </section>
 """
@@ -150,8 +152,8 @@ def footer():
       <a href="/feed.xml">RSS feed</a>
     </div>
     <p class="fine">Copyright &copy; {year} {e(BIZ)} &mdash; All rights reserved.
-      Hay sales, roadsiding, retrieving, squeeze work, tractor spreading and spreader trucks
-      across California's Central Valley.</p>
+      Fertilizer and soil amendment sales, custom tractor spreading and spreader trucks,
+      and hay &mdash; out of Hanford, California.</p>
   </div>
 </footer>
 </body>
@@ -196,18 +198,19 @@ def latest_cards(items, n=4):
 
 
 def page_home(items):
-    h = head("B. Mello Ag Services — Hay & Custom Spreading, Hanford CA",
-             "Hay sales, roadsiding, retrieving and squeeze work, plus tractor spreaders and "
-             "spreader trucks for vines, orchards and open ground across California's Central Valley.",
+    h = head("B. Mello Ag Services — Plant Nutrition, Soil Amendments & Custom Spreading",
+             "Fertilizer and soil amendment sales across California and the western states, with "
+             "tractor spreaders for trees, vines and kiwis and spreader trucks for open ground from "
+             "Bakersfield to Madera.",
              "/")
     return h + masthead("/") + f"""
 <section class="hero">
   <img class="hero-img" src="/assets/img/spreaders.jpg" alt="" aria-hidden="true">
   <div class="wrap">
     <div class="eyebrow">Hanford, California &middot; Since 2005</div>
-    <h1>Hay hauled. Ground fed. On your schedule.</h1>
-    <p>Balewagons in the field within 24 hours of baling, and four spreaders built for the rows
-       everyone else has to drive around.</p>
+    <h1>Plant nutrition, sold and spread.</h1>
+    <p>Fertilizer and soil amendments across California and into the western states &mdash; and the
+       spreaders to put them down right, from Bakersfield to Madera.</p>
     <div class="actions">
       <a class="btn btn-gold" href="/contact">Get a quote</a>
       <a class="btn btn-ghost" href="/reports">Read the reports</a>
@@ -219,38 +222,47 @@ def page_home(items):
   <div class="wrap">
     <div class="sechead"><h2>What we do</h2></div>
     <div class="svc">
-      <a href="/hay">
-        <h3>Hay</h3>
-        <p>Sales, roadsiding, retrieving, trucking and squeeze work &mdash; where we got our start,
-           and where we are continuing to thrive.</p>
-        <span class="more">See hay services &rarr;</span>
+      <a href="/fertilizer">
+        <h3>Fertilizer &amp; Amendments</h3>
+        <p>Plant nutrition and soil health &mdash; the material itself, priced and sourced across
+           California and into the western states.</p>
+        <span class="more">See fertilizer sales &rarr;</span>
       </a>
       <a href="/tractor-spreaders">
         <h3>Tractor Spreaders</h3>
-        <p>Dry soil amendments on everything from tight trellis rows to open fields. You name it,
-           we spread it.</p>
+        <p>Trees, vines and kiwis. A profile small enough for trellis and overhead rows others
+           can't drive through.</p>
         <span class="more">See tractor spreading &rarr;</span>
       </a>
       <a href="/spreader-trucks">
         <h3>Spreader Trucks</h3>
-        <p>The largest jobs, with pinpoint accuracy at increased load capacity &mdash; and still able
-           to work compact ground.</p>
+        <p>Open ground at volume, with the accuracy to place material where you want it and
+           nowhere you don't.</p>
         <span class="more">See spreader trucks &rarr;</span>
+      </a>
+      <a href="/hay">
+        <h3>Hay</h3>
+        <p>Where we started. We still buy and sell hay, and stack and haul it with our own
+           equipment.</p>
+        <span class="more">See hay services &rarr;</span>
       </a>
     </div>
   </div>
 </section>
 
-<img class="strip" src="/assets/img/balewagon.jpg" alt="A B. Mello Freeman balewagon on the road">
+<img class="strip" src="/assets/img/sunset.jpg" alt="Central Valley field at sunset">
 
 {latest_cards(items)}
 
 <section>
   <div class="wrap prose">
-    <div class="sechead"><h2>Twenty years in the Valley</h2></div>
-    <p>B. Mello Ag Services was established on January 1, 2005 near Hanford, built first on hay sales.
-       Tractor spreaders came in September 2009, opening up vineyards, orchards and fields. Spreader
-       trucks followed in December 2014 and greatly increased both load capacity and time efficiency.</p>
+    <div class="sechead"><h2>One call covers the material and the application</h2></div>
+    <p>Most growers have to buy the product from one company and find somebody else to put it out.
+       We do both. That means the rate you specify is the rate that actually reaches the ground, and
+       there's one person to call when something needs adjusting.</p>
+    <p>We started in hay in 2005. Tractor spreaders came in 2009 and opened up orchards and vineyards;
+       spreader trucks followed in 2014 and took on the open ground. Along the way the center of the
+       business moved to where it is now &mdash; plant nutrition and soil health.</p>
     <p><a href="/about">More about the company and Bryan Mello &rarr;</a></p>
   </div>
 </section>
@@ -279,18 +291,48 @@ def simple_page(slug, title, tag, body_html, desc, strip=None):
 """ + footer()
 
 
+def page_fertilizer():
+    body = f"""    <p>The center of our business is plant nutrition and soil health. We sell the dry fertilizers and
+       soil amendments that feed a crop and correct the ground it grows in &mdash; and across the
+       Central Valley we put them out ourselves.</p>
+
+    <h2>What we sell</h2>
+    <ul>
+      <li>Gypsum</li>
+      <li>Limestone</li>
+      <li>Sulfur</li>
+      <li>Compost</li>
+      <li>Dry fertilizers and blends</li>
+      <li>Biological and humic products</li>
+    </ul>
+    <p>If you are pricing a program, call us. We source material and quote it against what your ground
+       actually needs.</p>
+
+    <h2>Where we sell</h2>
+    <p>Fertilizer and amendment sales cover {SALES_AREA}. Custom application runs through the Central
+       Valley, {SPREAD_AREA} &mdash; <a href="/tractor-spreaders">tractor spreaders</a> in trees, vines
+       and kiwis, <a href="/spreader-trucks">spreader trucks</a> on open ground.</p>
+
+    <h2>Start with the soil, not the invoice</h2>
+    <p>The cheapest ton of material is the one you did not need. Soil and water testing shows what the
+       ground gave up last season and what it is short of now &mdash; the difference between a program
+       and a guess. We can arrange sampling and go through the results with you.</p>
+    <p>The same thinking runs through our <a href="/reports">Field Report</a> every month: crop stage,
+       what should be going on the ground, and what materials are doing in the market.</p>
+    <p><a href="/contact">Call for a quote today</a>.</p>"""
+    return simple_page("/fertilizer", "Fertilizer & Soil Amendments",
+                       "Plant nutrition and soil health &mdash; the material, priced and delivered.",
+                       body,
+                       "Fertilizer and soil amendment sales across California and into the western "
+                       "states — gypsum, limestone, sulfur, compost, dry blends and biologicals, with "
+                       "custom application throughout the Central Valley.",
+                       "/assets/img/spreaders.jpg")
+
+
 def page_hay():
-    body = """    <p>Integrated into many aspects of the hay business &mdash; hay sales, roadsiding, retrieving,
-       trucking and squeeze work &mdash; we offer services backed by years of experience.</p>
-
-    <h2>Equipment</h2>
-    <p>We run four Freeman big balewagons. The 5500 wagons stack 3x3, 3x4 and 4x4 bales, and can
-       stack big bales up to six high. Our Freeman small balewagons haul eleven-high stacks, up to
-       ninety-two bales per stack.</p>
-
-    <h2>Coverage and turnaround</h2>
-    <p>Our balewagons cover over 10,000 acres per cutting, and we will be in the field within 24 hours
-       of hay baling. Retriever trucks handle deliveries as small as 60 bales, or as many as you need.</p>
+    body = """    <p>Hay is where the company started in 2005, and we are still in it &mdash; buying, selling,
+       stacking and hauling. It sits behind the nutrition side of the business these days, but the
+       equipment and the crews are ours and the work gets the same attention it always did.</p>
 
     <h2>What we buy and sell</h2>
     <ul>
@@ -299,68 +341,90 @@ def page_hay():
       <li>Rice straw</li>
       <li>Sudan</li>
     </ul>
-    <p>Both big and small bales. <a href="/contact">Call for a quote</a>.</p>"""
+    <p>Big bales and small bales alike.</p>
+
+    <h2>Stacking and hauling</h2>
+    <p>We run our own balewagons and retriever trucks, so roadsiding, retrieving, stacking and trucking
+       are handled in house rather than subcontracted out. Big-bale stacks go up several high; small
+       bales are stacked tall and tight for the haul.</p>
+    <p>We move on hay quickly after baling &mdash; leaving a crop sitting in the field is how quality
+       gets lost. <a href="/contact">Call for a quote</a>.</p>"""
     return simple_page("/hay", "Hay",
-                       "Where we got our start, and where we are continuing to thrive.",
+                       "Where we started, and still part of what we do.",
                        body,
-                       "Hay sales, roadsiding, retrieving, trucking and squeeze work from B. Mello Ag "
-                       "Services in Hanford, CA. Four Freeman balewagons, 10,000+ acres per cutting.",
-                       "/assets/img/sunset.jpg")
+                       "B. Mello Ag Services buys and sells alfalfa, wheat straw, rice straw and sudan, "
+                       "and handles roadsiding, retrieving, stacking and trucking in house.",
+                       "/assets/img/hay-fleet.jpg")
 
 
 def page_tractor():
-    body = """    <p>Our tractor spreaders allow us to spread dry soil amendments on everything from tight rows to
-       open fields. Vines, citrus, nuts &mdash; the compact size of these spreaders gives us great
-       versatility on where we can take them.</p>
+    body = f"""    <p>Tractor spreaders are how we get dry material into permanent crops. Trees, vines and kiwis
+       &mdash; the compact profile is the point. We can work trellis and overhead rows that other
+       spreaders have to drive around.</p>
 
-    <h2>The fleet</h2>
-    <p>Two Termite spreaders and two spreaders we built ourselves. We designed the custom units for
-       trellis and overhead vines: their small profile has let us spread where others could not drive
-       through.</p>
+    <h2>Crops</h2>
+    <p>Almonds, walnuts, pistachios, citrus, table and wine grapes, and kiwis. If it is planted in
+       rows and permanent, we have most likely spread it.</p>
 
     <h2>Application</h2>
-    <p>Banding, side discharge and broadcast of any dry material, which lets us take care of any
-       permanent crop. We specialize in walnuts, almonds, pistachios and vines.</p>
-    <p>Our experienced crews leave a clean drop site and make sure your material goes out at the
-       application rate you specify, applied the way you want it.</p>
+    <p>Banding, side discharge and broadcast of any dry material. Your material goes out at the rate
+       you specify, placed the way you want it &mdash; and our crews leave a clean drop site behind
+       them.</p>
 
-    <h2>Material</h2>
-    <p>We can also get prices on material &mdash; gypsum, limestone, sulfur and compost.
-       <a href="/contact">Call for your quote today</a>.</p>"""
+    <h2>Where we work</h2>
+    <p>{SPREAD_AREA}, throughout the Central Valley.</p>
+
+    <h2>Material too, if you want it</h2>
+    <p>We sell the <a href="/fertilizer">gypsum, limestone, sulfur, compost and dry blends</a> as well
+       as spreading them, so one quote can cover both. <a href="/contact">Call for your quote
+       today</a>.</p>"""
     return simple_page("/tractor-spreaders", "Tractor Spreaders",
-                       "You name it, we spread it.",
+                       "Trees, vines and kiwis &mdash; including the rows nothing else fits down.",
                        body,
-                       "Custom tractor spreading for vines, citrus and nuts across the Central Valley. "
-                       "Banding, side discharge and broadcast of any dry material.",
-                       "/assets/img/spreaders.jpg")
+                       "Custom tractor spreading for almonds, walnuts, pistachios, citrus, grapes and "
+                       "kiwis from Bakersfield to Madera. Banding, side discharge and broadcast of any "
+                       "dry material.",
+                       "/assets/img/spreaders-fleet.jpg")
 
 
 def page_trucks():
-    body = """    <p>Our spreader trucks allow us to tackle the largest jobs with ease. Specifically designed to
-       spread with pinpoint accuracy even with increased load capacity, these trucks are not limited to
-       open fields &mdash; they can also spread in compact areas.</p>
+    body = f"""    <p>Spreader trucks are for open ground. They carry far more material per load than a tractor rig,
+       which is what makes large acreage practical &mdash; and they place it accurately enough that
+       volume does not cost you precision.</p>
 
-    <h2>Why we added them</h2>
-    <p>Spreader trucks joined the operation in December 2014 and greatly increased our load capacity as
-       well as our time efficiency. It is the segment of our business taking us into the future.</p>
+    <h2>Where they earn their keep</h2>
+    <p>Open fields and large blocks, pre-plant ground work, and any job where the acreage or the
+       tonnage would have a tractor spreader running all week. They are not limited to wide-open
+       ground either &mdash; they can work in tighter areas when the job calls for it.</p>
 
-    <h2>Material</h2>
-    <p>Gypsum, limestone, sulfur, compost and other dry amendments. We can quote material as well as
-       application. <a href="/contact">Call for your quote today</a>.</p>"""
+    <h2>Where we work</h2>
+    <p>{SPREAD_AREA}, throughout the Central Valley.</p>
+
+    <h2>Material too, if you want it</h2>
+    <p>Gypsum, limestone, sulfur, compost and dry blends &mdash; we can
+       <a href="/fertilizer">quote the material</a> alongside the application.
+       <a href="/contact">Call for your quote today</a>.</p>"""
     return simple_page("/spreader-trucks", "Spreader Trucks",
-                       "The segment of our business taking us into the future.",
+                       "Open ground, at volume, without losing the placement.",
                        body,
-                       "High-capacity spreader trucks for the largest jobs, with pinpoint accuracy in "
-                       "open fields and compact ground alike.")
+                       "High-capacity spreader trucks for open fields and large blocks from Bakersfield "
+                       "to Madera, placing gypsum, limestone, sulfur, compost and dry blends accurately.",
+                       "/assets/img/trucks-fleet.jpg")
 
 
 def page_about():
-    body = """    <h2>Our background</h2>
-    <p>The company was established on January 1, 2005, near Hanford in California's Central Valley.
-       Initially focused on hay sales, we built the operation into a competitive enterprise. In
-       September 2009 we added tractor spreaders, enabling application of materials to vineyards,
-       orchards and fields. The business expanded again in December 2014 with the addition of spreader
-       trucks, which greatly increased our load capacity as well as time efficiency.</p>
+    body = f"""    <h2>How we got here</h2>
+    <p>The company was established on January 1, 2005 near Hanford, in California's Central Valley, on
+       hay. In September 2009 we added tractor spreaders, which opened up vineyards and orchards. In
+       December 2014 spreader trucks followed and took on the open ground.</p>
+    <p>Each of those steps moved us further toward what the business is now: <strong>plant nutrition and
+       soil health</strong>. Today fertilizer and soil amendment sales are the core of what we do, the
+       spreading work is how that material gets into the ground, and hay &mdash; still bought, sold,
+       stacked and hauled &mdash; sits behind them.</p>
+
+    <h2>Where we work</h2>
+    <p>Fertilizer and amendment sales reach {SALES_AREA}. Custom spreading covers the Central Valley,
+       {SPREAD_AREA}.</p>
 
     <h2>Bryan Mello, founder</h2>
     <p><img src="/assets/img/bryan.jpg" alt="Bryan Mello with his children in a tractor cab"
@@ -370,17 +434,19 @@ def page_about():
        conducting outside sales for Superior Soil Company.</p>
 
     <h2>What we publish</h2>
-    <p>Alongside the hay and spreading work, we put out regular reports on Central Valley field
-       conditions, rural crime, commodity and fuel markets, and the water and weather that move them.
-       They are free, and every issue is <a href="/reports">on the site</a>.</p>
-    <p style="clear:both">With over twenty years of experience in ag sales and service, we provide
-       products and services that meet or beat your expectations. Our experienced crews do the job to
-       your specifications, in a clean and timely manner.</p>"""
+    <p style="clear:both">We put out regular reports on Central Valley field conditions, rural crime,
+       commodity and fuel markets, and the water and weather that move them. They are free, they go out
+       by email, and every issue is <a href="/reports">on this site</a>. They exist because the same
+       information we use to advise a nutrition program is worth having whether or not you buy a ton
+       from us.</p>
+    <p>Over twenty years in ag sales and service. Our crews do the job to your specifications, in a
+       clean and timely manner &mdash; <a href="/contact">call us for a quote</a>.</p>"""
     return simple_page("/about", "About Us",
-                       "Hay and custom spreading out of Hanford since 2005.",
+                       "Plant nutrition and soil health, out of Hanford since 2005.",
                        body,
-                       "B. Mello Ag Services was established in 2005 near Hanford, California. "
-                       "Founder Bryan Mello grew up in Central Valley agriculture.")
+                       "B. Mello Ag Services was established in 2005 near Hanford, California, and today "
+                       "focuses on plant nutrition and soil health — fertilizer sales, custom spreading "
+                       "and hay.")
 
 
 def page_contact():
@@ -411,7 +477,7 @@ def page_contact():
   <div class="wrap">
     <div class="eyebrow">{e(BIZ)}</div>
     <h1>Contact</h1>
-    <p class="tag">Hay, spreading, material pricing &mdash; call us for a quote today.</p>
+    <p class="tag">Material pricing, custom spreading, hay &mdash; call us for a quote today.</p>
   </div>
 </header>
 <section>
@@ -421,7 +487,8 @@ def page_contact():
         <li><span class="k">Phone</span><span class="v"><a href="tel:{PHONE_TEL}">{e(PHONE_TXT)}</a></span></li>
         <li><span class="k">Email</span><span class="v"><a href="mailto:{EMAIL}">{e(EMAIL)}</a></span></li>
         <li><span class="k">Address</span><span class="v">{e(ADDRESS)}</span></li>
-        <li><span class="k">Service area</span><span class="v">California's Central Valley</span></li>
+        <li><span class="k">Spreading</span><span class="v">Central Valley, Bakersfield to Madera</span></li>
+        <li><span class="k">Fertilizer sales</span><span class="v">All of California, into the western states</span></li>
       </ul>
 {right}
     </div>
@@ -653,6 +720,7 @@ def build_site():
     items = load_catalog()
     write("index.html", page_home(items))
     write("404.html", page_404(items))
+    write("fertilizer.html", page_fertilizer())
     write("hay.html", page_hay())
     write("tractor-spreaders.html", page_tractor())
     write("spreader-trucks.html", page_trucks())
@@ -664,7 +732,11 @@ def build_site():
         write(path, content)
     write("feed.xml", feed(items))
     write("sitemap.xml", sitemap(items))
-    write("_redirects", "/monthly-newsletter  /reports  301\n/newsletter  /reports  301\n")
+    write("_redirects",
+          "/monthly-newsletter  /reports   301\n"
+          "/newsletter          /reports   301\n"
+          "/about-us            /about     301\n"
+          "/contact-us          /contact   301\n")
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     print(f"site: {len(items)} issues in catalog, static pages rebuilt")
 

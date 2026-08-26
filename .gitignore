@@ -20,3 +20,11 @@ B Mello Logo.jpg
 _site-build.tar.gz
 .DS_Store
 Thumbs.db
+
+# Saved copies of the old GoDaddy pages (and the ~150 GoDaddy JS files that came
+# with them). Kept on disk as a photo source; never part of the website.
+Old website photos/
+
+# Photo drop-box and loose saves off the old site — working files, not the website.
+assets/img/new/
+rs=w_*
