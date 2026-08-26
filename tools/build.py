@@ -41,7 +41,7 @@ SERIES = {
 }
 SERIES_ORDER = ["field-report", "ag-crime", "economic-update", "energy", "fishing", "special", "holiday"]
 
-NAV = [("/", "Home"), ("/fertilizer", "Fertilizer"),
+NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Spreader Trucks"),
        ("/hay", "Hay"), ("/reports", "Reports"),
        ("/about", "About"), ("/contact", "Contact")]
@@ -100,13 +100,20 @@ def masthead(current):
         for h, t in NAV)
     return f"""<header class="masthead">
   <div class="wrap">
-    <a class="brand" href="/"><img src="/assets/logo.png" alt="{e(BIZ)}" width="148"></a>
-    <nav class="mainnav" aria-label="Main">
-      {links}
+    <a class="brand" href="/">
+      <img src="/assets/logo.png" alt="{e(BIZ)}" width="475" height="243">
+    </a>
+    <div class="mast-right">
+      <span class="mast-tag">Targeted plant nutrition<br>Soil health &middot; Custom spreading</span>
       <a class="callbtn" href="tel:{PHONE_TEL}">{e(PHONE_TXT)}</a>
-    </nav>
+    </div>
   </div>
 </header>
+<nav class="navbar" aria-label="Main">
+  <div class="wrap">
+    {links}
+  </div>
+</nav>
 """
 
 
@@ -208,9 +215,10 @@ def page_home(items):
   <img class="hero-img" src="/assets/img/spreaders.jpg" alt="" aria-hidden="true">
   <div class="wrap">
     <div class="eyebrow">Hanford, California &middot; Since 2005</div>
-    <h1>Plant nutrition, sold and spread.</h1>
-    <p>Fertilizer and soil amendments across California and into the western states &mdash; and the
-       spreaders to put them down right, from Bakersfield to Madera.</p>
+    <h1>Targeted plant nutrition, sold and spread.</h1>
+    <p>It starts with GPS-guided soil sampling and ends with material on the ground at the rate your
+       blocks actually call for. Fertilizer sales across California and into the western states;
+       spreading from Bakersfield to Madera.</p>
     <div class="actions">
       <a class="btn btn-gold" href="/contact">Get a quote</a>
       <a class="btn btn-ghost" href="/reports">Read the reports</a>
@@ -222,22 +230,22 @@ def page_home(items):
   <div class="wrap">
     <div class="sechead"><h2>What we do</h2></div>
     <div class="svc">
-      <a href="/fertilizer">
-        <h3>Fertilizer &amp; Amendments</h3>
-        <p>Plant nutrition and soil health &mdash; the material itself, priced and sourced across
-           California and into the western states.</p>
-        <span class="more">See fertilizer sales &rarr;</span>
+      <a href="/plant-nutrition">
+        <h3>Targeted Plant Nutrition</h3>
+        <p>GPS-guided soil sampling, a customized plan for your blocks, and the fertilizer and
+           amendments to carry it out.</p>
+        <span class="more">See the program &rarr;</span>
       </a>
       <a href="/tractor-spreaders">
         <h3>Tractor Spreaders</h3>
-        <p>Trees, vines and kiwis. A profile small enough for trellis and overhead rows others
-           can't drive through.</p>
+        <p>Almonds, pistachios, citrus, walnuts, fruit trees, pomegranates, vines and kiwis
+           &mdash; including rows others can't drive through.</p>
         <span class="more">See tractor spreading &rarr;</span>
       </a>
       <a href="/spreader-trucks">
         <h3>Spreader Trucks</h3>
-        <p>Open ground at volume, with the accuracy to place material where you want it and
-           nowhere you don't.</p>
+        <p>Open ground broadcast, pre-plant rows and woodchip spreading &mdash; at volume,
+           without losing the placement.</p>
         <span class="more">See spreader trucks &rarr;</span>
       </a>
       <a href="/hay">
@@ -255,7 +263,23 @@ def page_home(items):
 {latest_cards(items)}
 
 <section>
-  <div class="wrap prose">
+  <div class="wrap">
+    <div class="sechead"><h2>How the program works</h2></div>
+    <p style="color:var(--ink-soft);max-width:66ch;margin:0">Blanket-rating a whole ranch treats good
+       ground and short ground the same way. Ours doesn't.</p>
+    <ol class="program">
+      <li><div class="body"><h3>GPS-guided soil sampling</h3>
+        <p>Sampled on a grid and mapped, so the variability inside a block shows up instead of being
+           averaged away.</p></div></li>
+      <li><div class="body"><h3>A customized plan</h3>
+        <p>Targeted plant nutrition and soil health, written against what your ground came back
+           short of &mdash; block by block, not ranch-wide.</p></div></li>
+      <li><div class="body"><h3>Application</h3>
+        <p>Tractor spreaders in permanent crops, spreader trucks on open ground, at the rate the
+           plan calls for.</p></div></li>
+    </ol>
+
+    <div class="prose" style="margin-top:52px">
     <div class="sechead"><h2>One call covers the material and the application</h2></div>
     <p>Most growers have to buy the product from one company and find somebody else to put it out.
        We do both. That means the rate you specify is the rate that actually reaches the ground, and
@@ -264,6 +288,7 @@ def page_home(items):
        spreader trucks followed in 2014 and took on the open ground. Along the way the center of the
        business moved to where it is now &mdash; plant nutrition and soil health.</p>
     <p><a href="/about">More about the company and Bryan Mello &rarr;</a></p>
+    </div>
   </div>
 </section>
 
@@ -291,10 +316,24 @@ def simple_page(slug, title, tag, body_html, desc, strip=None):
 """ + footer()
 
 
-def page_fertilizer():
-    body = f"""    <p>The center of our business is plant nutrition and soil health. We sell the dry fertilizers and
-       soil amendments that feed a crop and correct the ground it grows in &mdash; and across the
-       Central Valley we put them out ourselves.</p>
+def page_nutrition():
+    body = f"""    <p>Targeted plant nutrition is the core of what we do. Not a blanket rate across a whole ranch
+       &mdash; a program built from what your ground actually came back short of, block by block, and
+       then carried out with our own equipment.</p>
+
+    <h2>The program</h2>
+    <ol class="program">
+      <li><div class="body"><h3>GPS-guided soil sampling</h3>
+        <p>Samples pulled on a mapped grid rather than a handful of spots. Good ground and short
+           ground stop cancelling each other out in the average.</p></div></li>
+      <li><div class="body"><h3>A customized plan</h3>
+        <p>A written program for targeted plant nutrition and soil health, matched to the crop, the
+           stage and what the sampling found.</p></div></li>
+      <li><div class="body"><h3>Application</h3>
+        <p><a href="/tractor-spreaders">Tractor spreaders</a> in permanent crops,
+           <a href="/spreader-trucks">spreader trucks</a> on open ground, at the rate the plan
+           calls for.</p></div></li>
+    </ol>
 
     <h2>What we sell</h2>
     <ul>
@@ -310,22 +349,22 @@ def page_fertilizer():
 
     <h2>Where we sell</h2>
     <p>Fertilizer and amendment sales cover {SALES_AREA}. Custom application runs through the Central
-       Valley, {SPREAD_AREA} &mdash; <a href="/tractor-spreaders">tractor spreaders</a> in trees, vines
-       and kiwis, <a href="/spreader-trucks">spreader trucks</a> on open ground.</p>
+       Valley, {SPREAD_AREA}.</p>
 
     <h2>Start with the soil, not the invoice</h2>
-    <p>The cheapest ton of material is the one you did not need. Soil and water testing shows what the
-       ground gave up last season and what it is short of now &mdash; the difference between a program
-       and a guess. We can arrange sampling and go through the results with you.</p>
+    <p>The most expensive ton of material is the one you did not need. Soil and water testing shows
+       what the ground gave up last season and what it is short of now &mdash; the difference between
+       a program and a guess.</p>
     <p>The same thinking runs through our <a href="/reports">Field Report</a> every month: crop stage,
        what should be going on the ground, and what materials are doing in the market.</p>
     <p><a href="/contact">Call for a quote today</a>.</p>"""
-    return simple_page("/fertilizer", "Fertilizer & Soil Amendments",
-                       "Plant nutrition and soil health &mdash; the material, priced and delivered.",
+    return simple_page("/plant-nutrition", "Targeted Plant Nutrition",
+                       "GPS-guided soil sampling, a plan built for your blocks, and the material to "
+                       "carry it out.",
                        body,
-                       "Fertilizer and soil amendment sales across California and into the western "
-                       "states — gypsum, limestone, sulfur, compost, dry blends and biologicals, with "
-                       "custom application throughout the Central Valley.",
+                       "Targeted plant nutrition and soil health from B. Mello Ag Services: GPS-guided "
+                       "soil sampling, a customized program, and fertilizer and soil amendment sales "
+                       "across California and into the western states.",
                        "/assets/img/spreaders.jpg")
 
 
@@ -363,8 +402,11 @@ def page_tractor():
        spreaders have to drive around.</p>
 
     <h2>Crops</h2>
-    <p>Almonds, walnuts, pistachios, citrus, table and wine grapes, and kiwis. If it is planted in
-       rows and permanent, we have most likely spread it.</p>
+    <p>Including but not limited to:</p>
+    <ul class="taglist">
+      <li>Almonds</li><li>Pistachios</li><li>Citrus</li><li>Walnuts</li>
+      <li>Fruit trees</li><li>Pomegranates</li><li>Vines</li><li>Kiwis</li>
+    </ul>
 
     <h2>Application</h2>
     <p>Banding, side discharge and broadcast of any dry material. Your material goes out at the rate
@@ -375,7 +417,7 @@ def page_tractor():
     <p>{SPREAD_AREA}, throughout the Central Valley.</p>
 
     <h2>Material too, if you want it</h2>
-    <p>We sell the <a href="/fertilizer">gypsum, limestone, sulfur, compost and dry blends</a> as well
+    <p>We sell the <a href="/plant-nutrition">gypsum, limestone, sulfur, compost and dry blends</a> as well
        as spreading them, so one quote can cover both. <a href="/contact">Call for your quote
        today</a>.</p>"""
     return simple_page("/tractor-spreaders", "Tractor Spreaders",
@@ -392,17 +434,20 @@ def page_trucks():
        which is what makes large acreage practical &mdash; and they place it accurately enough that
        volume does not cost you precision.</p>
 
-    <h2>Where they earn their keep</h2>
-    <p>Open fields and large blocks, pre-plant ground work, and any job where the acreage or the
-       tonnage would have a tractor spreader running all week. They are not limited to wide-open
-       ground either &mdash; they can work in tighter areas when the job calls for it.</p>
+    <h2>What they do</h2>
+    <ul class="taglist">
+      <li>Open ground broadcast</li><li>Pre-plant rows</li><li>Woodchip spreading</li>
+    </ul>
+    <p style="margin-top:16px">Any job where the acreage or the tonnage would have a tractor spreader
+       running all week. They are not limited to wide-open ground either &mdash; they can work tighter
+       areas when the job calls for it.</p>
 
     <h2>Where we work</h2>
     <p>{SPREAD_AREA}, throughout the Central Valley.</p>
 
     <h2>Material too, if you want it</h2>
     <p>Gypsum, limestone, sulfur, compost and dry blends &mdash; we can
-       <a href="/fertilizer">quote the material</a> alongside the application.
+       <a href="/plant-nutrition">quote the material</a> alongside the application.
        <a href="/contact">Call for your quote today</a>.</p>"""
     return simple_page("/spreader-trucks", "Spreader Trucks",
                        "Open ground, at volume, without losing the placement.",
@@ -720,7 +765,7 @@ def build_site():
     items = load_catalog()
     write("index.html", page_home(items))
     write("404.html", page_404(items))
-    write("fertilizer.html", page_fertilizer())
+    write("plant-nutrition.html", page_nutrition())
     write("hay.html", page_hay())
     write("tractor-spreaders.html", page_tractor())
     write("spreader-trucks.html", page_trucks())
@@ -733,10 +778,11 @@ def build_site():
     write("feed.xml", feed(items))
     write("sitemap.xml", sitemap(items))
     write("_redirects",
-          "/monthly-newsletter  /reports   301\n"
-          "/newsletter          /reports   301\n"
-          "/about-us            /about     301\n"
-          "/contact-us          /contact   301\n")
+          "/monthly-newsletter  /reports           301\n"
+          "/newsletter          /reports           301\n"
+          "/about-us            /about             301\n"
+          "/contact-us          /contact           301\n"
+          "/fertilizer          /plant-nutrition   301\n")
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
     print(f"site: {len(items)} issues in catalog, static pages rebuilt")
 

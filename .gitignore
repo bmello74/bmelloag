@@ -28,3 +28,6 @@ Old website photos/
 # Photo drop-box and loose saves off the old site — working files, not the website.
 assets/img/new/
 rs=w_*
+
+# Files staged for Bryan to delete (this session cannot delete on his machine).
+_to_delete/
