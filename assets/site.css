@@ -306,3 +306,27 @@ section.signup { padding:0; }
   margin:26px auto 30px; border:1px solid var(--hairline); }
 .pagehead .meta-line { font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:12px;
   color:var(--ink-soft); margin:10px 0 0; }
+
+/* ---------- topic tags ----------
+   The visible index of what a report covers. On an issue page it sits under the
+   dek; on a title's landing page it is the full coverage record. Both exist so
+   the words a reader searches for are on the page, not only in a meta tag. */
+.intopics {
+  margin:14px 0 0; max-width:78ch;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:12px; line-height:1.85; color:var(--ink-soft);
+}
+.intopics span {
+  display:inline-block; margin-right:9px; padding:2px 8px; border-radius:3px;
+  background:var(--gold-wash); border:1px solid var(--hairline);
+  color:var(--gold); font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  font-size:10.5px;
+}
+.taglist { display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 4px; max-width:88ch; }
+.tg {
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:12px; line-height:1;
+  padding:7px 11px; border-radius:99px; color:var(--ink-soft);
+  background:var(--surface); border:1px solid var(--hairline);
+}
+.prose .tagnote { font-size:14px; color:var(--ink-soft); margin:6px 0 0; }
+.prose h3 { font-size:17px; font-weight:800; letter-spacing:-.01em; margin:30px 0 0; }
