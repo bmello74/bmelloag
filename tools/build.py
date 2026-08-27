@@ -231,22 +231,23 @@ line-height:1.6;color:#16150F;background:#FBF9F3}}a{{color:#A8860A}}</style>
 
 # ---------------------------------------------------------------- static pages
 
-def latest_cards(items, n=4):
-    seen, picked = set(), []
-    for i in items:
-        if i["series"] in seen:
+def latest_cards(items, n=None):
+    # One card per report title, in business order (Field Report first), each
+    # showing that title's newest issue. Holiday greetings are not a report.
+    picked = []
+    for k in SERIES_ORDER:
+        if k == "holiday":
             continue
-        seen.add(i["series"])
-        picked.append(i)
-        if len(picked) == n:
-            break
+        sub = [i for i in items if i["series"] == k]
+        if sub:
+            picked.append(sub[0])
     cards = "".join(
-        f'''<a class="rcard" href="/{i["path"].replace("reports/", "reports/").removesuffix(".html")}">
+        f'''<a class="rcard" href="/{i["path"].removesuffix(".html")}">
       <div class="t">{e(SERIES[i["series"]]["label"])}</div>
       <div class="h">{e(i["headline"])}</div>
       <div class="d">{e(i["date_display"])} {i["date"][:4]}</div>
     </a>''' for i in picked)
-    return f"""<section class="band">
+    return f'''<section class="band">
   <div class="wrap">
     <div class="sechead">
       <span class="eyebrow">Latest reports</span>
@@ -255,7 +256,7 @@ def latest_cards(items, n=4):
     <div class="rcards">{cards}</div>
   </div>
 </section>
-"""
+'''
 
 
 def page_home(items):
@@ -390,16 +391,21 @@ def page_nutrition():
     </ol>
 
     <h2>What we sell</h2>
+    <p><strong>Blends are the centerpiece.</strong> Because the program starts with sampling your own
+       ground instead of a catalog, the blend gets mixed for what your soil is actually short of. You
+       are not paying for nutrients that are already there, and you are not guessing.</p>
+    <p>The products we move the most:</p>
     <ul>
+      <li>Custom dry blends</li>
       <li>Gypsum</li>
       <li>Limestone</li>
       <li>Sulfur</li>
       <li>Compost</li>
-      <li>Dry fertilizers and blends</li>
       <li>Biological and humic products</li>
     </ul>
-    <p>If you are pricing a program, call us. We source material and quote it against what your ground
-       actually needs.</p>
+    <p>That is a short list. We carry a full range of <strong>dry soil amendments</strong> and
+       <strong>solution grade</strong> products besides. If you need it, we probably sell it &mdash;
+       and at a better price than our closest competitor. <a href="/contact">Call and ask</a>.</p>
 
     <h2>Where we sell</h2>
     <p>Fertilizer and amendment sales cover {SALES_AREA}. Custom application runs through the Central
