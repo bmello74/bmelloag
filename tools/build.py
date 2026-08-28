@@ -411,6 +411,7 @@ def ld_org():
             "gypsum", "agricultural limestone", "elemental sulfur", "compost",
             "humic and biological products", "solution grade fertilizer",
             "orchard fertilizer spreading", "vineyard fertilizer spreading",
+            "tomato bed fertilizer spreading",
             "woodchip spreading", "pre-plant fertilizer application",
             "hay sales", "hay hauling and stacking",
         ],
@@ -423,7 +424,7 @@ def ld_org():
                 "@type": "Service", "name": "Tractor spreader application",
                 "description": "Custom fertilizer and amendment spreading in almonds, "
                                "pistachios, walnuts, citrus, fruit trees, pomegranates, "
-                               "vines and kiwis."}},
+                               "vines, kiwis and tomato beds, and other crops on request."}},
             {"@type": "Offer", "itemOffered": {
                 "@type": "Service", "name": "Spreader truck application",
                 "description": "Open ground broadcast, pre-plant rows and woodchip "
@@ -506,7 +507,10 @@ def strip_media(src, alt):
     if not src:
         return ""
     if src.endswith(".mp4"):
-        poster = src[:-4] + ".jpg"
+        # A separate poster that matches the clip's opening frame. Using the page's
+        # share image instead would make the band visibly jump the moment playback
+        # starts, because that still is picked from the strongest moment, not the first.
+        poster = src[:-4] + "-poster.jpg"
         return (f'<video class="strip" muted loop playsinline preload="none" '
                 f'poster="{poster}" aria-label="{e(alt)}">'
                 f'<source src="{src}" type="video/mp4">'
@@ -712,8 +716,8 @@ def page_home(items):
       </a>
       <a href="/tractor-spreaders">
         <h3>Tractor Spreaders</h3>
-        <p>Almonds, pistachios, citrus, walnuts, fruit trees, pomegranates, vines and kiwis
-           &mdash; including rows others can't drive through.</p>
+        <p>Almonds, pistachios, citrus, walnuts, fruit trees, pomegranates, vines, kiwis and
+           tomato beds &mdash; and we are not limited to those.</p>
         <span class="more">See tractor spreading &rarr;</span>
       </a>
       <a href="/spreader-trucks">
@@ -864,9 +868,12 @@ def page_nutrition():
        Kern, Tulare, Kings, Fresno and Madera counties.</p>
 
     <h3>What crops do you work in?</h3>
-    <p>Almonds, pistachios, walnuts, citrus, fruit trees, pomegranates, table and wine grapes, and
-       kiwis with the <a href="/tractor-spreaders">tractor spreaders</a>. Open ground, pre-plant rows
-       and woodchip spreading with the <a href="/spreader-trucks">spreader trucks</a>.</p>
+    <p>Almonds, pistachios, walnuts, citrus, fruit trees, pomegranates, table and wine grapes,
+       kiwis and tomato beds with the <a href="/tractor-spreaders">tractor spreaders</a>. Open
+       ground, pre-plant rows and woodchip spreading with the
+       <a href="/spreader-trucks">spreader trucks</a>. That is where we spend most of our hours,
+       not the limit of what we will take on &mdash; if you need it spread, call and we will work
+       out how.</p>
 
     <h3>How do I get a quote?</h3>
     <p>Call {PHONE_TXT} or <a href="/contact">send us the block details</a>. Bring your most recent
@@ -942,16 +949,20 @@ def page_hay():
 
 
 def page_tractor():
-    body = f"""    <p>Tractor spreaders are how we get dry material into permanent crops. Trees, vines and kiwis
-       &mdash; the compact profile is the point. We can work trellis and overhead rows that other
-       spreaders have to drive around.</p>
+    body = f"""    <p>Tractor spreaders are how we get dry material into standing crops. Trees, vines, kiwis and
+       tomato beds &mdash; the compact profile is the point. We can work trellis and overhead rows,
+       and bed ground, that other spreaders have to drive around.</p>
 
     <h2>Crops</h2>
-    <p>Including but not limited to:</p>
+    <p>Where the tractor spreaders go most often:</p>
     <ul class="taglist">
       <li>Almonds</li><li>Pistachios</li><li>Citrus</li><li>Walnuts</li>
       <li>Fruit trees</li><li>Pomegranates</li><li>Vines</li><li>Kiwis</li>
+      <li>Tomato beds</li>
     </ul>
+    <p>That is where we spend most of our hours, not a list of what we are willing to do.
+       <strong>We are not limited to these crops.</strong> If you need it spread, call us and we
+       will work out how to get it done.</p>
 
     <h2>Application</h2>
     <p>Banding, side discharge and broadcast of any dry material. Your material goes out at the rate
@@ -966,14 +977,15 @@ def page_tractor():
        as spreading them, so one quote can cover both. <a href="/contact">Call for your quote
        today</a>.</p>"""
     return simple_page("/tractor-spreaders", "Tractor Spreaders",
-                       "Trees, vines and kiwis &mdash; including the rows nothing else fits down.",
+                       "Trees, vines, kiwis and tomato beds &mdash; including the rows nothing "
+                       "else fits down.",
                        body,
-                       "Custom orchard and vineyard fertilizer spreading in almonds, walnuts, "
-                       "pistachios, citrus, pomegranates, grapes and kiwis, from Bakersfield "
-                       "to Madera.",
+                       "Custom spreading in almonds, walnuts, pistachios, citrus, pomegranates, "
+                       "grapes, kiwis and tomato beds, Bakersfield to Madera. Not limited to "
+                       "these crops.",
                        "/assets/img/tractor-loading.mp4",
-                       strip_alt="A loader charging a B. Mello tractor spreader alongside a "
-                                 "young orchard planting",
+                       strip_alt="A wheel loader carrying a bucket of material to a B. Mello "
+                                 "tractor spreader and dumping it in, beside a young orchard",
                        seo_title="Orchard & Vineyard Fertilizer Spreading — Central Valley",
                        image=SITE + "/assets/img/tractor-loading.jpg",
                        extra_ld=[{
@@ -987,7 +999,8 @@ def page_tractor():
                                                   "(Bakersfield to Madera)"},
                            "description": ("Custom spreading of dry fertilizer and soil amendments "
                                            "in almonds, pistachios, walnuts, citrus, fruit trees, "
-                                           "pomegranates, vines and kiwis, including narrow rows."),
+                                           "pomegranates, vines, kiwis and tomato beds, including "
+                                           "narrow rows. Not limited to these crops."),
                        }])
 
 
@@ -1018,8 +1031,8 @@ def page_trucks():
                        "Bakersfield to Madera. Gypsum, limestone, sulfur, compost and custom dry "
                        "blends placed at rate.",
                        "/assets/img/trucks-spreading.mp4",
-                       strip_alt="Two B. Mello spreader trucks broadcasting material across "
-                                 "open ground",
+                       strip_alt="Two B. Mello spreader trucks working open ground, the second "
+                                 "pulling away and starting to spread",
                        seo_title="Custom Fertilizer Spreading Trucks — Open Ground & Pre-Plant",
                        image=SITE + "/assets/img/trucks-spreading.jpg",
                        extra_ld=[{
