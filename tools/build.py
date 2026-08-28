@@ -459,10 +459,18 @@ def ld_crumbs(trail):
 
 
 def head(title, desc, path, extra_css="", extra_head="", image=None,
-         og_type="website", ld=None, lastmod=None):
+         og_type="website", ld=None, lastmod=None, image_size=None, image_alt=None):
     canon = SITE + path
     img = image or DEFAULT_OG
     blocks = ld_json(*(ld or []))
+    # Facebook and LinkedIn render the big card immediately when they are told the
+    # dimensions up front, instead of waiting until they have fetched the file.
+    dims = ""
+    if image_size:
+        dims = (f'<meta property="og:image:width" content="{image_size[0]}">\n'
+                f'<meta property="og:image:height" content="{image_size[1]}">\n')
+    if image_alt:
+        dims += f'<meta property="og:image:alt" content="{e(image_alt)}">\n'
     published = (f'<meta property="article:published_time" content="{lastmod}">\n'
                  if lastmod and og_type == "article" else "")
     return f'''<!doctype html>
@@ -483,7 +491,7 @@ def head(title, desc, path, extra_css="", extra_head="", image=None,
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{e(canon)}">
 <meta property="og:image" content="{e(img)}">
-<meta property="og:locale" content="en_US">
+{dims}<meta property="og:locale" content="en_US">
 {published}<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{e(title)}">
 <meta name="twitter:description" content="{e(desc)}">
@@ -684,7 +692,10 @@ def page_home(items):
              "Custom fertilizer blends, gypsum, lime, sulfur and compost sold across "
              "California, with GPS-guided soil sampling and custom spreading from "
              "Bakersfield to Madera.",
-             "/", image=SITE + "/assets/img/hero.jpg",
+             "/", image=SITE + "/assets/img/social-card.jpg",
+             image_size=(1200, 630),
+             image_alt="B. Mello Ag Services - ag information at your fingertips. "
+                       "News, field reports and market updates at bmelloag.com.",
              lastmod=items[0]["date"] if items else None,
              ld=[ld_org(), ld_website(), ld_crumbs([("Home", "/")])])
     return h + masthead("/") + f"""

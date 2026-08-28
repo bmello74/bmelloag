@@ -35,3 +35,7 @@ _to_delete/
 # Source video and stills from the camera — working originals, some over GitHub's
 # 100MB file limit. Only the processed web copies in assets/img/ ever ship.
 Equipment videos and pictures/
+
+# Ready-to-post social graphics — kept here for convenience, not part of the site.
+# (the one file the site itself needs is assets/img/social-card.jpg)
+Social media graphics/

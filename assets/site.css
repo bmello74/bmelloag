@@ -331,3 +331,26 @@ section.signup { padding:0; }
 }
 .prose .tagnote { font-size:14px; color:var(--ink-soft); margin:6px 0 0; }
 .prose h3 { font-size:17px; font-weight:800; letter-spacing:-.01em; margin:30px 0 0; }
+
+/* ---------- phones ----------
+   The header used to stack the logo, then a gap, then the phone button, and the
+   nav wrapped onto three ragged lines — together they ate the top third of the
+   screen before a visitor saw anything. Logo and phone number now share one
+   line, and the nav is a single swipeable row with a fade at the right edge to
+   show there is more of it. */
+@media (max-width:620px) {
+  .masthead .wrap { flex-wrap:nowrap; gap:12px; padding-top:12px; padding-bottom:12px; }
+  .brand img { width:min(46vw,190px); }
+  .mast-right { gap:10px; flex-wrap:nowrap; }
+  .callbtn { font-size:12.5px; padding:10px 12px; }
+
+  .navbar { position:relative; }
+  .navbar .wrap { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+    -webkit-overflow-scrolling:touch; padding-right:36px; gap:18px; }
+  .navbar .wrap::-webkit-scrollbar { display:none; }
+  .navbar a { white-space:nowrap; }
+  .navbar::after { content:""; position:absolute; inset:0 0 0 auto; width:36px;
+    background:linear-gradient(90deg, rgba(11,11,8,0), #0B0B08 78%); pointer-events:none; }
+
+  .hero .wrap { padding-top:38px; padding-bottom:38px; }
+}
