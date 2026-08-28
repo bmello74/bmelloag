@@ -595,7 +595,7 @@ def footer():
     <div>
       <h4>Reports</h4>
       <a href="/reports">All issues</a>
-      <a href="/feed.xml">RSS feed</a>
+      <a href="{MAILCHIMP_SIGNUP_URL}">Subscribe free</a>
     </div>
     <p class="theme">{THEME_AMERICAN}</p>
     <p class="fine">Copyright &copy; {year} {e(BIZ)} &mdash; All rights reserved.
