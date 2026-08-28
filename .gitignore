@@ -31,3 +31,7 @@ rs=w_*
 
 # Files staged for Bryan to delete (this session cannot delete on his machine).
 _to_delete/
+
+# Source video and stills from the camera — working originals, some over GitHub's
+# 100MB file limit. Only the processed web copies in assets/img/ ever ship.
+Equipment videos and pictures/

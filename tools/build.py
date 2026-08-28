@@ -353,7 +353,7 @@ def taglist(names):
 
 ORG_ID = SITE + "/#organization"
 SITE_ID = SITE + "/#website"
-DEFAULT_OG = SITE + "/assets/img/spreaders.jpg"
+DEFAULT_OG = SITE + "/assets/img/hero.jpg"
 
 
 def ld_json(*objs):
@@ -498,6 +498,23 @@ def head(title, desc, path, extra_css="", extra_head="", image=None,
 '''
 
 
+def strip_media(src, alt):
+    """A page's banner band. Give it an .mp4 and it becomes a silent looping clip
+    with the matching .jpg as the poster, so the band still reads as a photograph
+    before the video arrives - and stays a photograph for anyone who has asked
+    for reduced motion, or whose browser blocks autoplay."""
+    if not src:
+        return ""
+    if src.endswith(".mp4"):
+        poster = src[:-4] + ".jpg"
+        return (f'<video class="strip" muted loop playsinline preload="none" '
+                f'poster="{poster}" aria-label="{e(alt)}">'
+                f'<source src="{src}" type="video/mp4">'
+                f'<img class="strip" src="{poster}" alt="{e(alt)}">'
+                f'</video>')
+    return f'<img class="strip" src="{src}" alt="{e(alt)}" loading="lazy">'
+
+
 def masthead(current):
     cur = ' aria-current="page"'
     links = "".join(
@@ -542,6 +559,19 @@ def signup_band():
 """
 
 
+STRIP_JS = (
+    '<script>(function(){'
+    'var v=document.querySelectorAll("video.strip");if(!v.length)return;'
+    'if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;'
+    'if(!("IntersectionObserver" in window))return;'
+    'var o=new IntersectionObserver(function(es){es.forEach(function(x){'
+    'if(x.isIntersecting){x.target.preload="auto";var q=x.target.play();'
+    'if(q&&q.catch){q.catch(function(){});}}else{x.target.pause();}'
+    '});},{rootMargin:"250px"});'
+    'Array.prototype.forEach.call(v,function(el){o.observe(el);});'
+    '})();</script>\n')
+
+
 def footer():
     cols = "".join(
         f'<a href="{h}">{e(t)}</a>' for h, t in NAV if h != "/")
@@ -569,7 +599,7 @@ def footer():
       and hay &mdash; out of Hanford, California.</p>
   </div>
 </footer>
-</body>
+""" + STRIP_JS + """</body>
 </html>
 """
 
@@ -650,12 +680,13 @@ def page_home(items):
              "Custom fertilizer blends, gypsum, lime, sulfur and compost sold across "
              "California, with GPS-guided soil sampling and custom spreading from "
              "Bakersfield to Madera.",
-             "/", image=SITE + "/assets/img/spreaders.jpg",
+             "/", image=SITE + "/assets/img/hero.jpg",
              lastmod=items[0]["date"] if items else None,
              ld=[ld_org(), ld_website(), ld_crumbs([("Home", "/")])])
     return h + masthead("/") + f"""
 <section class="hero">
-  <img class="hero-img" src="/assets/img/spreaders.jpg" alt="" aria-hidden="true">
+  <img class="hero-img" src="/assets/img/hero.jpg" alt="" aria-hidden="true"
+       width="1920" height="1080" fetchpriority="high">
   <div class="wrap">
     <div class="eyebrow">Hanford, California &middot; Since 2005</div>
     <h1>Targeted plant nutrition, sold and spread.</h1>
@@ -701,7 +732,8 @@ def page_home(items):
   </div>
 </section>
 
-<img class="strip" src="/assets/img/sunset.jpg" alt="Central Valley field at sunset">
+<img class="strip" src="/assets/img/woodchips.jpg" loading="lazy"
+     alt="A B. Mello spreader truck laying woodchips across an open field">
 
 {latest_cards(items)}
 
@@ -740,12 +772,12 @@ def page_home(items):
 
 
 def simple_page(slug, title, tag, body_html, desc, strip=None,
-                seo_title=None, image=None, extra_ld=None):
+                seo_title=None, image=None, extra_ld=None, strip_alt=None):
     crumbs = ld_crumbs([('Home', '/'), (title, slug)])
     blocks = [ld_org(), crumbs] + (extra_ld or [])
     h = head(seo_title or f"{title} — {BIZ}", desc, slug,
              image=image, ld=blocks)
-    strip_html = f'<img class="strip" src="{strip}" alt="">' if strip else ""
+    strip_html = strip_media(strip, strip_alt or title)
     return h + masthead(slug) + f"""
 <header class="pagehead">
   <div class="wrap">
@@ -869,9 +901,11 @@ def page_nutrition():
                        "Custom fertilizer blends, gypsum, lime, sulfur, compost and solution grade "
                        "products, plus GPS-guided soil sampling. Sold across California and into the "
                        "western states.",
-                       "/assets/img/spreaders.jpg",
+                       "/assets/img/tractor-trees.mp4",
+                       strip_alt="A B. Mello tractor spreader placing material down a "
+                                 "walnut row",
                        seo_title="Soil Amendments, Custom Blends & Soil Sampling — California",
-                       image=SITE + "/assets/img/spreaders.jpg",
+                       image=SITE + "/assets/img/tractor-trees.jpg",
                        extra_ld=[svc])
 
 
@@ -902,6 +936,7 @@ def page_hay():
                        "Central Valley, with roadsiding, retrieving, stacking and trucking handled "
                        "in house.",
                        "/assets/img/hay-fleet.jpg",
+                       strip_alt="B. Mello balewagons stacking hay",
                        seo_title="Hay Sales, Stacking & Hauling — Central Valley California",
                        image=SITE + "/assets/img/hay-fleet.jpg")
 
@@ -936,9 +971,11 @@ def page_tractor():
                        "Custom orchard and vineyard fertilizer spreading in almonds, walnuts, "
                        "pistachios, citrus, pomegranates, grapes and kiwis, from Bakersfield "
                        "to Madera.",
-                       "/assets/img/spreaders-fleet.jpg",
+                       "/assets/img/tractor-loading.mp4",
+                       strip_alt="A loader charging a B. Mello tractor spreader alongside a "
+                                 "young orchard planting",
                        seo_title="Orchard & Vineyard Fertilizer Spreading — Central Valley",
-                       image=SITE + "/assets/img/spreaders-fleet.jpg",
+                       image=SITE + "/assets/img/tractor-loading.jpg",
                        extra_ld=[{
                            "@context": "https://schema.org", "@type": "Service",
                            "name": "Tractor spreader application",
@@ -980,9 +1017,11 @@ def page_trucks():
                        "Open ground broadcast, pre-plant rows and woodchip spreading from "
                        "Bakersfield to Madera. Gypsum, limestone, sulfur, compost and custom dry "
                        "blends placed at rate.",
-                       "/assets/img/trucks-fleet.jpg",
+                       "/assets/img/trucks-spreading.mp4",
+                       strip_alt="Two B. Mello spreader trucks broadcasting material across "
+                                 "open ground",
                        seo_title="Custom Fertilizer Spreading Trucks — Open Ground & Pre-Plant",
-                       image=SITE + "/assets/img/trucks-fleet.jpg",
+                       image=SITE + "/assets/img/trucks-spreading.jpg",
                        extra_ld=[{
                            "@context": "https://schema.org", "@type": "Service",
                            "name": "Spreader truck application",

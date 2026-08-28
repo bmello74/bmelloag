@@ -73,9 +73,9 @@ a:focus-visible { outline:2px solid var(--gold-lit); outline-offset:3px; border-
 
 /* ---------- hero ---------- */
 .hero { position:relative; background:var(--band); color:var(--band-ink); overflow:hidden; }
-.hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.62; }
+.hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.85; }
 .hero::after { content:""; position:absolute; inset:0;
-  background:linear-gradient(78deg, rgba(11,11,8,.93) 26%, rgba(11,11,8,.38) 100%); }
+  background:linear-gradient(78deg, rgba(11,11,8,.92) 22%, rgba(11,11,8,.20) 100%); }
 .hero .wrap { position:relative; z-index:1; padding-top:64px; padding-bottom:58px; }
 .hero .eyebrow { color:var(--gold-lit); }
 .hero h1 { font-size:clamp(34px,6vw,58px); font-weight:800; letter-spacing:-.028em;
@@ -127,7 +127,8 @@ section.tight { padding:38px 0; }
 .prose li { margin:8px 0; }
 .prose li::marker { color:var(--gold); }
 
-.strip { width:100%; height:clamp(150px,26vw,290px); object-fit:cover; display:block; }
+.strip { width:100%; height:clamp(150px,26vw,290px); object-fit:cover; display:block;
+  background:var(--band); }
 
 /* ---------- latest reports (home) ---------- */
 .rcards { display:grid; grid-template-columns:repeat(auto-fit,minmax(292px,1fr)); gap:12px; }
