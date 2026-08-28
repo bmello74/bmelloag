@@ -354,3 +354,38 @@ section.signup { padding:0; }
 
   .hero .wrap { padding-top:38px; padding-bottom:38px; }
 }
+
+/* ---------- Bryan on the About page ----------
+   The headshot is the square portrait from the newsletters, which the emails run
+   at 92–108px. Held to 170px here so it is never asked to do more than it can. */
+.prose img.headshot {
+  float:right; width:170px; height:170px; object-fit:cover;
+  margin:4px 0 16px 22px; border-radius:50%;
+  box-shadow:0 0 0 1px var(--hairline), 0 6px 18px -10px rgba(22,21,15,.35);
+}
+.signoff {
+  margin:38px 0 0; padding:26px 0 4px; border-top:1px solid var(--hairline);
+  text-align:center; clear:both;
+}
+.signoff p {
+  max-width:56ch; margin:0 auto; font-style:italic; color:var(--ink-soft);
+  font-size:16px; line-height:1.7;
+}
+/* The signature is ink on transparency, so it takes the page's ground with it.
+   Black strokes vanish on the dark theme, so flip them there. */
+.signoff img { width:190px; height:auto; display:block; margin:18px auto 0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .signoff img { filter:invert(1); }
+}
+:root[data-theme="dark"] .signoff img { filter:invert(1); }
+.signoff .who {
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif; font-weight:800;
+  font-size:16px; letter-spacing:-.01em; margin-top:6px;
+}
+.signoff .what {
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:12px;
+  color:var(--ink-soft); letter-spacing:.03em; margin-top:4px;
+}
+@media (max-width:620px) {
+  .prose img.headshot { float:none; display:block; margin:0 0 16px; width:150px; }
+}

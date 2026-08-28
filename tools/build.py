@@ -25,6 +25,21 @@ ADDRESS = "5771 7th Avenue, Hanford, California 93230"
 
 # Mailchimp's hosted signup landing page. Blank falls back to a mailto link.
 MAILCHIMP_SIGNUP_URL = "https://mailchi.mp/bmelloag/subscribe-to-b-mello-newsletter"
+
+# The headshot and signature from the newsletters, so the site and the emails
+# show the same Bryan. Served from this site, not Mailchimp's CDN.
+HEADSHOT = "/assets/img/bryan-headshot.jpg"
+SIGNATURE = "/assets/img/bryan-signature.png"
+
+# The same two images as Mailchimp serves them. Published newsletters arrive with
+# these URLs baked in, and clean_email() swaps them for the local copies above so
+# the archive pages do not depend on an account at another company either.
+MC_SWAP = {
+    "https://mcusercontent.com/d1194b13a9ecdbbcf7bb3294a/images/"
+    "26b78291-655e-7da4-7b16-b991f94593ee.jpg": HEADSHOT,
+    "https://mcusercontent.com/d1194b13a9ecdbbcf7bb3294a/images/"
+    "66a30743-3374-79c9-c873-1cafa9434a9d.jpg": SIGNATURE,
+}
 CONTACT_ENDPOINT = ""     # Cloudflare Worker / Formspree endpoint for the contact form
 
 SPREAD_AREA = "Bakersfield to Madera"
@@ -1076,8 +1091,8 @@ def page_about():
        {SPREAD_AREA}.</p>
 
     <h2>Bryan Mello, founder</h2>
-    <p><img src="/assets/img/bryan.jpg" alt="Bryan Mello with his children in a tractor cab"
-       style="float:right;width:270px;margin:4px 0 16px 22px;border:1px solid var(--hairline)">
+    <p><img class="headshot" src="{HEADSHOT}" alt="Bryan Mello, B. Mello Ag Services"
+       width="170" height="170" loading="lazy">
        Bryan Mello is a Hanford native who grew up in agriculture, surrounded by all aspects of farming.
        He established the business in 2005 and continues to develop company services, while also
        conducting outside sales for Superior Soil Company.</p>
@@ -1089,7 +1104,16 @@ def page_about():
        information we use to advise a nutrition program is worth having whether or not you buy a ton
        from us.</p>
     <p>Over twenty years in ag sales and service. Our crews do the job to your specifications, in a
-       clean and timely manner &mdash; <a href="/contact">call us for a quote</a>.</p>"""
+       clean and timely manner &mdash; <a href="/contact">call us for a quote</a>.</p>
+
+    <div class="signoff">
+      <p>We put the reports together because the information we needed was never in one place, and
+         what we found we may as well pass along. If one of them ever misses something you care
+         about, tell us &mdash; we read every reply.</p>
+      <img src="{SIGNATURE}" alt="Bryan Mello signature" width="200" loading="lazy">
+      <div class="who">Bryan Mello</div>
+      <div class="what">B. Mello Ag Services &mdash; Central Valley, California</div>
+    </div>"""
     return simple_page("/about", "About Us",
                        "Plant nutrition and soil health, out of Hanford since 2005.",
                        body,
@@ -1594,6 +1618,11 @@ def clean_email(src_html, asset_dir, url_prefix):
     """Strip Mailchimp scaffolding, pull base64 images out to files.
     Returns (styles, body_html, images_written)."""
     doc = src_html
+
+    # Bryan's headshot and signature ride in every newsletter as Mailchimp CDN
+    # URLs. Serve our own copies instead.
+    for remote, local in MC_SWAP.items():
+        doc = doc.replace(remote, local)
 
     # 1. pull <style> blocks out of the head and scope them to .emailbody, so a
     #    standalone page's stylesheet can't take over the site's own chrome
