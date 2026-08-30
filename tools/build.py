@@ -1116,8 +1116,8 @@ def page_subscribe(items):
       <div>
         <h3>Point a camera at this</h3>
         <p>Open the camera on any phone, hold it over the code, and tap the link that pops up.
-           It comes back to this page.</p>
-        <p class="url">bmelloag.com/subscribe</p>
+           It goes straight to the signup form.</p>
+        <p class="url">Or type <strong>bmelloag.com/subscribe</strong></p>
       </div>
     </div>"""
 
