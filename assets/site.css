@@ -389,3 +389,32 @@ section.signup { padding:0; }
 @media (max-width:620px) {
   .prose img.headshot { float:none; display:block; margin:0 0 16px; width:150px; }
 }
+
+/* ---------- /subscribe ---------- */
+.prose .lede { font-size:19px; line-height:1.6; color:var(--ink); max-width:60ch; }
+.subcta {
+  margin:26px 0 6px; padding:26px 24px; border-radius:3px; text-align:center;
+  background:var(--gold-wash); border:1px solid var(--hairline);
+}
+.btn-big { font-size:15px; padding:17px 34px; letter-spacing:.1em; }
+.subcta .fine {
+  margin:14px auto 0; max-width:46ch; font-size:14px; color:var(--ink-soft);
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+}
+.qrblock {
+  display:flex; gap:26px; align-items:center; flex-wrap:wrap;
+  margin:34px 0 0; padding:24px; border:1px solid var(--hairline);
+  border-radius:3px; background:var(--surface);
+}
+.qrblock img { width:220px; height:220px; flex:none; display:block; border-radius:2px; background:#fff; }
+.qrblock > div { flex:1 1 260px; }
+.qrblock h3 { margin:0 0 8px; font-size:17px; font-weight:800; }
+.qrblock p { margin:0 0 10px; font-size:15.5px; color:var(--ink-soft); max-width:44ch; }
+.qrblock .url {
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:15px;
+  font-weight:600; color:var(--ink); margin:0;
+}
+@media (max-width:620px) {
+  .qrblock { gap:18px; padding:18px; justify-content:center; text-align:center; }
+  .qrblock p { margin-left:auto; margin-right:auto; }
+}

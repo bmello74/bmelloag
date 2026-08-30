@@ -24,6 +24,8 @@ EMAIL = "bryan@bmelloag.com"
 ADDRESS = "5771 7th Avenue, Hanford, California 93230"
 
 # Mailchimp's hosted signup landing page. Blank falls back to a mailto link.
+# Mailchimp's hosted form. This is the thing that actually adds someone to the
+# audience, so every signup route on the site ends here.
 MAILCHIMP_SIGNUP_URL = "https://mailchi.mp/bmelloag/subscribe-to-b-mello-newsletter"
 
 # The headshot and signature from the newsletters, so the site and the emails
@@ -802,11 +804,12 @@ def page_home(items):
 
 
 def simple_page(slug, title, tag, body_html, desc, strip=None,
-                seo_title=None, image=None, extra_ld=None, strip_alt=None):
+                seo_title=None, image=None, extra_ld=None, strip_alt=None,
+                image_size=None, image_alt=None):
     crumbs = ld_crumbs([('Home', '/'), (title, slug)])
     blocks = [ld_org(), crumbs] + (extra_ld or [])
     h = head(seo_title or f"{title} — {BIZ}", desc, slug,
-             image=image, ld=blocks)
+             image=image, ld=blocks, image_size=image_size, image_alt=image_alt)
     strip_html = strip_media(strip, strip_alt or title)
     return h + masthead(slug) + f"""
 <header class="pagehead">
@@ -1074,6 +1077,60 @@ def page_trucks():
                                            "blocks: gypsum, agricultural limestone, sulfur, compost, "
                                            "woodchips and custom dry blends."),
                        }])
+
+
+def page_subscribe(items):
+    """Short enough to text or read down the phone, and it carries the ad
+    artwork as its share image so a text message previews the graphic rather
+    than a bare link. The button hands off to the Mailchimp hosted form, which
+    is what actually puts someone on the audience."""
+    counts = []
+    for k in SERIES_ORDER:
+        if k == "holiday":
+            continue
+        n = len([i for i in items if i["series"] == k])
+        if n:
+            counts.append(
+                f'<li><strong>{e(SERIES[k]["label"])}</strong> &mdash; '
+                f'{e(SERIES[k]["cadence"]).lower()}. {e(SERIES[k].get("blurb", ""))}</li>')
+    rows = "".join(counts)
+    total = len([i for i in items if i["series"] != "holiday"])
+
+    body = f"""    <p class="lede">Field conditions, ag crime, commodity and fuel markets, water, weather and
+       fishing &mdash; written for people who farm in the Central Valley. Free, and always will be.</p>
+
+    <div class="subcta">
+      <a class="btn btn-gold btn-big" href="{MAILCHIMP_SIGNUP_URL}">Sign up free</a>
+      <p class="fine">Takes about twenty seconds. Unsubscribe any time &mdash; we never share your
+         address with anyone.</p>
+    </div>
+
+    <h2>What you get</h2>
+    <ul>{rows}</ul>
+    <p>{total} issues published so far, and <a href="/reports">every one of them is free to read</a>
+       right now without signing up for anything.</p>
+
+    <div class="qrblock">
+      <img src="/assets/img/subscribe-qr.png" alt="QR code to sign up for the B. Mello Ag Services reports"
+           width="220" height="220" loading="lazy">
+      <div>
+        <h3>Point a camera at this</h3>
+        <p>Open the camera on any phone, hold it over the code, and tap the link that pops up.
+           It comes back to this page.</p>
+        <p class="url">bmelloag.com/subscribe</p>
+      </div>
+    </div>"""
+
+    return simple_page("/subscribe", "Get the reports",
+                       "Six free ag reports, weekly and monthly, from B. Mello Ag Services.",
+                       body,
+                       "Free weekly and monthly ag reports for Central Valley growers: field "
+                       "conditions, ag crime, markets, fuel and fishing. No cost, no spam.",
+                       seo_title="Sign Up Free — B. Mello Ag Services Reports",
+                       image=SITE + "/assets/img/social-card.jpg",
+                       image_size=(1200, 630),
+                       image_alt="B. Mello Ag Services - free ag reports. News, field reports and "
+                                 "market updates at bmelloag.com.")
 
 
 def page_about():
@@ -1467,6 +1524,7 @@ def sitemap(items):
             add("/reports", newest, "weekly", "0.9")
         else:
             add(path, None, "monthly", "0.8")
+    add("/subscribe", None, "monthly", "0.9")   # not in the nav, but very much a landing page
 
     for k in SERIES_ORDER:
         sub = [i for i in items if i["series"] == k]
@@ -1524,6 +1582,7 @@ def build_site():
     write("spreader-trucks.html", page_trucks())
     write("about.html", page_about())
     write("contact.html", page_contact())
+    write("subscribe.html", page_subscribe(items))
     write("reports/index.html", reports_index(items))
     write("assets/archive.js", ARCHIVE_JS)
     for path, content in series_pages(items):
