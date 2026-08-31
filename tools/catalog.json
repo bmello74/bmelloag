@@ -1,5 +1,35 @@
 [
   {
+    "id": "energy/2026-08-31",
+    "series": "energy",
+    "slug": "2026-08-31",
+    "date": "2026-08-31",
+    "date_display": "Aug 31",
+    "title": "Weekly Energy Update — August 31, 2026",
+    "headline": "The world market turned this week and California did not",
+    "summary": "Crude fell 4 to 6% on Hormuz corridor talks and the record diesel crack came off its high — but California diesel still added 15 cents to $7.295.",
+    "meta": "Week 36 · Week in review Aug 24–30",
+    "source": "26 Weekly Energy Update/B Mello Weekly Energy Update - August 31 2026.html",
+    "path": "reports/energy/2026-08-31.html",
+    "topics": [
+      "California diesel prices",
+      "gasoline prices",
+      "crude oil",
+      "Brent crude",
+      "WTI crude",
+      "refinery margins",
+      "refinery outages",
+      "Strait of Hormuz",
+      "OPEC",
+      "EIA inventory data",
+      "carbon and LCFS costs",
+      "California fuel taxes",
+      "natural gas",
+      "electricity rates",
+      "harvest fuel budgeting"
+    ]
+  },
+  {
     "id": "fishing/2026-08-26",
     "series": "fishing",
     "slug": "2026-08-26",

@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://bmelloag.com/</loc><lastmod>2026-08-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://bmelloag.com/</loc><lastmod>2026-08-31</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://bmelloag.com/plant-nutrition</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/tractor-spreaders</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/spreader-trucks</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/hay</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://bmelloag.com/reports</loc><lastmod>2026-08-26</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bmelloag.com/reports</loc><lastmod>2026-08-31</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://bmelloag.com/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/subscribe</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://bmelloag.com/reports/field-report</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/reports/ag-crime</loc><lastmod>2026-08-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/reports/economic-update</loc><lastmod>2026-08-15</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://bmelloag.com/reports/energy</loc><lastmod>2026-08-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bmelloag.com/reports/energy</loc><lastmod>2026-08-31</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/reports/fishing</loc><lastmod>2026-08-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/reports/special</loc><lastmod>2026-07-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://bmelloag.com/reports/holiday</loc><lastmod>2026-07-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://bmelloag.com/reports/energy/2026-08-31</loc><lastmod>2026-08-31</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bmelloag.com/reports/fishing/2026-08-26</loc><lastmod>2026-08-26</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bmelloag.com/reports/energy/2026-08-24</loc><lastmod>2026-08-24</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
   <url><loc>https://bmelloag.com/reports/fishing/2026-08-19</loc><lastmod>2026-08-19</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
