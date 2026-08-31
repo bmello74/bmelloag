@@ -42,6 +42,16 @@ MC_SWAP = {
     "https://mcusercontent.com/d1194b13a9ecdbbcf7bb3294a/images/"
     "66a30743-3374-79c9-c873-1cafa9434a9d.jpg": SIGNATURE,
 }
+# The retired Mailchimp list-archive URL. It is baked into every issue drafted
+# from a pre-August-2026 template, and it points at a page that is no longer the
+# home of this business's back catalog. clean_email() rewrites it to the issue's
+# own series page. Keep the &amp; form as well as the raw & — newsletters carry
+# the escaped one in href attributes and the bare one in VML.
+DEAD_ARCHIVE = [
+    "https://us14.campaign-archive.com/home/?u=d1194b13a9ecdbbcf7bb3294a&amp;id=4dfd26e55e",
+    "https://us14.campaign-archive.com/home/?u=d1194b13a9ecdbbcf7bb3294a&id=4dfd26e55e",
+]
+
 CONTACT_ENDPOINT = ""     # Cloudflare Worker / Formspree endpoint for the contact form
 
 SPREAD_AREA = "Bakersfield to Madera"
@@ -76,6 +86,18 @@ SERIES = {
                         "blurb": "Greetings from the B. Mello family."},
 }
 SERIES_ORDER = ["field-report", "ag-crime", "economic-update", "energy", "fishing", "special", "holiday"]
+
+# What the "Past Issues" button should say once it points somewhere specific.
+# A button that names what it opens beats a generic one, and the words are
+# read by search engines.
+PAST_LABEL = {
+    "field-report":    "All Field Reports",
+    "ag-crime":        "All Crime Reports",
+    "economic-update": "All Economic Updates",
+    "energy":          "All Fuel Reports",
+    "fishing":         "All Fishing Reports",
+    "special":         "All Special Reports",
+}
 
 NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Spreader Trucks"),
@@ -1673,7 +1695,7 @@ def scope_css(css, scope):
     return "\n".join(out)
 
 
-def clean_email(src_html, asset_dir, url_prefix):
+def clean_email(src_html, asset_dir, url_prefix, series=None):
     """Strip Mailchimp scaffolding, pull base64 images out to files.
     Returns (styles, body_html, images_written)."""
     doc = src_html
@@ -1682,6 +1704,18 @@ def clean_email(src_html, asset_dir, url_prefix):
     # URLs. Serve our own copies instead.
     for remote, local in MC_SWAP.items():
         doc = doc.replace(remote, local)
+
+    # The retired list-archive URL, pointed at this title's own page instead.
+    # Every issue drafted from an old template carries it, so this runs on all
+    # of them rather than being fixed by hand one newsletter at a time.
+    if series:
+        landing = f"{SITE}/reports/{series}"
+        for dead in DEAD_ARCHIVE:
+            doc = doc.replace(dead, landing)
+        label = PAST_LABEL.get(series)
+        if label:
+            doc = doc.replace(">PAST ISSUES</center>", f">{label.upper()}</center>")
+            doc = doc.replace(">Past Issues</a>", f">{label}</a>")
 
     # 1. pull <style> blocks out of the head and scope them to .emailbody, so a
     #    standalone page's stylesheet can't take over the site's own chrome
@@ -1845,7 +1879,8 @@ def publish_one(entry, items, source_root):
     slug = entry["id"].split("/")[-1]
     asset_dir = ROOT / "assets" / "reports" / entry["series"] / slug
     styles, body, imgs = clean_email(raw, str(asset_dir),
-                                     f"/assets/reports/{entry['series']}/{slug}")
+                                     f"/assets/reports/{entry['series']}/{slug}",
+                                     series=entry["series"])
     # Record what this issue actually talks about, so the archive can say so.
     plain = html.unescape(re.sub(r"<[^>]+>", " ", body))
     entry["topics"] = issue_topics(entry["series"], plain)
