@@ -412,41 +412,6 @@
     ]
   },
   {
-    "id": "ag-crime/2026-08",
-    "series": "ag-crime",
-    "slug": "2026-08",
-    "date": "2026-08-13",
-    "date_display": "Aug 13",
-    "title": "August 2026 Ag Crime Report",
-    "headline": "Harvest is peak theft season",
-    "summary": "A serial copper thief arrested in Ventura County, a 500-vase metal ring broken by the Fresno ag task force, plus county briefs statewide.",
-    "meta": "County briefs · Trends · Statewide hotspot map",
-    "source": "26 Rural Crime Newsletter/B Mello August 2026 Ag Crime Report.html",
-    "path": "reports/ag-crime/2026-08.html",
-    "topics": [
-      "Fresno County",
-      "Kings County",
-      "Tulare County",
-      "Kern County",
-      "Madera County",
-      "Merced County",
-      "Stanislaus County",
-      "San Joaquin County",
-      "Monterey County",
-      "Ventura County",
-      "Sacramento Valley",
-      "Salinas Valley",
-      "Imperial Valley",
-      "Pajaro Valley",
-      "copper wire theft",
-      "solar panel theft",
-      "cattle rustling",
-      "fuel theft",
-      "Ag Task Force",
-      "county sheriff reports"
-    ]
-  },
-  {
     "id": "fishing/2026-08-12",
     "series": "fishing",
     "slug": "2026-08-12",
@@ -516,27 +481,6 @@
       "white seabass",
       "bonito",
       "shad"
-    ]
-  },
-  {
-    "id": "ag-crime/2026-08-hotspot-map",
-    "series": "ag-crime",
-    "slug": "2026-08-hotspot-map",
-    "date": "2026-08-12",
-    "date_display": "Aug 12",
-    "title": "California Ag Crime Hotspot Map — August 2026",
-    "headline": "California Ag Crime Hotspot Map",
-    "summary": "The interactive county watch list that ships with the August report — click a county and see what is being hit.",
-    "meta": "Interactive · Companion to the August report",
-    "source": "26 Rural Crime Newsletter/ca-ag-crime-hotspot-map-interactive.html",
-    "path": "reports/ag-crime/2026-08-hotspot-map.html",
-    "topics": [
-      "copper wire theft",
-      "equipment theft",
-      "cattle rustling",
-      "fuel theft",
-      "Ag Task Force",
-      "county sheriff reports"
     ]
   },
   {
