@@ -35,6 +35,35 @@
     ]
   },
   {
+    "id": "energy/2026-09-07",
+    "series": "energy",
+    "slug": "2026-09-07",
+    "date": "2026-09-07",
+    "date_display": "Sep 7",
+    "title": "Weekly Energy Update — September 7, 2026",
+    "headline": "We called the top and the market called our bluff",
+    "summary": "A Labor Day thank-you to the men and women of agriculture, the armed forces and our first responders. Then the market: US–Iran strikes resumed September 1, crude ran up 9%, the diesel crack set a record above $106 a barrel, and California diesel closed at an all-time high of $7.8105 with six of nine Valley metros setting records.",
+    "meta": "Week 37 · Week in review Aug 31–Sep 6",
+    "source": "26 Weekly Energy Update/B Mello Weekly Energy Update - September 7 2026.html",
+    "path": "reports/energy/2026-09-07.html",
+    "topics": [
+      "California diesel prices",
+      "gasoline prices",
+      "crude oil",
+      "Brent crude",
+      "WTI crude",
+      "refinery margins",
+      "Strait of Hormuz",
+      "OPEC",
+      "EIA inventory data",
+      "carbon and LCFS costs",
+      "California fuel taxes",
+      "natural gas",
+      "electricity rates",
+      "harvest fuel budgeting"
+    ]
+  },
+  {
     "id": "fishing/2026-09-02",
     "series": "fishing",
     "slug": "2026-09-02",
