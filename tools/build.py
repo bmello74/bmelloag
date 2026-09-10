@@ -70,6 +70,9 @@ SERIES = {
     "ag-crime":        {"label": "Ag Crime Report",       "chip": "Ag Crime",        "cadence": "Monthly",
                         "banner": "ag-crime",
                         "blurb": "County briefs, statewide trends and the hotspot map."},
+    "ag-labor":        {"label": "Ag Labor Report",       "chip": "Ag Labor",        "cadence": "Monthly",
+                        "banner": "ag-labor",
+                        "blurb": "Wages and employment, regulations and compliance, workforce updates."},
     "economic-update": {"label": "Economic Update",       "chip": "Economic Update", "cadence": "Monthly, mid-month",
                         "banner": "economic-update",
                         "blurb": "Milk and dairy, grain futures, fuel, water and Valley weather."},
@@ -85,7 +88,7 @@ SERIES = {
     "holiday":         {"label": "Holiday",               "chip": "Holiday",         "cadence": "Per holiday",
                         "blurb": "Greetings from the B. Mello family."},
 }
-SERIES_ORDER = ["field-report", "ag-crime", "economic-update", "energy", "fishing", "special", "holiday"]
+SERIES_ORDER = ["field-report", "ag-crime", "ag-labor", "economic-update", "energy", "fishing", "special", "holiday"]
 
 # What the "Past Issues" button should say once it points somewhere specific.
 # A button that names what it opens beats a generic one, and the words are
@@ -93,6 +96,7 @@ SERIES_ORDER = ["field-report", "ag-crime", "economic-update", "energy", "fishin
 PAST_LABEL = {
     "field-report":    "All Field Reports",
     "ag-crime":        "All Crime Reports",
+    "ag-labor":        "All Labor Reports",
     "economic-update": "All Economic Updates",
     "energy":          "All Fuel Reports",
     "fishing":         "All Fishing Reports",
@@ -191,6 +195,36 @@ TOPICS = {
         ("gypsum", r"gypsum"), ("compost", r"compost"), ("irrigation water", r"irrigation"),
         ("bloom timing", r"bloom"), ("harvest timing", r"harvest"),
         ("chill hours", r"chill"), ("hull split", r"hull split"),
+    ],
+    "ag-labor": [
+        ("California ag minimum wage", r"ag minimum wage|agricultural minimum wage"),
+        ("state minimum wage", r"state minimum wage|minimum wage"),
+        ("overtime for farmworkers", r"farmworker overtime|ag overtime|AB 1066|overtime"),
+        ("H-2A program", r"H-2A|H2A"),
+        ("Adverse Effect Wage Rate", r"Adverse Effect Wage Rate|AEWR"),
+        ("piece rate pay", r"piece rate|piece-rate"),
+        ("rest and recovery pay", r"rest and recovery|rest break|recovery period"),
+        ("heat illness prevention", r"heat illness|heat standard|shade requirement"),
+        ("Cal/OSHA", r"Cal/OSHA|CalOSHA|Cal-OSHA"),
+        ("labor contractor licensing", r"farm labor contractor|FLC licen|AB 1897"),
+        ("I-9 and E-Verify", r"I-9|E-Verify|EVerify"),
+        ("workplace immigration enforcement", r"ICE audit|immigration enforcement|worksite enforcement"),
+        ("workers compensation", r"workers.{0,3}comp"),
+        ("paid sick leave", r"paid sick leave|sick leave"),
+        ("wage and hour claims", r"wage and hour|wage claim|back pay|back-pay"),
+        ("Labor Commissioner", r"Labor Commissioner|DLSE"),
+        ("Employment Development Department", r"\bEDD\b|Employment Development"),
+        ("payroll tax", r"payroll tax|unemployment insurance rate"),
+        ("labor shortage", r"labor shortage|worker shortage"),
+        ("harvest crew staffing", r"harvest crew|crew size|crew staffing"),
+        ("mechanization and labor cost", r"mechaniz|labor pass|labor cost"),
+        ("housing for farmworkers", r"farmworker housing|employee housing"),
+        ("transportation of farm workers", r"crew bus|worker transportation"),
+        ("Fresno County", r"Fresno County"), ("Kings County", r"Kings County"),
+        ("Tulare County", r"Tulare County"), ("Kern County", r"Kern County"),
+        ("Madera County", r"Madera County"), ("Merced County", r"Merced County"),
+        ("Stanislaus County", r"Stanislaus County"), ("San Joaquin County", r"San Joaquin County"),
+        ("Central Valley", r"Central Valley"),
     ],
     "ag-crime": [
         ("Fresno County", r"Fresno County"), ("Kings County", r"Kings County"),
