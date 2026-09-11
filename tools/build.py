@@ -105,7 +105,7 @@ PAST_LABEL = {
 
 NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Spreader Trucks"),
-       ("/hay", "Hay"), ("/reports", "Reports"),
+       ("/hay", "Hay"), ("/reports", "Reports"), ("/field-tools", "Tools"),
        ("/about", "About"), ("/contact", "Contact")]
 
 e = html.escape
@@ -1189,6 +1189,115 @@ def page_subscribe(items):
                                  "market updates at bmelloag.com.")
 
 
+def page_tools():
+    """Calculators growers and our own crew actually use. Everything runs in the
+    browser — nothing is sent anywhere, which is the honest claim and also why
+    these keep working on a bad signal once the page has loaded."""
+    body = '''    <p class="lede">Free field tools, no signup. Everything below runs on your own phone or
+       computer &mdash; nothing you type is sent to us or to anyone else.</p>
+
+    <div class="tool" id="tool-qr">
+      <h2>Field point QR code</h2>
+      <p class="toolnote">Turn a latitude and longitude into a code anyone can scan to open the exact
+         spot in their map app. Good for well heads, gates, sample points, and telling a driver where
+         to tip a load.</p>
+      <div class="toolgrid">
+        <div class="toolin">
+          <label for="qr-coords">Coordinates</label>
+          <input id="qr-coords" type="text" inputmode="decimal" placeholder="36.3275, -119.6457"
+                 autocomplete="off" spellcheck="false">
+          <button type="button" class="btn btn-quiet" id="qr-locate">Use my location</button>
+
+          <label for="qr-label">Label <span class="opt">(optional)</span></label>
+          <input id="qr-label" type="text" placeholder="North block well" autocomplete="off">
+
+          <p class="toolnote" id="qr-note"></p>
+          <p class="toollink"><a id="qr-link" rel="noopener"></a></p>
+          <div class="toolbtns">
+            <button type="button" class="btn btn-gold" id="qr-download" disabled>Download PNG</button>
+            <button type="button" class="btn btn-quiet" id="qr-copy" disabled>Copy link</button>
+          </div>
+        </div>
+        <div class="toolout qrout" id="qr-canvas-wrap"></div>
+      </div>
+    </div>
+
+    <div class="tool" id="tool-rate">
+      <h2>Rate &amp; acreage</h2>
+      <p class="toolnote">How much product the job takes, and what the analysis actually puts on the
+         ground per acre.</p>
+      <div class="toolgrid">
+        <div class="toolin">
+          <label for="r-acres">Acres</label>
+          <input id="r-acres" type="number" inputmode="decimal" step="any" value="40">
+          <label for="r-rate">Rate <span class="opt">(lb per acre)</span></label>
+          <input id="r-rate" type="number" inputmode="decimal" step="any" value="400">
+
+          <div class="npk">
+            <div><label for="r-n">N %</label><input id="r-n" type="number" inputmode="decimal" step="any" value="15"></div>
+            <div><label for="r-p">P&#8322;O&#8325; %</label><input id="r-p" type="number" inputmode="decimal" step="any" value="15"></div>
+            <div><label for="r-k">K&#8322;O %</label><input id="r-k" type="number" inputmode="decimal" step="any" value="15"></div>
+          </div>
+
+          <label for="r-have">Tons on hand <span class="opt">(optional)</span></label>
+          <input id="r-have" type="number" inputmode="decimal" step="any" placeholder="e.g. 24">
+        </div>
+        <div class="toolout">
+          <div class="res"><span>Total product</span><strong id="r-lbs">&mdash;</strong></div>
+          <div class="res"><span>&nbsp;</span><strong id="r-tons">&mdash;</strong></div>
+          <div class="res sep"><span>Nitrogen</span><strong id="r-un">&mdash;</strong></div>
+          <div class="res"><span>Phosphate</span><strong id="r-up">&mdash;</strong></div>
+          <div class="res"><span>Potash</span><strong id="r-uk">&mdash;</strong></div>
+          <div class="res sep"><span>Tons on hand cover</span><strong id="r-cover">&mdash;</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool" id="tool-solution">
+      <h2>Solution grade &amp; tank mix</h2>
+      <p class="toolnote">Solution products are sold by the gallon and applied by the pound. This turns
+         one into the other, then tells you how far a tank goes.</p>
+      <div class="toolgrid">
+        <div class="toolin">
+          <label for="s-wpg">Weight per gallon <span class="opt">(lb)</span></label>
+          <input id="s-wpg" type="number" inputmode="decimal" step="any" value="11.06">
+          <label for="s-pct">Nutrient in the analysis <span class="opt">(%)</span></label>
+          <input id="s-pct" type="number" inputmode="decimal" step="any" value="32">
+
+          <label for="s-gal">Gallons <span class="opt">(to convert)</span></label>
+          <input id="s-gal" type="number" inputmode="decimal" step="any" value="100">
+
+          <label for="s-target">Target nutrient <span class="opt">(lb per acre)</span></label>
+          <input id="s-target" type="number" inputmode="decimal" step="any" value="30">
+          <label for="s-tank">Tank size <span class="opt">(gallons)</span></label>
+          <input id="s-tank" type="number" inputmode="decimal" step="any" value="1500">
+        </div>
+        <div class="toolout">
+          <div class="res"><span>Nutrient per gallon</span><strong id="s-lbgal">&mdash;</strong></div>
+          <div class="res sep"><span>That many gallons is</span><strong id="s-galprod">&mdash;</strong></div>
+          <div class="res"><span>&nbsp;</span><strong id="s-galnut">&mdash;</strong></div>
+          <div class="res sep"><span>To hit the target</span><strong id="s-gpa">&mdash;</strong></div>
+          <div class="res"><span>One tank covers</span><strong id="s-acres">&mdash;</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="toolfoot">These are working tools, not agronomic advice. Check the numbers against your
+       product label and your PCA before you pull the trigger on a program. Want one built for
+       something else you do every day? <a href="/contact">Tell us what it is.</a></p>
+
+    <script src="/assets/js/qrcode.min.js" defer></script>
+    <script src="/assets/tools.js" defer></script>'''
+
+    return simple_page("/field-tools", "Field Tools",
+                       "Free calculators for coordinates, rates and solution grade.",
+                       body,
+                       "Free ag field tools from B. Mello Ag Services: turn GPS coordinates into a "
+                       "scannable QR code, work out product and acreage, and convert solution grade "
+                       "gallons to pounds.",
+                       seo_title="Field Tools \u2014 GPS QR Codes, Rate & Solution Calculators")
+
+
 def page_about():
     body = f"""    <h2>How we got here</h2>
     <p>The company was established on January 1, 2005 near Hanford, in California's Central Valley, on
@@ -1388,6 +1497,189 @@ def reports_index(items):
 </main>
 <script src="/assets/archive.js" defer></script>
 """ + footer()
+
+
+TOOLS_JS = """(function () {
+  'use strict';
+
+  // ---- helpers -------------------------------------------------------
+  var $ = function (id) { return document.getElementById(id); };
+  function num(id) {
+    var el = $(id); if (!el) return NaN;
+    var v = parseFloat(String(el.value).replace(/,/g, '').trim());
+    return isFinite(v) ? v : NaN;
+  }
+  function put(id, text) { var el = $(id); if (el) el.textContent = text; }
+  function fmt(n, dp) {
+    if (!isFinite(n)) return '\\u2014';
+    dp = (dp === undefined) ? 2 : dp;
+    return n.toLocaleString(undefined, { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  }
+  function on(ids, fn) {
+    ids.forEach(function (id) {
+      var el = $(id);
+      if (el) { el.addEventListener('input', fn); el.addEventListener('change', fn); }
+    });
+  }
+
+  // ---- 1. field point QR ---------------------------------------------
+  // Accepts '36.3275, -119.6457', '36.3275 -119.6457', or with N/S/E/W.
+  function parseCoords(raw) {
+    if (!raw) return null;
+    var t = raw.trim().replace(/[()]/g, ' ');
+    var hemi = t.toUpperCase();
+    var nums = t.match(/-?\\d+(?:\\.\\d+)?/g);
+    if (!nums || nums.length < 2) return null;
+    var lat = parseFloat(nums[0]), lng = parseFloat(nums[1]);
+    if (/S/.test(hemi) && lat > 0) lat = -lat;
+    if (/W/.test(hemi) && lng > 0) lng = -lng;
+    if (!isFinite(lat) || !isFinite(lng)) return null;
+    if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+    return { lat: lat, lng: lng };
+  }
+
+  var lastPng = null;
+
+  function drawQR() {
+    var box = $('qr-canvas-wrap'); if (!box) return;
+    var c = parseCoords($('qr-coords') ? $('qr-coords').value : '');
+    var note = $('qr-note'), link = $('qr-link'), dl = $('qr-download'), cp = $('qr-copy');
+    if (!c) {
+      box.innerHTML = '<span class=\"qrempty\">Your code appears here</span>';
+      put('qr-note', 'Paste a latitude and longitude, or tap Use my location.');
+      if (link) { link.textContent = ''; link.removeAttribute('href'); }
+      if (dl) dl.setAttribute('disabled', 'disabled');
+      if (cp) cp.setAttribute('disabled', 'disabled');
+      lastPng = null;
+      return;
+    }
+    var lat = c.lat.toFixed(6), lng = c.lng.toFixed(6);
+    var url = 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng;
+
+    if (typeof qrcode !== 'function') {
+      put('qr-note', 'The code generator did not load. Refresh the page and try again.');
+      return;
+    }
+    var q = qrcode(0, 'M');
+    if (qrcode.stringToBytesFuncs && qrcode.stringToBytesFuncs['UTF-8']) {
+      qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+    }
+    q.addData(url, 'Byte');
+    q.make();
+
+    var n = q.getModuleCount(), quiet = 4, scale = 8, size = (n + quiet * 2) * scale;
+    var cv = document.createElement('canvas');
+    cv.width = cv.height = size;
+    cv.style.width = '100%';
+    cv.style.maxWidth = '260px';
+    cv.style.height = 'auto';
+    cv.setAttribute('role', 'img');
+    cv.setAttribute('aria-label', 'QR code for ' + lat + ', ' + lng);
+    var g = cv.getContext('2d');
+    g.fillStyle = '#ffffff'; g.fillRect(0, 0, size, size);
+    g.fillStyle = '#000000';
+    for (var r = 0; r < n; r++) {
+      for (var col = 0; col < n; col++) {
+        if (q.isDark(r, col)) g.fillRect((col + quiet) * scale, (r + quiet) * scale, scale, scale);
+      }
+    }
+    box.innerHTML = '';
+    box.appendChild(cv);
+    try { lastPng = cv.toDataURL('image/png'); } catch (e) { lastPng = null; }
+
+    var label = $('qr-label') && $('qr-label').value.trim();
+    put('qr-note', (label ? label + ' \\u2014 ' : '') + lat + ', ' + lng +
+        '  \\u00b7  ' + n + '\\u00d7' + n + ' modules');
+    if (link) { link.textContent = url; link.setAttribute('href', url); }
+    if (dl) dl.removeAttribute('disabled');
+    if (cp) cp.removeAttribute('disabled');
+  }
+
+  function initQR() {
+    if (!$('qr-coords')) return;
+    on(['qr-coords', 'qr-label'], drawQR);
+
+    var loc = $('qr-locate');
+    if (loc) {
+      if (!navigator.geolocation) { loc.style.display = 'none'; }
+      loc.addEventListener('click', function () {
+        put('qr-note', 'Getting your location\\u2026');
+        navigator.geolocation.getCurrentPosition(function (pos) {
+          $('qr-coords').value = pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
+          drawQR();
+        }, function () {
+          put('qr-note', 'Could not get your location. Type the coordinates instead.');
+        }, { enableHighAccuracy: true, timeout: 10000 });
+      });
+    }
+
+    var dl = $('qr-download');
+    if (dl) dl.addEventListener('click', function () {
+      if (!lastPng) return;
+      var label = ($('qr-label') && $('qr-label').value.trim()) || 'field-point';
+      var a = document.createElement('a');
+      a.href = lastPng;
+      a.download = label.replace(/[^A-Za-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '') + '-qr.png';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    });
+
+    var cp = $('qr-copy');
+    if (cp) cp.addEventListener('click', function () {
+      var link = $('qr-link'); if (!link || !link.textContent) return;
+      var done = function () { cp.textContent = 'Copied'; setTimeout(function () { cp.textContent = 'Copy link'; }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link.textContent).then(done, function () {});
+      }
+    });
+    drawQR();
+  }
+
+  // ---- 2. rate and acreage -------------------------------------------
+  function calcRate() {
+    var acres = num('r-acres'), rate = num('r-rate');
+    var lbs = acres * rate;
+    put('r-lbs', fmt(lbs, 0) + ' lb');
+    put('r-tons', fmt(lbs / 2000, 2) + ' tons');
+
+    var n = num('r-n'), p2 = num('r-p'), k = num('r-k');
+    put('r-un', isFinite(rate * n) ? fmt(rate * n / 100, 1) + ' lb N/ac' : '\\u2014');
+    put('r-up', isFinite(rate * p2) ? fmt(rate * p2 / 100, 1) + ' lb P\\u2082O\\u2085/ac' : '\\u2014');
+    put('r-uk', isFinite(rate * k) ? fmt(rate * k / 100, 1) + ' lb K\\u2082O/ac' : '\\u2014');
+
+    var have = num('r-have');
+    put('r-cover', isFinite(have * 2000 / rate) ? fmt(have * 2000 / rate, 1) + ' acres' : '\\u2014');
+  }
+
+  // ---- 3. solution grade and tank mix ---------------------------------
+  function calcSol() {
+    var wpg = num('s-wpg'), pct = num('s-pct');
+    var lbPerGal = wpg * pct / 100;
+    put('s-lbgal', isFinite(lbPerGal) ? fmt(lbPerGal, 2) + ' lb nutrient/gal' : '\\u2014');
+
+    var gal = num('s-gal');
+    put('s-galprod', isFinite(gal * wpg) ? fmt(gal * wpg, 0) + ' lb product' : '\\u2014');
+    put('s-galnut', isFinite(gal * lbPerGal) ? fmt(gal * lbPerGal, 1) + ' lb nutrient' : '\\u2014');
+
+    var target = num('s-target');
+    var galPerAcre = target / lbPerGal;
+    put('s-gpa', isFinite(galPerAcre) ? fmt(galPerAcre, 2) + ' gal/ac' : '\\u2014');
+
+    var tank = num('s-tank');
+    put('s-acres', isFinite(tank / galPerAcre) ? fmt(tank / galPerAcre, 1) + ' acres per tank' : '\\u2014');
+  }
+
+  function init() {
+    initQR();
+    on(['r-acres', 'r-rate', 'r-n', 'r-p', 'r-k', 'r-have'], calcRate);
+    on(['s-wpg', 's-pct', 's-gal', 's-target', 's-tank'], calcSol);
+    calcRate(); calcSol();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else { init(); }
+})();
+"""
 
 
 ARCHIVE_JS = """(function () {
@@ -1638,6 +1930,8 @@ def build_site():
     write("spreader-trucks.html", page_trucks())
     write("about.html", page_about())
     write("contact.html", page_contact())
+    write("field-tools.html", page_tools())
+    write("assets/tools.js", TOOLS_JS)
     write("subscribe.html", page_subscribe(items))
     write("reports/index.html", reports_index(items))
     write("assets/archive.js", ARCHIVE_JS)
