@@ -1222,8 +1222,66 @@ def page_tools():
       </div>
     </div>
 
+    <div class="tool" id="tool-acres">
+      <h2>Field acreage</h2>
+      <p class="toolnote">How many acres is it, really. Measure the block, take it off a pivot radius,
+         or walk the corners with your phone &mdash; useful when the map, the deed and the ground
+         disagree, and for billing the piece you actually covered.</p>
+      <div class="modes">
+        <button type="button" class="modebtn is-on" data-mode="dim" aria-pressed="true">Length &amp; width</button>
+        <button type="button" class="modebtn" data-mode="pivot" aria-pressed="false">Circle / pivot</button>
+        <button type="button" class="modebtn" data-mode="gps" aria-pressed="false">GPS corners</button>
+      </div>
+      <div class="toolgrid">
+        <div class="toolin">
+          <div class="amode" id="a-pane-dim">
+            <label for="a-len">Length <span class="opt">(feet)</span></label>
+            <input id="a-len" type="number" inputmode="decimal" step="any" value="1320">
+            <label for="a-wid">Width <span class="opt">(feet)</span></label>
+            <input id="a-wid" type="number" inputmode="decimal" step="any" value="1320">
+            <p class="toolnote" style="margin:14px 0 0">A quarter-quarter section is 1320 by 1320 feet,
+               which is where the 40 comes from.</p>
+          </div>
+
+          <div class="amode" id="a-pane-pivot" hidden>
+            <label for="a-rad">Radius <span class="opt">(feet, pivot point to the end gun)</span></label>
+            <input id="a-rad" type="number" inputmode="decimal" step="any" value="1320">
+            <label for="a-sweep">Sweep <span class="opt">(degrees &mdash; 360 is a full circle)</span></label>
+            <input id="a-sweep" type="number" inputmode="decimal" step="any" value="360">
+            <p class="toolnote" style="margin:14px 0 0">Drop the sweep to 180 or 270 for a part-circle
+               pivot working around a corner or a road.</p>
+          </div>
+
+          <div class="amode" id="a-pane-gps" hidden>
+            <label for="a-pt">Corner <span class="opt">(latitude, longitude)</span></label>
+            <input id="a-pt" type="text" inputmode="decimal" placeholder="36.327500, -119.645700"
+                   autocomplete="off" spellcheck="false">
+            <div class="toolbtns">
+              <button type="button" class="btn btn-gold" id="a-add">Add corner</button>
+              <button type="button" class="btn btn-quiet" id="a-here">Add my location</button>
+            </div>
+            <ol class="ptlist" id="a-list"></ol>
+            <div class="toolbtns">
+              <button type="button" class="btn btn-quiet" id="a-undo" disabled>Undo last</button>
+              <button type="button" class="btn btn-quiet" id="a-clear" disabled>Clear all</button>
+            </div>
+            <p class="toolnote" id="a-gpsnote"></p>
+          </div>
+        </div>
+        <div class="toolout">
+          <div class="res"><span>Acres</span><strong id="a-acres">&mdash;</strong></div>
+          <div class="res"><span>Square feet</span><strong id="a-sqft">&mdash;</strong></div>
+          <div class="res"><span>Hectares</span><strong id="a-ha">&mdash;</strong></div>
+          <div class="res sep"><span>Perimeter</span><strong id="a-per">&mdash;</strong></div>
+          <div class="toolbtns">
+            <button type="button" class="btn btn-quiet" id="a-use" disabled>Use these acres below</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="tool" id="tool-rate">
-      <h2>Rate &amp; acreage</h2>
+      <h2>Product &amp; rate</h2>
       <p class="toolnote">How much product the job takes, and what the analysis actually puts on the
          ground per acre.</p>
       <div class="toolgrid">
@@ -1290,12 +1348,12 @@ def page_tools():
     <script src="/assets/tools.js" defer></script>'''
 
     return simple_page("/field-tools", "Field Tools",
-                       "Free calculators for coordinates, rates and solution grade.",
+                       "Free calculators for acreage, coordinates, rates and solution grade.",
                        body,
-                       "Free ag field tools from B. Mello Ag Services: turn GPS coordinates into a "
-                       "scannable QR code, work out product and acreage, and convert solution grade "
-                       "gallons to pounds.",
-                       seo_title="Field Tools \u2014 GPS QR Codes, Rate & Solution Calculators")
+                       "Free ag field tools from B. Mello Ag Services: work out field acreage from "
+                       "dimensions, a pivot radius or GPS corners, turn coordinates into a scannable "
+                       "QR code, and convert solution grade gallons to pounds.",
+                       seo_title="Field Tools \u2014 Acreage, GPS QR Codes & Rate Calculators")
 
 
 def page_about():
@@ -1634,7 +1692,164 @@ TOOLS_JS = """(function () {
     drawQR();
   }
 
-  // ---- 2. rate and acreage -------------------------------------------
+  // ---- 2. field acreage ------------------------------------------------
+  // Length x width and the pivot circle are plain geometry. The GPS corners
+  // project each point onto a flat xy grid centred on the first corner, then
+  // run the shoelace formula. Over anything field-sized that is good to about
+  // a hundredth of a percent: a surveyed one-mile section comes out 639.94
+  // against a true 640, which is tighter than anyone walks a boundary.
+  var SQFT_PER_ACRE = 43560;
+  var pts = [], mode = 'dim', lastAcres = NaN;
+
+  function acreOut(sqft, perimFt) {
+    var use = $('a-use');
+    if (!isFinite(sqft) || sqft <= 0) {
+      put('a-acres', '\\u2014'); put('a-sqft', '\\u2014');
+      put('a-ha', '\\u2014');    put('a-per', '\\u2014');
+      if (use) use.setAttribute('disabled', 'disabled');
+      lastAcres = NaN;
+      return;
+    }
+    var acres = sqft / SQFT_PER_ACRE;
+    lastAcres = acres;
+    put('a-acres', fmt(acres, acres < 10 ? 3 : 2) + ' ac');
+    put('a-sqft', fmt(sqft, 0) + ' sq ft');
+    put('a-ha', fmt(acres * 0.40468564224, 2) + ' ha');
+    put('a-per', isFinite(perimFt)
+        ? fmt(perimFt, 0) + ' ft  \\u00b7  ' + fmt(perimFt / 5280, 2) + ' mi'
+        : '\\u2014');
+    if (use) use.removeAttribute('disabled');
+  }
+
+  function gpsArea() {
+    if (pts.length < 3) return null;
+    var lat0 = pts[0].lat * Math.PI / 180;
+    var kx = Math.cos(lat0) * 111320, ky = 110540;   // metres per degree
+    var xy = pts.map(function (p) {
+      return { x: (p.lng - pts[0].lng) * kx, y: (p.lat - pts[0].lat) * ky };
+    });
+    var a = 0, per = 0, i, j, dx, dy;
+    for (i = 0; i < xy.length; i++) {
+      j = (i + 1) % xy.length;
+      a += xy[i].x * xy[j].y - xy[j].x * xy[i].y;
+      dx = xy[j].x - xy[i].x; dy = xy[j].y - xy[i].y;
+      per += Math.sqrt(dx * dx + dy * dy);
+    }
+    return { m2: Math.abs(a) / 2, perM: per };
+  }
+
+  function renderPts() {
+    var list = $('a-list');
+    if (list) {
+      list.innerHTML = '';
+      pts.forEach(function (p) {
+        var li = document.createElement('li');
+        li.textContent = p.lat.toFixed(6) + ', ' + p.lng.toFixed(6);
+        list.appendChild(li);
+      });
+    }
+    ['a-undo', 'a-clear'].forEach(function (id) {
+      var b = $(id); if (!b) return;
+      if (pts.length) b.removeAttribute('disabled');
+      else b.setAttribute('disabled', 'disabled');
+    });
+    put('a-gpsnote', pts.length >= 3
+      ? pts.length + ' corners \\u2014 the shape closes back to the first one on its own.'
+      : 'Add at least three corners. Drive or walk the boundary and tap Add my location at every turn.');
+  }
+
+  function calcAcres() {
+    if (mode === 'dim') {
+      var L = num('a-len'), W = num('a-wid');
+      acreOut(L * W, 2 * (L + W));
+    } else if (mode === 'pivot') {
+      var r = num('a-rad'), sweep = num('a-sweep');
+      if (!isFinite(sweep) || sweep <= 0) sweep = 360;
+      if (sweep > 360) sweep = 360;
+      var frac = sweep / 360;
+      acreOut(Math.PI * r * r * frac,
+              2 * Math.PI * r * frac + (sweep < 360 ? 2 * r : 0));
+    } else {
+      renderPts();
+      var g = gpsArea();
+      if (!g) { acreOut(NaN); return; }
+      acreOut(g.m2 * 10.7639104167, g.perM * 3.280839895);
+    }
+  }
+
+  function setMode(m) {
+    mode = m;
+    ['dim', 'pivot', 'gps'].forEach(function (k) {
+      var pane = $('a-pane-' + k); if (pane) pane.hidden = (k !== m);
+    });
+    [].slice.call(document.querySelectorAll('.modebtn')).forEach(function (b) {
+      var isOn = b.getAttribute('data-mode') === m;
+      b.className = 'modebtn' + (isOn ? ' is-on' : '');
+      b.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+    });
+    calcAcres();
+  }
+
+  function initAcres() {
+    if (!$('tool-acres')) return;
+    on(['a-len', 'a-wid', 'a-rad', 'a-sweep'], calcAcres);
+
+    [].slice.call(document.querySelectorAll('.modebtn')).forEach(function (b) {
+      b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); });
+    });
+
+    var add = $('a-add'), field = $('a-pt');
+    if (add) add.addEventListener('click', function () {
+      var c = parseCoords(field ? field.value : '');
+      if (!c) {
+        put('a-gpsnote', 'That did not read as a latitude and longitude. Try 36.327500, -119.645700.');
+        return;
+      }
+      pts.push(c);
+      if (field) field.value = '';
+      calcAcres();
+    });
+    if (field && add) field.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); add.click(); }
+    });
+
+    var here = $('a-here');
+    if (here) {
+      if (!navigator.geolocation) { here.style.display = 'none'; }
+      here.addEventListener('click', function () {
+        put('a-gpsnote', 'Getting your location\\u2026');
+        navigator.geolocation.getCurrentPosition(function (pos) {
+          pts.push({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+          calcAcres();
+        }, function () {
+          put('a-gpsnote', 'Could not get your location. Type the corner in instead.');
+        }, { enableHighAccuracy: true, timeout: 10000 });
+      });
+    }
+
+    var undo = $('a-undo');
+    if (undo) undo.addEventListener('click', function () { pts.pop(); calcAcres(); });
+    var clr = $('a-clear');
+    if (clr) clr.addEventListener('click', function () { pts = []; calcAcres(); });
+
+    // The acres you just worked out are almost always the acres the next
+    // calculator wants, so hand them down instead of making anyone retype.
+    var use = $('a-use');
+    if (use) use.addEventListener('click', function () {
+      if (!isFinite(lastAcres)) return;
+      var f = $('r-acres'); if (!f) return;
+      f.value = lastAcres.toFixed(2);
+      calcRate();
+      var card = $('tool-rate');
+      if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      use.textContent = 'Sent down \\u2193';
+      setTimeout(function () { use.textContent = 'Use these acres below'; }, 1800);
+    });
+
+    setMode('dim');
+  }
+
+  // ---- 3. rate and acreage -------------------------------------------
   function calcRate() {
     var acres = num('r-acres'), rate = num('r-rate');
     var lbs = acres * rate;
@@ -1650,7 +1865,7 @@ TOOLS_JS = """(function () {
     put('r-cover', isFinite(have * 2000 / rate) ? fmt(have * 2000 / rate, 1) + ' acres' : '\\u2014');
   }
 
-  // ---- 3. solution grade and tank mix ---------------------------------
+  // ---- 4. solution grade and tank mix ---------------------------------
   function calcSol() {
     var wpg = num('s-wpg'), pct = num('s-pct');
     var lbPerGal = wpg * pct / 100;
@@ -1670,6 +1885,7 @@ TOOLS_JS = """(function () {
 
   function init() {
     initQR();
+    initAcres();
     on(['r-acres', 'r-rate', 'r-n', 'r-p', 'r-k', 'r-have'], calcRate);
     on(['s-wpg', 's-pct', 's-gal', 's-target', 's-tank'], calcSol);
     calcRate(); calcSol();

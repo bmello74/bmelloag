@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Field Tools — GPS QR Codes, Rate &amp; Solution Calculators</title>
-<meta name="description" content="Free ag field tools from B. Mello Ag Services: turn GPS coordinates into a scannable QR code, work out product and acreage, and convert solution grade gallons to pounds.">
+<title>Field Tools — Acreage, GPS QR Codes &amp; Rate Calculators</title>
+<meta name="description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, and convert solution grade gallons to pounds.">
 <link rel="canonical" href="https://bmelloag.com/field-tools">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="author" content="B. Mello Ag Services">
@@ -12,14 +12,14 @@
 <meta name="geo.placename" content="Hanford, California">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="B. Mello Ag Services">
-<meta property="og:title" content="Field Tools — GPS QR Codes, Rate &amp; Solution Calculators">
-<meta property="og:description" content="Free ag field tools from B. Mello Ag Services: turn GPS coordinates into a scannable QR code, work out product and acreage, and convert solution grade gallons to pounds.">
+<meta property="og:title" content="Field Tools — Acreage, GPS QR Codes &amp; Rate Calculators">
+<meta property="og:description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, and convert solution grade gallons to pounds.">
 <meta property="og:url" content="https://bmelloag.com/field-tools">
 <meta property="og:image" content="https://bmelloag.com/assets/img/hero.jpg">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Field Tools — GPS QR Codes, Rate &amp; Solution Calculators">
-<meta name="twitter:description" content="Free ag field tools from B. Mello Ag Services: turn GPS coordinates into a scannable QR code, work out product and acreage, and convert solution grade gallons to pounds.">
+<meta name="twitter:title" content="Field Tools — Acreage, GPS QR Codes &amp; Rate Calculators">
+<meta name="twitter:description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, and convert solution grade gallons to pounds.">
 <meta name="twitter:image" content="https://bmelloag.com/assets/img/hero.jpg">
 <link rel="icon" href="/assets/logo.png">
 <link rel="alternate" type="application/rss+xml" title="B. Mello Ag Services Reports" href="/feed.xml">
@@ -52,7 +52,7 @@
   <div class="wrap">
     <div class="eyebrow">B. Mello Ag Services</div>
     <h1>Field Tools</h1>
-    <p class="tag">Free calculators for coordinates, rates and solution grade.</p>
+    <p class="tag">Free calculators for acreage, coordinates, rates and solution grade.</p>
   </div>
 </header>
 
@@ -87,8 +87,66 @@
       </div>
     </div>
 
+    <div class="tool" id="tool-acres">
+      <h2>Field acreage</h2>
+      <p class="toolnote">How many acres is it, really. Measure the block, take it off a pivot radius,
+         or walk the corners with your phone &mdash; useful when the map, the deed and the ground
+         disagree, and for billing the piece you actually covered.</p>
+      <div class="modes">
+        <button type="button" class="modebtn is-on" data-mode="dim" aria-pressed="true">Length &amp; width</button>
+        <button type="button" class="modebtn" data-mode="pivot" aria-pressed="false">Circle / pivot</button>
+        <button type="button" class="modebtn" data-mode="gps" aria-pressed="false">GPS corners</button>
+      </div>
+      <div class="toolgrid">
+        <div class="toolin">
+          <div class="amode" id="a-pane-dim">
+            <label for="a-len">Length <span class="opt">(feet)</span></label>
+            <input id="a-len" type="number" inputmode="decimal" step="any" value="1320">
+            <label for="a-wid">Width <span class="opt">(feet)</span></label>
+            <input id="a-wid" type="number" inputmode="decimal" step="any" value="1320">
+            <p class="toolnote" style="margin:14px 0 0">A quarter-quarter section is 1320 by 1320 feet,
+               which is where the 40 comes from.</p>
+          </div>
+
+          <div class="amode" id="a-pane-pivot" hidden>
+            <label for="a-rad">Radius <span class="opt">(feet, pivot point to the end gun)</span></label>
+            <input id="a-rad" type="number" inputmode="decimal" step="any" value="1320">
+            <label for="a-sweep">Sweep <span class="opt">(degrees &mdash; 360 is a full circle)</span></label>
+            <input id="a-sweep" type="number" inputmode="decimal" step="any" value="360">
+            <p class="toolnote" style="margin:14px 0 0">Drop the sweep to 180 or 270 for a part-circle
+               pivot working around a corner or a road.</p>
+          </div>
+
+          <div class="amode" id="a-pane-gps" hidden>
+            <label for="a-pt">Corner <span class="opt">(latitude, longitude)</span></label>
+            <input id="a-pt" type="text" inputmode="decimal" placeholder="36.327500, -119.645700"
+                   autocomplete="off" spellcheck="false">
+            <div class="toolbtns">
+              <button type="button" class="btn btn-gold" id="a-add">Add corner</button>
+              <button type="button" class="btn btn-quiet" id="a-here">Add my location</button>
+            </div>
+            <ol class="ptlist" id="a-list"></ol>
+            <div class="toolbtns">
+              <button type="button" class="btn btn-quiet" id="a-undo" disabled>Undo last</button>
+              <button type="button" class="btn btn-quiet" id="a-clear" disabled>Clear all</button>
+            </div>
+            <p class="toolnote" id="a-gpsnote"></p>
+          </div>
+        </div>
+        <div class="toolout">
+          <div class="res"><span>Acres</span><strong id="a-acres">&mdash;</strong></div>
+          <div class="res"><span>Square feet</span><strong id="a-sqft">&mdash;</strong></div>
+          <div class="res"><span>Hectares</span><strong id="a-ha">&mdash;</strong></div>
+          <div class="res sep"><span>Perimeter</span><strong id="a-per">&mdash;</strong></div>
+          <div class="toolbtns">
+            <button type="button" class="btn btn-quiet" id="a-use" disabled>Use these acres below</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="tool" id="tool-rate">
-      <h2>Rate &amp; acreage</h2>
+      <h2>Product &amp; rate</h2>
       <p class="toolnote">How much product the job takes, and what the analysis actually puts on the
          ground per acre.</p>
       <div class="toolgrid">

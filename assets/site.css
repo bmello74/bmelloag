@@ -459,3 +459,18 @@ section.signup { padding:0; }
 .toollink a{color:var(--ink-soft)}
 .toolfoot{margin-top:26px;color:var(--ink-soft);font-size:.9rem;line-height:1.6}
 .qrempty{color:var(--ink-soft);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+
+/* Acreage card: the three ways in, and the list of corners you have walked.
+   The mode buttons wrap rather than squeeze, because on a phone in a field
+   three of them across 390px would be unreadable. */
+.modes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.modebtn{font:inherit;font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+         padding:8px 13px;border:1px solid var(--hairline);background:transparent;
+         color:var(--ink-soft);border-radius:3px;cursor:pointer}
+.modebtn:hover{border-color:var(--gold);color:var(--ink)}
+.modebtn.is-on{background:var(--gold-wash);border-color:var(--gold);color:var(--ink)}
+.amode[hidden]{display:none}
+.ptlist{list-style:decimal;margin:14px 0 0;padding-left:26px}
+.ptlist:empty{margin:0}
+.ptlist li{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+           font-size:.85rem;padding:3px 0;color:var(--ink);word-break:break-word}
