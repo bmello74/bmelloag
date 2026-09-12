@@ -142,9 +142,10 @@ TRUSTED = [
         "what": "Bistro &amp; steakhouse \u2014 Hanford",
         "url": "https://www.fugazzisbistro.com/hanford",
         "cta": "See the menu",
-        "photo": "/assets/img/trusted/fugazzis.jpg",
-        "size": (480, 278),
-        "alt": "The Fugazzis Hanford sign on the storefront window",
+        "photo": "/assets/img/trusted/fugazzis-store.jpg",
+        "size": (1400, 793),
+        "wide": True,
+        "alt": "The lit Fugazzis sign over the patio in downtown Hanford at night",
         "body": [
             "A steakhouse on 7th Street that cooks the way this whole page is about: real food, "
             "cooked properly, out of things that change with the season. Albert Armenta runs the "
@@ -163,7 +164,13 @@ TRUSTED = [
             "text": "<strong>Wine Dinner with Austin Hope</strong> \u2014 Thursday, October 8 at "
                     "6:00pm. Four courses from Chef Fernando, each paired with a Hope Family "
                     "Wines pour, finishing on caramelized autumn pumpkin. $150 a person, "
-                    "reservations only, limited seating. Call (559) 587-4568.",
+                    "reservations only, limited seating.<br>Reserve: "
+                    "<a href=\"tel:+15595874568\">(559) 587-4568</a> or "
+                    "<a href=\"mailto:armenta.anibal@yahoo.com\">armenta.anibal@yahoo.com</a>",
+            "flyer": "/assets/img/trusted/fugazzis-winedinner.jpg",
+            "flyer_thumb": "/assets/img/trusted/fugazzis-winedinner-thumb.jpg",
+            "flyer_alt": "Wine Dinner at Fugazzis flyer \u2014 Hope Family Wines, October 8, "
+                         "6pm, four paired courses, $150 per person, reservations only",
         },
         "disclosure": "No connection here beyond a standing table. We eat there, we order from "
                       "there on the busy nights, and we send people there.",
@@ -1274,9 +1281,20 @@ def page_trusted():
         ev = t.get("event")
         ev_html = ""
         if ev and today <= ev["until"]:
-            ev_html = (chr(10) + '        <p class="trustevent">'
-                       f'<span class="evlabel">{e(ev["label"])}</span> {ev["text"]}</p>')
-        cards.append(f"""    <article class="trust">
+            flyer = ""
+            if ev.get("flyer"):
+                # A link, not a button: if the script never loads, tapping it
+                # still opens the flyer.
+                flyer = (f'<a class="flyer" href="{ev["flyer"]}" target="_blank" rel="noopener" '
+                         f'aria-label="Enlarge the flyer">'
+                         f'<img src="{ev["flyer_thumb"]}" alt="{e(ev["flyer_alt"])}" '
+                         f'width="320" height="400" loading="lazy" decoding="async">'
+                         f'<span class="flyerhint">Tap to enlarge</span></a>')
+            ev_html = (chr(10) + '        <div class="trustevent">'
+                       f'{flyer}<p><span class="evlabel">{e(ev["label"])}</span> '
+                       f'{ev["text"]}</p></div>')
+        wide = " trust-wide" if t.get("wide") else ""
+        cards.append(f"""    <article class="trust{wide}">
       <div class="trustpic">{pic}</div>
       <div class="trustbody">
         <h2>{e(t["name"])}</h2>
@@ -1318,7 +1336,9 @@ def page_trusted():
 
     <p class="toolfoot">Know somebody who belongs on this page? The bar is that we use them
        ourselves, so tell us who they are and what they did for you.
-       <a href="/contact">Get in touch.</a></p>"""
+       <a href="/contact">Get in touch.</a></p>
+
+    <script src="/assets/trusted.js" defer></script>"""
 
     return simple_page("/trusted", "Trusted",
                        "People and companies we use ourselves.",
@@ -1765,6 +1785,74 @@ def reports_index(items):
 </main>
 <script src="/assets/archive.js" defer></script>
 """ + footer()
+
+
+
+
+TRUSTED_JS = """(function () {
+  'use strict';
+  var links = [].slice.call(document.querySelectorAll('a.flyer'));
+  if (!links.length) return;
+
+  var box = null, img = null, lastFocus = null;
+
+  function build() {
+    box = document.createElement('div');
+    box.className = 'lbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Enlarged flyer');
+    box.hidden = true;
+    img = document.createElement('img');
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'lclose';
+    close.setAttribute('aria-label', 'Close');
+    close.innerHTML = '&times;';
+    box.appendChild(img);
+    box.appendChild(close);
+    document.body.appendChild(box);
+
+    // Click the backdrop or the button to leave. Clicking the picture itself
+    // does nothing, because that is where a thumb lands while pinching.
+    box.addEventListener('click', function (ev) {
+      if (ev.target === box || ev.target === close) hide();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (!box.hidden && (ev.key === 'Escape' || ev.key === 'Esc')) hide();
+    });
+  }
+
+  function show(href, alt) {
+    if (!box) build();
+    lastFocus = document.activeElement;
+    img.src = href;
+    img.alt = alt || '';
+    box.hidden = false;
+    document.body.style.overflow = 'hidden';
+    box.querySelector('.lclose').focus();
+  }
+
+  function hide() {
+    box.hidden = true;
+    img.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  links.forEach(function (a) {
+    a.addEventListener('click', function (ev) {
+      // Leave the modified clicks alone -- somebody asking for a new tab
+      // should get one.
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;
+      ev.preventDefault();
+      var thumb = a.querySelector('img');
+      show(a.getAttribute('href'), thumb ? thumb.getAttribute('alt') : '');
+    });
+  });
+})();
+"""
+
 
 
 TOOLS_JS = """(function () {
@@ -2480,6 +2568,7 @@ def build_site():
     write("about.html", page_about())
     write("contact.html", page_contact())
     write("trusted.html", page_trusted())
+    write("assets/trusted.js", TRUSTED_JS)
     write("field-tools.html", page_tools())
     write("assets/tools.js", TOOLS_JS)
     write("subscribe.html", page_subscribe(items))
