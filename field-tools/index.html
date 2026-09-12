@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Field Tools — Acreage, GPS QR Codes &amp; Rate Calculators</title>
-<meta name="description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, and convert solution grade gallons to pounds.">
+<title>Field Tools — Acreage, Load, Rate &amp; Solution Calculators</title>
+<meta name="description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, count truck loads and spreading time, and convert solution grade gallons to pounds.">
 <link rel="canonical" href="https://bmelloag.com/field-tools">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="author" content="B. Mello Ag Services">
@@ -12,14 +12,14 @@
 <meta name="geo.placename" content="Hanford, California">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="B. Mello Ag Services">
-<meta property="og:title" content="Field Tools — Acreage, GPS QR Codes &amp; Rate Calculators">
-<meta property="og:description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, and convert solution grade gallons to pounds.">
+<meta property="og:title" content="Field Tools — Acreage, Load, Rate &amp; Solution Calculators">
+<meta property="og:description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, count truck loads and spreading time, and convert solution grade gallons to pounds.">
 <meta property="og:url" content="https://bmelloag.com/field-tools">
 <meta property="og:image" content="https://bmelloag.com/assets/img/hero.jpg">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Field Tools — Acreage, GPS QR Codes &amp; Rate Calculators">
-<meta name="twitter:description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, and convert solution grade gallons to pounds.">
+<meta name="twitter:title" content="Field Tools — Acreage, Load, Rate &amp; Solution Calculators">
+<meta name="twitter:description" content="Free ag field tools from B. Mello Ag Services: work out field acreage from dimensions, a pivot radius or GPS corners, turn coordinates into a scannable QR code, count truck loads and spreading time, and convert solution grade gallons to pounds.">
 <meta name="twitter:image" content="https://bmelloag.com/assets/img/hero.jpg">
 <link rel="icon" href="/assets/logo.png">
 <link rel="alternate" type="application/rss+xml" title="B. Mello Ag Services Reports" href="/feed.xml">
@@ -52,7 +52,7 @@
   <div class="wrap">
     <div class="eyebrow">B. Mello Ag Services</div>
     <h1>Field Tools</h1>
-    <p class="tag">Free calculators for acreage, coordinates, rates and solution grade.</p>
+    <p class="tag">Free calculators for acreage, coordinates, rates, truck loads and solution grade.</p>
   </div>
 </header>
 
@@ -172,6 +172,74 @@
           <div class="res"><span>Phosphate</span><strong id="r-up">&mdash;</strong></div>
           <div class="res"><span>Potash</span><strong id="r-uk">&mdash;</strong></div>
           <div class="res sep"><span>Tons on hand cover</span><strong id="r-cover">&mdash;</strong></div>
+          <div class="toolbtns">
+            <button type="button" class="btn btn-quiet" id="r-send">Send these tons to dispatch</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool" id="tool-load">
+      <h2>Load &amp; dispatch</h2>
+      <p class="toolnote">The two questions that get asked before a job goes out: how many loads is
+         that and how long are the trucks at it, and how long is the applicator on the field before
+         it has to come back and refill.</p>
+      <div class="modes">
+        <button type="button" class="modebtn is-on" data-mode="haul" aria-pressed="true">Trucks &amp; loads</button>
+        <button type="button" class="modebtn" data-mode="spread" aria-pressed="false">Spread time</button>
+      </div>
+      <div class="toolgrid">
+        <div class="toolin">
+          <div class="amode" id="d-pane-haul">
+            <label for="d-tons">Tons to move</label>
+            <input id="d-tons" type="number" inputmode="decimal" step="any" value="320">
+            <label for="d-cap">Truck capacity <span class="opt">(tons)</span></label>
+            <input id="d-cap" type="number" inputmode="decimal" step="any" value="25">
+            <label for="d-drive">Round trip drive time <span class="opt">(minutes, out and back)</span></label>
+            <input id="d-drive" type="number" inputmode="decimal" step="any" value="90">
+            <label for="d-turn">Load &amp; dump time <span class="opt">(minutes a trip)</span></label>
+            <input id="d-turn" type="number" inputmode="decimal" step="any" value="25">
+            <label for="d-trucks">Trucks running</label>
+            <input id="d-trucks" type="number" inputmode="decimal" step="1" min="1" value="2">
+          </div>
+
+          <div class="amode" id="d-pane-spread" hidden>
+            <label for="d-acres">Acres</label>
+            <input id="d-acres" type="number" inputmode="decimal" step="any" value="40">
+            <label for="d-width">Swath width <span class="opt">(feet)</span></label>
+            <input id="d-width" type="number" inputmode="decimal" step="any" value="60">
+            <label for="d-speed">Ground speed <span class="opt">(mph)</span></label>
+            <input id="d-speed" type="number" inputmode="decimal" step="any" value="10">
+            <label for="d-eff">Field efficiency <span class="opt">(%, turns and overlap)</span></label>
+            <input id="d-eff" type="number" inputmode="decimal" step="any" value="80">
+            <label for="d-rateac">Rate <span class="opt">(lb per acre)</span></label>
+            <input id="d-rateac" type="number" inputmode="decimal" step="any" value="400">
+            <label for="d-spcap">Spreader capacity <span class="opt">(tons)</span></label>
+            <input id="d-spcap" type="number" inputmode="decimal" step="any" value="12">
+            <p class="toolnote" style="margin:14px 0 0">Efficiency is the honest part. Eighty percent
+               is a fair day on a square block; drop it for point rows, short runs or a lot of turning.</p>
+          </div>
+        </div>
+
+        <div class="toolout">
+          <div class="amode" id="d-out-haul">
+            <div class="res"><span>Loads</span><strong id="d-loads">&mdash;</strong></div>
+            <div class="res"><span>Last load</span><strong id="d-last">&mdash;</strong></div>
+            <div class="res sep"><span>Cycle time</span><strong id="d-cycle">&mdash;</strong></div>
+            <div class="res"><span>Fleet turns</span><strong id="d-perhr">&mdash;</strong></div>
+            <div class="res sep"><span>Time to move it all</span><strong id="d-total">&mdash;</strong></div>
+            <div class="res"><span>Per truck</span><strong id="d-pertruck">&mdash;</strong></div>
+          </div>
+          <div class="amode" id="d-out-spread" hidden>
+            <div class="res"><span>Ground covered</span><strong id="d-ach">&mdash;</strong></div>
+            <div class="res"><span>Time on the field</span><strong id="d-hours">&mdash;</strong></div>
+            <div class="res sep"><span>One load covers</span><strong id="d-acload">&mdash;</strong></div>
+            <div class="res"><span>Refills for the job</span><strong id="d-loads2">&mdash;</strong></div>
+            <div class="res sep"><span>Product for the job</span><strong id="d-tons2">&mdash;</strong></div>
+            <div class="toolbtns">
+              <button type="button" class="btn btn-quiet" id="d-send">Send these tons to the trucks</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

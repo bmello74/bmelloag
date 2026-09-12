@@ -139,6 +139,11 @@
   // run the shoelace formula. Over anything field-sized that is good to about
   // a hundredth of a percent: a surveyed one-mile section comes out 639.94
   // against a true 640, which is tighter than anyone walks a boundary.
+  function modeBtns(cardId) {
+    var card = $(cardId);
+    return card ? [].slice.call(card.querySelectorAll('.modebtn')) : [];
+  }
+
   var SQFT_PER_ACRE = 43560;
   var pts = [], mode = 'dim', lastAcres = NaN;
 
@@ -223,7 +228,7 @@
     ['dim', 'pivot', 'gps'].forEach(function (k) {
       var pane = $('a-pane-' + k); if (pane) pane.hidden = (k !== m);
     });
-    [].slice.call(document.querySelectorAll('.modebtn')).forEach(function (b) {
+    modeBtns('tool-acres').forEach(function (b) {
       var isOn = b.getAttribute('data-mode') === m;
       b.className = 'modebtn' + (isOn ? ' is-on' : '');
       b.setAttribute('aria-pressed', isOn ? 'true' : 'false');
@@ -235,7 +240,7 @@
     if (!$('tool-acres')) return;
     on(['a-len', 'a-wid', 'a-rad', 'a-sweep'], calcAcres);
 
-    [].slice.call(document.querySelectorAll('.modebtn')).forEach(function (b) {
+    modeBtns('tool-acres').forEach(function (b) {
       b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); });
     });
 
@@ -281,6 +286,8 @@
       var f = $('r-acres'); if (!f) return;
       f.value = lastAcres.toFixed(2);
       calcRate();
+      var sp = $('d-acres');
+      if (sp) { sp.value = lastAcres.toFixed(2); calcLoad(); }
       var card = $('tool-rate');
       if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
       use.textContent = 'Sent down \u2193';
@@ -306,7 +313,122 @@
     put('r-cover', isFinite(have * 2000 / rate) ? fmt(have * 2000 / rate, 1) + ' acres' : '\u2014');
   }
 
-  // ---- 4. solution grade and tank mix ---------------------------------
+  // ---- 4. load and dispatch --------------------------------------------
+  // Haul side: loads is a ceiling, not a division -- a 0.8 of a load still
+  // sends a truck. Spread side: swath feet x mph x 5280 / 43560 is acres an
+  // hour flat out, then knocked down by field efficiency, because nobody
+  // spreads in one unbroken line.
+  var lmode = 'haul';
+
+  function hoursText(h) {
+    if (!isFinite(h) || h < 0) return '\u2014';
+    var mins = Math.round(h * 60);
+    if (mins < 60) return mins + ' min';
+    var h = Math.floor(mins / 60), m = mins % 60;
+    return h + ' h' + (m ? ' ' + m + ' min' : '');
+  }
+
+  function calcLoad() {
+    if (!$('tool-load')) return;
+    if (lmode === 'haul') {
+      var tons = num('d-tons'), cap = num('d-cap');
+      var drive = num('d-drive'), turn = num('d-turn'), trucks = num('d-trucks');
+      if (!isFinite(trucks) || trucks < 1) trucks = 1;
+      trucks = Math.floor(trucks);
+
+      var loads = (isFinite(tons) && tons > 0 && isFinite(cap) && cap > 0)
+                ? Math.ceil(tons / cap - 1e-9) : NaN;
+      put('d-loads', isFinite(loads) ? fmt(loads, 0) + (loads === 1 ? ' load' : ' loads') : '\u2014');
+
+      if (isFinite(loads) && loads > 0) {
+        var last = tons - (loads - 1) * cap;
+        put('d-last', fmt(last, 2) + ' tons' + (Math.abs(last - cap) < 0.005 ? ' (full)' : ''));
+      } else { put('d-last', '\u2014'); }
+
+      var cycle = (isFinite(drive) ? drive : 0) + (isFinite(turn) ? turn : 0);
+      put('d-cycle', cycle > 0 ? fmt(cycle, 0) + ' min a trip' : '\u2014');
+      put('d-perhr', cycle > 0 ? fmt(trucks * 60 / cycle, 2) + ' loads/hr' : '\u2014');
+      put('d-total', (isFinite(loads) && cycle > 0) ? hoursText(loads * cycle / trucks / 60) : '\u2014');
+      var each = isFinite(loads) ? Math.ceil(loads / trucks) : NaN;
+      put('d-pertruck', isFinite(each)
+          ? fmt(each, 0) + (each === 1 ? ' trip each' : ' trips each') : '\u2014');
+    } else {
+      var ac = num('d-acres'), w = num('d-width'), mph = num('d-speed');
+      var eff = num('d-eff'); if (!isFinite(eff) || eff <= 0) eff = 100;
+      var rate = num('d-rateac'), spcap = num('d-spcap');
+
+      var acHr = w * mph * 5280 / 43560 * (eff / 100);
+      put('d-ach', (isFinite(acHr) && acHr > 0) ? fmt(acHr, 1) + ' ac/hr' : '\u2014');
+      put('d-hours', (isFinite(ac) && ac > 0 && acHr > 0) ? hoursText(ac / acHr) : '\u2014');
+
+      var acLoad = spcap * 2000 / rate;
+      put('d-acload', (isFinite(acLoad) && acLoad > 0) ? fmt(acLoad, 1) + ' acres' : '\u2014');
+      var refills = (isFinite(ac) && ac > 0 && isFinite(acLoad) && acLoad > 0)
+                  ? Math.ceil(ac / acLoad - 1e-9) : NaN;
+      put('d-loads2', isFinite(refills)
+          ? fmt(refills, 0) + (refills === 1 ? ' load' : ' loads') : '\u2014');
+
+      var jobTons = ac * rate / 2000;
+      put('d-tons2', isFinite(jobTons) ? fmt(jobTons, 2) + ' tons' : '\u2014');
+      var snd = $('d-send');
+      if (snd) {
+        if (isFinite(jobTons) && jobTons > 0) snd.removeAttribute('disabled');
+        else snd.setAttribute('disabled', 'disabled');
+      }
+    }
+  }
+
+  function setLoadMode(m) {
+    lmode = m;
+    ['haul', 'spread'].forEach(function (k) {
+      var pane = $('d-pane-' + k); if (pane) pane.hidden = (k !== m);
+      var out = $('d-out-' + k);   if (out)  out.hidden  = (k !== m);
+    });
+    modeBtns('tool-load').forEach(function (b) {
+      var isOn = b.getAttribute('data-mode') === m;
+      b.className = 'modebtn' + (isOn ? ' is-on' : '');
+      b.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+    });
+    calcLoad();
+  }
+
+  function initLoad() {
+    if (!$('tool-load')) return;
+    on(['d-tons', 'd-cap', 'd-drive', 'd-turn', 'd-trucks',
+        'd-acres', 'd-width', 'd-speed', 'd-eff', 'd-rateac', 'd-spcap'], calcLoad);
+
+    modeBtns('tool-load').forEach(function (b) {
+      b.addEventListener('click', function () { setLoadMode(b.getAttribute('data-mode')); });
+    });
+
+    // Tons come from two places -- the rate card above, or the spread side of
+    // this one. Both land in the same box.
+    function sendTons(tons, btn, back) {
+      var box = $('d-tons'); if (!box || !isFinite(tons) || tons <= 0) return;
+      box.value = tons.toFixed(2);
+      setLoadMode('haul');
+      var card = $('tool-load');
+      if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (btn) {
+        btn.textContent = 'Sent \u2193';
+        setTimeout(function () { btn.textContent = back; }, 1800);
+      }
+    }
+
+    var rs = $('r-send');
+    if (rs) rs.addEventListener('click', function () {
+      sendTons(num('r-acres') * num('r-rate') / 2000, rs, 'Send these tons to dispatch');
+    });
+
+    var ds = $('d-send');
+    if (ds) ds.addEventListener('click', function () {
+      sendTons(num('d-acres') * num('d-rateac') / 2000, ds, 'Send these tons to the trucks');
+    });
+
+    setLoadMode('haul');
+  }
+
+  // ---- 5. solution grade and tank mix ---------------------------------
   function calcSol() {
     var wpg = num('s-wpg'), pct = num('s-pct');
     var lbPerGal = wpg * pct / 100;
@@ -327,6 +449,7 @@
   function init() {
     initQR();
     initAcres();
+    initLoad();
     on(['r-acres', 'r-rate', 'r-n', 'r-p', 'r-k', 'r-have'], calcRate);
     on(['s-wpg', 's-pct', 's-gal', 's-target', 's-tank'], calcSol);
     calcRate(); calcSol();
