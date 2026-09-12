@@ -137,6 +137,37 @@ TRUSTED = [
         "disclosure": "Michelle is my wife. We both take the products every day \u2014 that is "
                       "why she is the first name on this page.",
     },
+    {
+        "name": "Fugazzis",
+        "what": "Bistro &amp; steakhouse \u2014 Hanford",
+        "url": "https://www.fugazzisbistro.com/hanford",
+        "cta": "See the menu",
+        "photo": "/assets/img/trusted/fugazzis.jpg",
+        "size": (480, 278),
+        "alt": "The Fugazzis Hanford sign on the storefront window",
+        "body": [
+            "A steakhouse on 7th Street that cooks the way this whole page is about: real food, "
+            "cooked properly, out of things that change with the season. Albert Armenta runs the "
+            "room and Chef Fernando runs the kitchen, and the specials move week to week instead "
+            "of sitting on a laminated menu all year.",
+            "The part we lean on hardest is the family-style takeout. There are weeks where the "
+            "choice after a ball game or a school night is a drive-through window or nothing, and "
+            "they built the answer to that \u2014 a proper meal for the whole table, ready to "
+            "pick up. Eating clean should not have to stop because the calendar got busy.",
+            "Warm room, and people who are glad you came in. They also put on reservation-only "
+            "evenings worth clearing a night for.",
+        ],
+        "event": {
+            "until": "2026-10-08",
+            "label": "Coming up",
+            "text": "<strong>Wine Dinner with Austin Hope</strong> \u2014 Thursday, October 8 at "
+                    "6:00pm. Four courses from Chef Fernando, each paired with a Hope Family "
+                    "Wines pour, finishing on caramelized autumn pumpkin. $150 a person, "
+                    "reservations only, limited seating. Call (559) 587-4568.",
+        },
+        "disclosure": "No connection here beyond a standing table. We eat there, we order from "
+                      "there on the busy nights, and we send people there.",
+    },
 ]
 
 e = html.escape
@@ -1227,20 +1258,30 @@ def page_trusted():
     our own money to, which is the only qualification and the only reason the
     page is worth anything to a reader."""
     cards = []
+    today = datetime.date.today().isoformat()
     for t in TRUSTED:
         if t.get("photo"):
+            w, h = t.get("size", (480, 600))
             pic = (f'<img src="{t["photo"]}" alt="{e(t["alt"])}" '
-                   f'width="480" height="600" loading="lazy" decoding="async">')
+                   f'width="{w}" height="{h}" loading="lazy" decoding="async">')
         else:
             initials = "".join(w[0] for w in t["name"].split()[:2]).upper()
             pic = f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
         paras = "\n".join(f"          <p>{b}</p>" for b in t["body"])
+
+        # A dated event shows until its day is past and then stops, by itself.
+        # A stale "coming up" is a worse advert than no event at all.
+        ev = t.get("event")
+        ev_html = ""
+        if ev and today <= ev["until"]:
+            ev_html = (chr(10) + '        <p class="trustevent">'
+                       f'<span class="evlabel">{e(ev["label"])}</span> {ev["text"]}</p>')
         cards.append(f"""    <article class="trust">
       <div class="trustpic">{pic}</div>
       <div class="trustbody">
         <h2>{e(t["name"])}</h2>
         <p class="trustwhat">{t["what"]}</p>
-{paras}
+{paras}{ev_html}
         <p class="trustdisc">{t["disclosure"]}</p>
         <p class="trustgo"><a class="btn btn-gold" href="{e(t["url"])}"
            rel="noopener nofollow" target="_blank">{t["cta"]}</a></p>

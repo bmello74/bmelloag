@@ -503,3 +503,11 @@ section.signup { padding:0; }
 .trustdisc{border-left:3px solid var(--gold);padding:6px 0 6px 13px;margin:16px 0;
            color:var(--ink-soft);font-size:.88rem;line-height:1.56}
 .trustgo{margin:16px 0 0}
+
+/* A dated event on a card. Set apart enough to be read as news rather than as
+   more description, and it disappears on its own the day after it happens. */
+.trustevent{background:var(--gold-wash);border:1px solid var(--hairline);border-radius:3px;
+            padding:12px 14px;margin:16px 0 0;font-size:.91rem;line-height:1.6}
+.evlabel{display:inline-block;margin-right:8px;padding:2px 7px;border-radius:2px;
+         background:var(--gold);color:#1a1a1a;font-size:.66rem;font-weight:700;
+         letter-spacing:.1em;text-transform:uppercase;vertical-align:2px}
