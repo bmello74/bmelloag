@@ -106,7 +106,38 @@ PAST_LABEL = {
 NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Spreader Trucks"),
        ("/hay", "Hay"), ("/reports", "Reports"), ("/field-tools", "Tools"),
-       ("/about", "About"), ("/contact", "Contact")]
+       ("/trusted", "Trusted"), ("/about", "About"), ("/contact", "Contact")]
+
+
+
+# ------------------------------------------------------------------ trusted
+# People and outfits we use ourselves. Kept as data, not HTML, so the next one
+# is a dict -- and so `disclosure` stays a required field. A card cannot go up
+# without saying what the connection is, which is the whole reason anyone would
+# believe the recommendation.
+#
+# photo: a path under assets/img/trusted/, or None for the monogram tile.
+TRUSTED = [
+    {
+        "name": "Michelle Mello",
+        "what": "Shaklee \u2014 nutrition and supplements",
+        "url": "https://mymodlink.com/MichelleMello/",
+        "cta": "Visit Michelle\u2019s page",
+        "photo": "/assets/img/trusted/michelle-mello.jpg",
+        "alt": "Michelle Mello, Shaklee ambassador",
+        "body": [
+            "Shaklee has been making nutrition products since 1956, which is a good deal longer "
+            "than most of what gets sold as a breakthrough has been around. Michelle is a Shaklee "
+            "ambassador and she works the daily end of it \u2014 what you take every morning, how "
+            "you eat around it, and staying strong and clear-headed for the long run instead of "
+            "chasing a six-week result.",
+            "Start with a conversation. She asks what you are already doing before she brings up a "
+            "product, and she will tell you straight if she thinks you don\u2019t need one.",
+        ],
+        "disclosure": "Michelle is my wife. We both take the products every day \u2014 that is "
+                      "why she is the first name on this page.",
+    },
+]
 
 e = html.escape
 MONTH = ["", "January", "February", "March", "April", "May", "June",
@@ -1187,6 +1218,75 @@ def page_subscribe(items):
                        image_size=(1200, 630),
                        image_alt="B. Mello Ag Services - free ag reports. News, field reports and "
                                  "market updates at bmelloag.com.")
+
+
+
+
+def page_trusted():
+    """Not a directory and not an ad board. Everyone on it is somebody we pay
+    our own money to, which is the only qualification and the only reason the
+    page is worth anything to a reader."""
+    cards = []
+    for t in TRUSTED:
+        if t.get("photo"):
+            pic = (f'<img src="{t["photo"]}" alt="{e(t["alt"])}" '
+                   f'width="480" height="600" loading="lazy" decoding="async">')
+        else:
+            initials = "".join(w[0] for w in t["name"].split()[:2]).upper()
+            pic = f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
+        paras = "\n".join(f"          <p>{b}</p>" for b in t["body"])
+        cards.append(f"""    <article class="trust">
+      <div class="trustpic">{pic}</div>
+      <div class="trustbody">
+        <h2>{e(t["name"])}</h2>
+        <p class="trustwhat">{t["what"]}</p>
+{paras}
+        <p class="trustdisc">{t["disclosure"]}</p>
+        <p class="trustgo"><a class="btn btn-gold" href="{e(t["url"])}"
+           rel="noopener nofollow" target="_blank">{t["cta"]}</a></p>
+      </div>
+    </article>""")
+
+    body = """    <p class="lede">We only recommend products and services we use ourselves and think would
+       enrich the lives of the people we care about. Everyone on this page clears that bar. Some of
+       them have nothing to do with farming, and that is the point.</p>
+
+    <p>We spend our working lives on targeted plant nutrition &mdash; pull a sample, find out what
+       the ground is honestly short of, and feed it exactly that instead of a blanket rate across
+       the whole ranch. It would be a strange thing to put that much care into dirt and none of it
+       into ourselves. What you put in your body and how you look after it matters more than how you
+       look after the ground you farm and the crop you grow. If we don&rsquo;t take care of
+       ourselves, we can&rsquo;t adequately take care of and provide for the people who count on
+       us.</p>
+
+    <p>And people learn from what you do, not from what you say. Good nutrition, moving your body,
+       eating clean &mdash; that is the same job we do for the dirt, done for the people we go home
+       to.</p>
+
+    <div class="standing">
+      <h2>Where we stand</h2>
+      <p>Nobody lands on this page because they asked to. They are here because we use them, and
+         because we would want them for the people we love.</p>
+      <p>Where we have a personal connection to somebody listed, it is written on their card, in
+         plain words.</p>
+      <p>None of this is medical advice, and we are not doctors. Talk to yours before you start or
+         stop anything &mdash; especially if you take prescription medication.</p>
+    </div>
+
+""" + "\n\n".join(cards) + """
+
+    <p class="toolfoot">Know somebody who belongs on this page? The bar is that we use them
+       ourselves, so tell us who they are and what they did for you.
+       <a href="/contact">Get in touch.</a></p>"""
+
+    return simple_page("/trusted", "Trusted",
+                       "People and companies we use ourselves.",
+                       body,
+                       "People and companies B. Mello Ag Services uses and trusts \u2014 in and out "
+                       "of agriculture. Nobody pays to be listed, and every personal connection is "
+                       "disclosed on the card.",
+                       seo_title="Trusted \u2014 People & Companies We Use")
+
 
 
 def page_tools():
@@ -2338,6 +2438,7 @@ def build_site():
     write("spreader-trucks.html", page_trucks())
     write("about.html", page_about())
     write("contact.html", page_contact())
+    write("trusted.html", page_trusted())
     write("field-tools.html", page_tools())
     write("assets/tools.js", TOOLS_JS)
     write("subscribe.html", page_subscribe(items))

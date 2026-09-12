@@ -474,3 +474,32 @@ section.signup { padding:0; }
 .ptlist:empty{margin:0}
 .ptlist li{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
            font-size:.85rem;padding:3px 0;color:var(--ink);word-break:break-word}
+
+/* ------------------------------------------------------------------ trusted
+   Recommendation cards on /trusted. A portrait column that becomes a small
+   square on a phone rather than a full-width face, and a disclosure rule that
+   is meant to be noticed -- it is the part that makes the rest believable. */
+.standing{border:1px solid var(--hairline);background:var(--gold-wash);border-radius:4px;
+          padding:18px 20px;margin:28px 0}
+.standing h2{margin:0 0 10px;font-size:.86rem;font-weight:700;letter-spacing:.09em;
+             text-transform:uppercase;color:var(--ink)}
+.standing p{margin:0 0 10px;font-size:.93rem;line-height:1.62;color:var(--ink-soft)}
+.standing p:last-child{margin-bottom:0}
+
+.trust{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;align-items:start;
+       border:1px solid var(--hairline);background:var(--surface);border-radius:4px;
+       padding:22px;margin:24px 0;box-shadow:var(--shadow)}
+@media (max-width:620px){.trust{grid-template-columns:minmax(0,1fr);gap:18px}
+                         .trustpic{max-width:148px}}
+.trustpic img{display:block;width:100%;height:auto;border-radius:3px}
+.mono{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;
+      background:var(--gold-wash);border:1px solid var(--gold);border-radius:3px;
+      font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+      font-size:2.1rem;font-weight:700;letter-spacing:.06em;color:var(--ink)}
+.trust h2{margin:0 0 5px;font-size:1.2rem;letter-spacing:.01em}
+.trustwhat{margin:0 0 14px;font-size:.78rem;font-weight:600;letter-spacing:.08em;
+           text-transform:uppercase;color:var(--ink-soft)}
+.trustbody p{line-height:1.68}
+.trustdisc{border-left:3px solid var(--gold);padding:6px 0 6px 13px;margin:16px 0;
+           color:var(--ink-soft);font-size:.88rem;line-height:1.56}
+.trustgo{margin:16px 0 0}
