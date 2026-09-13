@@ -145,6 +145,17 @@ TRUSTED = [
         ],
         "disclosure": "Michelle is my wife. We both take the products every day \u2014 that is "
                       "why she is the first name on this page.",
+        "schema": {
+            "@type": "Person",
+            "name": "Michelle Mello",
+            "jobTitle": "Shaklee Ambassador",
+            "url": "https://mymodlink.com/MichelleMello/",
+            "image": SITE + "/assets/img/trusted/michelle-mello.jpg",
+            "affiliation": {"@type": "Organization", "name": "Shaklee",
+                            "url": "https://shaklee.com/"},
+            "knowsAbout": ["nutrition", "dietary supplements", "vitamins",
+                           "whole body health", "healthy aging", "clean eating"],
+        },
     },
     {
         "name": "Fugazzis",
@@ -181,9 +192,51 @@ TRUSTED = [
             "flyer_thumb": "/assets/img/trusted/fugazzis-winedinner-thumb.jpg",
             "flyer_alt": "Wine Dinner at Fugazzis flyer \u2014 Hope Family Wines, October 8, "
                          "6pm, four paired courses, $150 per person, reservations only",
+            "schema": {
+                "@type": "FoodEvent",
+                "name": "Wine Dinner at Fugazzis with Austin Hope",
+                "startDate": "2026-10-08T18:00:00-07:00",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                "eventStatus": "https://schema.org/EventScheduled",
+                "description": "A four course dinner from Chef Fernando, each course paired "
+                               "with a Hope Family Wines pour, finishing on caramelized autumn "
+                               "pumpkin. Reservations only, limited seating.",
+                "image": SITE + "/assets/img/trusted/fugazzis-winedinner.jpg",
+                "location": {
+                    "@type": "Restaurant", "name": "Fugazzis Bistro & Steakhouse",
+                    "telephone": "+15595874568",
+                    "address": {"@type": "PostalAddress",
+                                "streetAddress": "601 W. 7th Street",
+                                "addressLocality": "Hanford", "addressRegion": "CA",
+                                "postalCode": "93230", "addressCountry": "US"}},
+                "offers": {"@type": "Offer", "price": "150", "priceCurrency": "USD",
+                           "availability": "https://schema.org/LimitedAvailability",
+                           "url": "https://www.fugazzisbistro.com/hanford"},
+                "performer": {"@type": "Person", "name": "Chef Fernando"},
+                "organizer": {"@type": "Restaurant",
+                              "name": "Fugazzis Bistro & Steakhouse"},
+            },
         },
         "disclosure": "No connection here beyond a standing table. We eat there, we order from "
                       "there on the busy nights, and we send people there.",
+        "schema": {
+            "@type": "Restaurant",
+            "name": "Fugazzis Bistro & Steakhouse",
+            "url": "https://www.fugazzisbistro.com/hanford",
+            "image": SITE + "/assets/img/trusted/fugazzis-store.jpg",
+            "telephone": "+15595874568",
+            "servesCuisine": ["Steakhouse", "American", "Bistro"],
+            "priceRange": "$$$",
+            "address": {"@type": "PostalAddress", "streetAddress": "601 W. 7th Street",
+                        "addressLocality": "Hanford", "addressRegion": "CA",
+                        "postalCode": "93230", "addressCountry": "US"},
+            "amenityFeature": [
+                {"@type": "LocationFeatureSpecification", "name": "Full bar", "value": True},
+                {"@type": "LocationFeatureSpecification", "name": "Takeout", "value": True},
+                {"@type": "LocationFeatureSpecification", "name": "Family style takeout",
+                 "value": True},
+            ],
+        },
     },
 ]
 
@@ -1070,8 +1123,7 @@ def page_nutrition():
                        "carry it out.",
                        body,
                        "Custom fertilizer blends, gypsum, lime, sulfur, compost and solution grade "
-                       "products, plus GPS-guided soil sampling. Sold across California and into the "
-                       "western states.",
+                       "products, plus GPS-guided soil sampling. Hanford and the Central Valley.",
                        "/assets/img/tractor-trees.mp4",
                        strip_alt="A B. Mello tractor spreader placing material down a "
                                  "walnut row",
@@ -1275,6 +1327,7 @@ def page_trusted():
     our own money to, which is the only qualification and the only reason the
     page is worth anything to a reader."""
     cards = []
+    entities = []          # one JSON-LD entity per card, plus any live event
     today = datetime.date.today().isoformat()
     for t in TRUSTED:
         if t.get("photo"):
@@ -1288,9 +1341,19 @@ def page_trusted():
 
         # A dated event shows until its day is past and then stops, by itself.
         # A stale "coming up" is a worse advert than no event at all.
+        # The entity goes in the page's structured data whether or not a reader
+        # scrolls this far. An expired event drops out of the markup the same
+        # day it drops off the page -- stale Event data is worse than none.
+        if t.get("schema"):
+            ent = dict(t["schema"])
+            ent.setdefault("@id", f"{SITE}/trusted#{t['name'].lower().replace(' ', '-')}")
+            entities.append(ent)
+
         ev = t.get("event")
         ev_html = ""
         if ev and today <= ev["until"]:
+            if ev.get("schema"):
+                entities.append(dict(ev["schema"]))
             flyer = ""
             if ev.get("flyer"):
                 # A link, not a button: if the script never loads, tapping it
@@ -1348,13 +1411,30 @@ def page_trusted():
 
     <script src="/assets/trusted.js" defer></script>"""
 
+    itemlist = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "@id": SITE + "/trusted#list",
+        "name": "People and companies B. Mello Ag Services uses and trusts",
+        "itemListOrder": "https://schema.org/ItemListUnordered",
+        "numberOfItems": len(TRUSTED),
+        "itemListElement": [
+            {"@type": "ListItem", "position": n + 1,
+             "name": t["name"],
+             "url": t["url"]}
+            for n, t in enumerate(TRUSTED)],
+    }
+    blocks = [itemlist] + [dict(ent, **{"@context": "https://schema.org"})
+                           for ent in entities]
+
     return simple_page("/trusted", "Trusted",
                        "People and companies we use ourselves.",
                        body,
-                       "People and companies B. Mello Ag Services uses and trusts \u2014 in and out "
-                       "of agriculture. Nobody pays to be listed, and every personal connection is "
-                       "disclosed on the card.",
-                       seo_title="Trusted \u2014 People & Companies We Use")
+                       "People and businesses B. Mello Ag Services uses and trusts around "
+                       "Hanford and the Central Valley \u2014 Shaklee nutrition, and Fugazzis "
+                       "bistro and steakhouse.",
+                       seo_title="Trusted \u2014 People & Companies We Use in Hanford, CA",
+                       extra_ld=blocks)
 
 
 
@@ -1587,10 +1667,8 @@ def page_tools():
     return simple_page("/field-tools", "Field Tools",
                        "Free calculators for acreage, coordinates, rates, truck loads and solution grade.",
                        body,
-                       "Free ag field tools from B. Mello Ag Services: work out field acreage from "
-                       "dimensions, a pivot radius or GPS corners, turn coordinates into a scannable "
-                       "QR code, count truck loads and spreading time, and convert solution grade "
-                       "gallons to pounds.",
+                       "Free ag calculators: field acreage from dimensions, a pivot radius or GPS "
+                       "corners, coordinates to a QR code, truck loads and solution grade math.",
                        seo_title="Field Tools \u2014 Acreage, Load, Rate & Solution Calculators")
 
 
