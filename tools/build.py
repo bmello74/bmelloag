@@ -136,8 +136,12 @@ TRUSTED = [
             "your body, with real food and quality supplements behind it. Keep at that and it "
             "compounds into what everybody actually wants out of it: years of still being able, "
             "and being there for the moments you would hate to miss.",
-            "Start with a conversation. She asks what you are already doing before she brings up a "
-            "product, and she will tell you straight if she thinks you don\u2019t need one.",
+            "Everybody is somewhere different, and at a different stage of life, so it starts "
+            "with a conversation: where you are now, what you are after, and what worries you. "
+            "What comes back is not the trendy answer. It is steps you can actually take, drawn "
+            "from seventy years of Shaklee\u2019s work and from her own years of doing it, "
+            "pointed at the long haul instead of the next six weeks. And if she thinks you do "
+            "not need a product, she will say so.",
         ],
         "disclosure": "Michelle is my wife. We both take the products every day \u2014 that is "
                       "why she is the first name on this page.",
