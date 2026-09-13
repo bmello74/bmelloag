@@ -127,10 +127,15 @@ TRUSTED = [
         "alt": "Michelle Mello, Shaklee ambassador",
         "body": [
             "Shaklee has been making nutrition products since 1956, longer than most miracle "
-            "ingredients last. Michelle is a Shaklee "
-            "ambassador and she works the daily end of it \u2014 what you take every morning, how "
-            "you eat around it, and staying strong and clear-headed for the long run instead of "
-            "chasing a six-week result.",
+            "ingredients last. Michelle is a Shaklee ambassador, but the part worth knowing is "
+            "that she lives it \u2014 she does not hand anybody a routine she does not keep "
+            "herself, and she stays strong and active for her own sake and for the people who "
+            "count on her.",
+            "Her view is that whole-body health is not found, it is built. Twenty or thirty "
+            "minutes a day that belong to you, which does as much for your head as it does for "
+            "your body, with real food and quality supplements behind it. Keep at that and it "
+            "compounds into what everybody actually wants out of it: years of still being able, "
+            "and being there for the moments you would hate to miss.",
             "Start with a conversation. She asks what you are already doing before she brings up a "
             "product, and she will tell you straight if she thinks you don\u2019t need one.",
         ],
