@@ -149,14 +149,15 @@ TRUSTED = [
         "body": [
             "A steakhouse on 7th Street that cooks the way this whole page is about: real food, "
             "cooked properly, out of things that change with the season. Albert Armenta runs the "
-            "room and Chef Fernando runs the kitchen, and the specials move week to week instead "
-            "of sitting on a laminated menu all year.",
+            "room, Chef Fernando runs the kitchen and after a long awaited return mixologist "
+            "Fabian is back behind the bar. The specials move week to week instead of sitting on "
+            "a laminated menu all year.",
             "The part we lean on hardest is the family-style takeout. There are weeks where the "
             "choice after a ball game or a school night is a drive-through window or nothing, and "
             "they built the answer to that \u2014 a proper meal for the whole table, ready to "
             "pick up. Eating clean should not have to stop because the calendar got busy.",
-            "Warm room, and people who are glad you came in. They also put on reservation-only "
-            "evenings worth clearing a night for.",
+            "It is a warm room, and they are very good about making everyone feel like a "
+            "regular.",
         ],
         "event": {
             "until": "2026-10-08",
