@@ -147,11 +147,11 @@ TRUSTED = [
         "wide": True,
         "alt": "The lit Fugazzis sign over the patio in downtown Hanford at night",
         "body": [
-            "A steakhouse on 7th Street that cooks the way this whole page is about: real food, "
-            "cooked properly, out of things that change with the season. Albert Armenta runs the "
-            "room, Chef Fernando runs the kitchen and after a long awaited return mixologist "
-            "Fabian is back behind the bar. The specials move week to week instead of sitting on "
-            "a laminated menu all year.",
+            "A steakhouse on 7th Street that cooks the way this whole page is about: fine "
+            "ingredients at their peak, cooked with a light hand, and a table that changes with "
+            "the season. Restaurateur Albert runs the room, Chef Fernando runs the kitchen and "
+            "after a long awaited return mixologist Fabian is back behind the bar. The specials "
+            "move week to week instead of sitting on a laminated menu all year.",
             "The part we lean on hardest is the family-style takeout. There are weeks where the "
             "choice after a ball game or a school night is a drive-through window or nothing, and "
             "they built the answer to that \u2014 a proper meal for the whole table, ready to "
