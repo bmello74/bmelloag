@@ -143,7 +143,7 @@ TRUSTED = [
         "url": "https://www.fugazzisbistro.com/hanford",
         "cta": "See the menu",
         "photo": "/assets/img/trusted/fugazzis-store.jpg",
-        "size": (1400, 793),
+        "size": (1400, 847),
         "wide": True,
         "alt": "The lit Fugazzis sign over the patio in downtown Hanford at night",
         "body": [
