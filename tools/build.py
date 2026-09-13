@@ -1334,8 +1334,6 @@ def page_trusted():
          because we would want them for the people we love.</p>
       <p>Where we have a personal connection to somebody listed, it is written on their card, in
          plain words.</p>
-      <p>None of this is medical advice, and we are not doctors. Talk to yours before you start or
-         stop anything &mdash; especially if you take prescription medication.</p>
     </div>
 
 """ + "\n\n".join(cards) + """
