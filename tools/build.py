@@ -126,8 +126,8 @@ TRUSTED = [
         "photo": "/assets/img/trusted/michelle-mello.jpg",
         "alt": "Michelle Mello, Shaklee ambassador",
         "body": [
-            "Shaklee has been making nutrition products since 1956, which is a good deal longer "
-            "than most of what gets sold as a breakthrough has been around. Michelle is a Shaklee "
+            "Shaklee has been making nutrition products since 1956, longer than most miracle "
+            "ingredients last. Michelle is a Shaklee "
             "ambassador and she works the daily end of it \u2014 what you take every morning, how "
             "you eat around it, and staying strong and clear-headed for the long run instead of "
             "chasing a six-week result.",
