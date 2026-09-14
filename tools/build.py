@@ -60,7 +60,7 @@ SALES_AREA = "all of California and into the western states"
 # The two house themes. The soil line is the customer-facing promise and rides in
 # the masthead on every page; the American line closes the footer.
 THEME_SOIL = "Tailored for your soil &middot; Central Valley proven"
-THEME_AMERICAN = ("Proudly American &mdash; "
+THEME_AMERICAN = ("Proudly American. "
                   "<span>Rooted in the American Dream</span>")
 
 SERIES = {
@@ -811,7 +811,7 @@ def footer():
       <a href="{MAILCHIMP_SIGNUP_URL}">Subscribe free</a>
     </div>
     <p class="theme">{THEME_AMERICAN}</p>
-    <p class="fine">Copyright &copy; {year} {e(BIZ)} &mdash; All rights reserved.
+    <p class="fine">Copyright &copy; {year} {e(BIZ)}. All rights reserved.
       Fertilizer and soil amendment sales, custom tractor spreading and spreader trucks,
       and hay &mdash; out of Hanford, California.</p>
   </div>
@@ -834,9 +834,102 @@ def out_path(path):
     return path[:-len(".html")] + "/index.html"
 
 
+# ---------------------------------------------------------------- em dashes
+# Bryan reads em dashes as hyphens dropped into the middle of a sentence, and
+# he is right that most readers do not parse them. Every page this file writes
+# goes through dedash_html() on the way out, which means the static pages, the
+# published newsletter issues and anything added later are all clean without
+# anybody having to remember. Source copy may still contain them; the output
+# never does.
+
+ENTITIES = ('&mdash;', '&#8212;', '&#x2014;', '&#X2014;')
+CLOSERS = ',:;.!?'          # already punctuated, so the dash just goes away
+
+
+def dedash_text(t, prev=''):
+    """`prev` is the last visible character emitted before this run, which may
+    have come from an earlier tag -- a dash sitting in its own text node
+    between <strong> and the next word still needs a comma, not a deletion."""
+    for ent in ENTITIES:
+        t = t.replace(ent, '—')
+    if '—' not in t:
+        return t
+
+    out, pos = [], 0
+    for m in re.finditer(r'\s*—\s*', t):
+        out.append(t[pos:m.start()].rstrip())
+        left = (''.join(out)).rstrip() or prev
+        if not left:
+            sep = ''                       # genuinely opens on a dash
+        elif left[-1] in CLOSERS:
+            sep = ' '                      # never stack punctuation
+        else:
+            sep = ', '
+        out.append(sep)
+        pos = m.end()
+    out.append(t[pos:])
+    return ''.join(out)
+
+
+# Attributes a reader or a search result actually sees. Everything else --
+# href, src, class, style -- is left alone.
+VISIBLE_ATTRS = re.compile(r'\b(alt|title|content|data-hay)="([^"]*)"', re.I)
+LD_JSON = re.compile(r'(?is)(<script[^>]*application/ld\+json[^>]*>)(.*?)(</script>)')
+
+
+def _count(s):
+    return s.count('—') + sum(s.count(e) for e in ENTITIES)
+
+
+def dedash_html(html):
+    """Rewrite the text nodes, the attributes a person can read, and the
+    structured data -- which is what Google prints in a search result.
+    Scripts and stylesheets are left untouched. Returns (html, removed)."""
+    out, n, prev = [], 0, ''
+
+    def do_tag(tag):
+        nonlocal n
+        def attr(m):
+            nonlocal n
+            n += _count(m.group(2))
+            return f'{m.group(1)}="{dedash_text(m.group(2))}"'
+        return VISIBLE_ATTRS.sub(attr, tag)
+
+    def do_ld(m):
+        nonlocal n
+        n += _count(m.group(2))
+        return m.group(1) + dedash_text(m.group(2)) + m.group(3)
+
+    html = LD_JSON.sub(do_ld, html)
+
+    for m in re.finditer(r'(?is)<(script|style)\b.*?</\1>|<[^>]*>|[^<]+', html):
+        chunk = m.group(0)
+        if chunk.lower().startswith(('<script', '<style')):
+            out.append(chunk)              # a whole script or style block
+        elif chunk.startswith('<'):
+            out.append(do_tag(chunk))      # a tag: clean readable attributes
+        else:
+            n += _count(chunk)
+            fixed = dedash_text(chunk, prev=prev)
+            out.append(fixed)
+            stripped = fixed.rstrip()
+            if stripped:
+                prev = stripped[-1]
+    doc = ''.join(out)
+    # A dash that ended a block leaves a comma hanging before the closing tag.
+    doc = re.sub(r',\s*(</(?:p|div|td|th|h[1-6]|li|span|strong|em|b|a|center)>)',
+                 r'\1', doc)
+    # ...and one that started a block leaves a comma in front of the first word.
+    doc = re.sub(r'(<(?:p|div|td|th|h[1-6]|li|center)\b[^>]*>)\s*,\s*', r'\1', doc)
+    return doc, n
+
+
 def write(path, content):
     p = ROOT / out_path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
+    # The feed is prose people read in a reader, so it gets the same treatment.
+    if p.suffix == ".html" or p.name == "feed.xml":
+        content, _ = dedash_html(content)
     p.write_text(content, encoding="utf-8")
     return p
 
@@ -938,7 +1031,7 @@ def page_home(items):
       </a>
       <a href="/spreader-trucks">
         <h3>Spreader Trucks</h3>
-        <p>Open ground broadcast, pre-plant rows and woodchip spreading &mdash; at volume,
+        <p>Open ground broadcast, pre-plant rows and woodchip spreading at volume,
            without losing the placement.</p>
         <span class="more">See spreader trucks &rarr;</span>
       </a>

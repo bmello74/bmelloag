@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Field Tools — Acreage, Load, Rate &amp; Solution Calculators</title>
+<title>Field Tools, Acreage, Load, Rate &amp; Solution Calculators</title>
 <meta name="description" content="Free ag calculators: field acreage from dimensions, a pivot radius or GPS corners, coordinates to a QR code, truck loads and solution grade math.">
 <link rel="canonical" href="https://bmelloag.com/field-tools">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -12,13 +12,13 @@
 <meta name="geo.placename" content="Hanford, California">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="B. Mello Ag Services">
-<meta property="og:title" content="Field Tools — Acreage, Load, Rate &amp; Solution Calculators">
+<meta property="og:title" content="Field Tools, Acreage, Load, Rate &amp; Solution Calculators">
 <meta property="og:description" content="Free ag calculators: field acreage from dimensions, a pivot radius or GPS corners, coordinates to a QR code, truck loads and solution grade math.">
 <meta property="og:url" content="https://bmelloag.com/field-tools">
 <meta property="og:image" content="https://bmelloag.com/assets/img/hero.jpg">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Field Tools — Acreage, Load, Rate &amp; Solution Calculators">
+<meta name="twitter:title" content="Field Tools, Acreage, Load, Rate &amp; Solution Calculators">
 <meta name="twitter:description" content="Free ag calculators: field acreage from dimensions, a pivot radius or GPS corners, coordinates to a QR code, truck loads and solution grade math.">
 <meta name="twitter:image" content="https://bmelloag.com/assets/img/hero.jpg">
 <link rel="icon" href="/assets/logo.png">
@@ -59,7 +59,7 @@
 <section>
   <div class="wrap prose">
     <p class="lede">Free field tools, no signup. Everything below runs on your own phone or
-       computer &mdash; nothing you type is sent to us or to anyone else.</p>
+       computer, nothing you type is sent to us or to anyone else.</p>
 
     <div class="tool" id="tool-qr">
       <h2>Field point QR code</h2>
@@ -90,7 +90,7 @@
     <div class="tool" id="tool-acres">
       <h2>Field acreage</h2>
       <p class="toolnote">How many acres is it, really. Measure the block, take it off a pivot radius,
-         or walk the corners with your phone &mdash; useful when the map, the deed and the ground
+         or walk the corners with your phone, useful when the map, the deed and the ground
          disagree, and for billing the piece you actually covered.</p>
       <div class="modes">
         <button type="button" class="modebtn is-on" data-mode="dim" aria-pressed="true">Length &amp; width</button>
@@ -111,7 +111,7 @@
           <div class="amode" id="a-pane-pivot" hidden>
             <label for="a-rad">Radius <span class="opt">(feet, pivot point to the end gun)</span></label>
             <input id="a-rad" type="number" inputmode="decimal" step="any" value="1320">
-            <label for="a-sweep">Sweep <span class="opt">(degrees &mdash; 360 is a full circle)</span></label>
+            <label for="a-sweep">Sweep <span class="opt">(degrees, 360 is a full circle)</span></label>
             <input id="a-sweep" type="number" inputmode="decimal" step="any" value="360">
             <p class="toolnote" style="margin:14px 0 0">Drop the sweep to 180 or 270 for a part-circle
                pivot working around a corner or a road.</p>
@@ -134,10 +134,10 @@
           </div>
         </div>
         <div class="toolout">
-          <div class="res"><span>Acres</span><strong id="a-acres">&mdash;</strong></div>
-          <div class="res"><span>Square feet</span><strong id="a-sqft">&mdash;</strong></div>
-          <div class="res"><span>Hectares</span><strong id="a-ha">&mdash;</strong></div>
-          <div class="res sep"><span>Perimeter</span><strong id="a-per">&mdash;</strong></div>
+          <div class="res"><span>Acres</span><strong id="a-acres"></strong></div>
+          <div class="res"><span>Square feet</span><strong id="a-sqft"></strong></div>
+          <div class="res"><span>Hectares</span><strong id="a-ha"></strong></div>
+          <div class="res sep"><span>Perimeter</span><strong id="a-per"></strong></div>
           <div class="toolbtns">
             <button type="button" class="btn btn-quiet" id="a-use" disabled>Use these acres below</button>
           </div>
@@ -166,12 +166,12 @@
           <input id="r-have" type="number" inputmode="decimal" step="any" placeholder="e.g. 24">
         </div>
         <div class="toolout">
-          <div class="res"><span>Total product</span><strong id="r-lbs">&mdash;</strong></div>
-          <div class="res"><span>&nbsp;</span><strong id="r-tons">&mdash;</strong></div>
-          <div class="res sep"><span>Nitrogen</span><strong id="r-un">&mdash;</strong></div>
-          <div class="res"><span>Phosphate</span><strong id="r-up">&mdash;</strong></div>
-          <div class="res"><span>Potash</span><strong id="r-uk">&mdash;</strong></div>
-          <div class="res sep"><span>Tons on hand cover</span><strong id="r-cover">&mdash;</strong></div>
+          <div class="res"><span>Total product</span><strong id="r-lbs"></strong></div>
+          <div class="res"><span>&nbsp;</span><strong id="r-tons"> </strong></div>
+          <div class="res sep"><span>Nitrogen</span><strong id="r-un"></strong></div>
+          <div class="res"><span>Phosphate</span><strong id="r-up"></strong></div>
+          <div class="res"><span>Potash</span><strong id="r-uk"></strong></div>
+          <div class="res sep"><span>Tons on hand cover</span><strong id="r-cover"></strong></div>
           <div class="toolbtns">
             <button type="button" class="btn btn-quiet" id="r-send">Send these tons to dispatch</button>
           </div>
@@ -223,19 +223,19 @@
 
         <div class="toolout">
           <div class="amode" id="d-out-haul">
-            <div class="res"><span>Loads</span><strong id="d-loads">&mdash;</strong></div>
-            <div class="res"><span>Last load</span><strong id="d-last">&mdash;</strong></div>
-            <div class="res sep"><span>Cycle time</span><strong id="d-cycle">&mdash;</strong></div>
-            <div class="res"><span>Fleet turns</span><strong id="d-perhr">&mdash;</strong></div>
-            <div class="res sep"><span>Time to move it all</span><strong id="d-total">&mdash;</strong></div>
-            <div class="res"><span>Per truck</span><strong id="d-pertruck">&mdash;</strong></div>
+            <div class="res"><span>Loads</span><strong id="d-loads"></strong></div>
+            <div class="res"><span>Last load</span><strong id="d-last"></strong></div>
+            <div class="res sep"><span>Cycle time</span><strong id="d-cycle"></strong></div>
+            <div class="res"><span>Fleet turns</span><strong id="d-perhr"></strong></div>
+            <div class="res sep"><span>Time to move it all</span><strong id="d-total"></strong></div>
+            <div class="res"><span>Per truck</span><strong id="d-pertruck"></strong></div>
           </div>
           <div class="amode" id="d-out-spread" hidden>
-            <div class="res"><span>Ground covered</span><strong id="d-ach">&mdash;</strong></div>
-            <div class="res"><span>Time on the field</span><strong id="d-hours">&mdash;</strong></div>
-            <div class="res sep"><span>One load covers</span><strong id="d-acload">&mdash;</strong></div>
-            <div class="res"><span>Refills for the job</span><strong id="d-loads2">&mdash;</strong></div>
-            <div class="res sep"><span>Product for the job</span><strong id="d-tons2">&mdash;</strong></div>
+            <div class="res"><span>Ground covered</span><strong id="d-ach"></strong></div>
+            <div class="res"><span>Time on the field</span><strong id="d-hours"></strong></div>
+            <div class="res sep"><span>One load covers</span><strong id="d-acload"></strong></div>
+            <div class="res"><span>Refills for the job</span><strong id="d-loads2"></strong></div>
+            <div class="res sep"><span>Product for the job</span><strong id="d-tons2"></strong></div>
             <div class="toolbtns">
               <button type="button" class="btn btn-quiet" id="d-send">Send these tons to the trucks</button>
             </div>
@@ -264,11 +264,11 @@
           <input id="s-tank" type="number" inputmode="decimal" step="any" value="1500">
         </div>
         <div class="toolout">
-          <div class="res"><span>Nutrient per gallon</span><strong id="s-lbgal">&mdash;</strong></div>
-          <div class="res sep"><span>That many gallons is</span><strong id="s-galprod">&mdash;</strong></div>
-          <div class="res"><span>&nbsp;</span><strong id="s-galnut">&mdash;</strong></div>
-          <div class="res sep"><span>To hit the target</span><strong id="s-gpa">&mdash;</strong></div>
-          <div class="res"><span>One tank covers</span><strong id="s-acres">&mdash;</strong></div>
+          <div class="res"><span>Nutrient per gallon</span><strong id="s-lbgal"></strong></div>
+          <div class="res sep"><span>That many gallons is</span><strong id="s-galprod"></strong></div>
+          <div class="res"><span>&nbsp;</span><strong id="s-galnut"> </strong></div>
+          <div class="res sep"><span>To hit the target</span><strong id="s-gpa"></strong></div>
+          <div class="res"><span>One tank covers</span><strong id="s-acres"></strong></div>
         </div>
       </div>
     </div>
@@ -298,10 +298,10 @@
       <a href="/reports">All issues</a>
       <a href="https://mailchi.mp/bmelloag/subscribe-to-b-mello-newsletter">Subscribe free</a>
     </div>
-    <p class="theme">Proudly American &mdash; <span>Rooted in the American Dream</span></p>
-    <p class="fine">Copyright &copy; 2026 B. Mello Ag Services &mdash; All rights reserved.
+    <p class="theme">Proudly American. <span>Rooted in the American Dream</span></p>
+    <p class="fine">Copyright &copy; 2026 B. Mello Ag Services. All rights reserved.
       Fertilizer and soil amendment sales, custom tractor spreading and spreader trucks,
-      and hay &mdash; out of Hanford, California.</p>
+      and hay, out of Hanford, California.</p>
   </div>
 </footer>
 <script>(function(){var v=document.querySelectorAll("video.strip");if(!v.length)return;if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;if(!("IntersectionObserver" in window))return;var o=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.preload="auto";var q=x.target.play();if(q&&q.catch){q.catch(function(){});}}else{x.target.pause();}});},{rootMargin:"250px"});Array.prototype.forEach.call(v,function(el){o.observe(el);});})();</script>
