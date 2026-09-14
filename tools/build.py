@@ -921,6 +921,12 @@ def dedash_html(html):
                  r'\1', doc)
     # ...and one that started a block leaves a comma in front of the first word.
     doc = re.sub(r'(<(?:p|div|td|th|h[1-6]|li|center)\b[^>]*>)\s*,\s*', r'\1', doc)
+    # When the dash sat across a tag boundary the trailing space of the previous
+    # run is already out the door, leaving "$8.1367 , another". Close it up.
+    doc = re.sub(r'(>[^<]*?)[ \t\xa0]+([,;.!?])', r'\1\2', doc)
+    # Same thing again when the space and the comma sit on opposite sides of a
+    # tag: "capacity </strong>, flat out" renders as "capacity , flat out".
+    doc = re.sub(r'([^\s<])[ \t\xa0]+((?:<[^>]+>)+)[ \t\xa0]*([,;.!?])', r'\1\2\3', doc)
     return doc, n
 
 

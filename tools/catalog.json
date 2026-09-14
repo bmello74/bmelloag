@@ -33,6 +33,35 @@
     ]
   },
   {
+    "id": "energy/2026-09-14",
+    "series": "energy",
+    "slug": "2026-09-14",
+    "date": "2026-09-14",
+    "date_display": "Sep 14",
+    "title": "Weekly Energy Update, September 14, 2026",
+    "headline": "We called the $8 handle and got it, now we think the top is close",
+    "summary": "California diesel set another all-time record Sunday at $8.1367, and for the first time all nine Central Valley metros we track set records on the same day. But something changed Friday: crude fell, distillate inventories built for a second straight week, and Gulf diplomats sit down with Iran in Oman today. We think the wholesale top is close, and we say exactly what would prove us wrong.",
+    "meta": "Week 38 · Week in review Sep 7–13",
+    "source": "26 Weekly Energy Update/B Mello Weekly Energy Update - September 14 2026.html",
+    "path": "reports/energy/2026-09-14.html",
+    "topics": [
+      "California diesel prices",
+      "gasoline prices",
+      "crude oil",
+      "Brent crude",
+      "WTI crude",
+      "refinery margins",
+      "Strait of Hormuz",
+      "OPEC",
+      "EIA inventory data",
+      "carbon and LCFS costs",
+      "California fuel taxes",
+      "natural gas",
+      "electricity rates",
+      "harvest fuel budgeting"
+    ]
+  },
+  {
     "id": "fishing/2026-09-09",
     "series": "fishing",
     "slug": "2026-09-09",
