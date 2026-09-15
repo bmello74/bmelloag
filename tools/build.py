@@ -123,8 +123,8 @@ TRUSTED = [
         "slug": "michelle-mello",
         "what": "Shaklee \u2014 nutrition and supplements",
         "teaser": "A Shaklee ambassador who lives what she recommends. She starts with a "
-                  "conversation about where you are, and if she does not think you need "
-                  "something, she will tell you.",
+                  "conversation, and if she does not think you need something, she will "
+                  "tell you.",
         "url": "https://mymodlink.com/MichelleMello/",
         "cta": "Visit Michelle\u2019s page",
         "photo": "/assets/img/trusted/michelle-mello.jpg",
