@@ -217,6 +217,22 @@ TRUSTED = [
                               "name": "Fugazzis Bistro & Steakhouse"},
             },
         },
+        "specials": {
+            "heading": "The same specials every week, all year",
+            "days": [
+                ("Monday", "Pasta night. Buy one, the second is half off.", ""),
+                ("Tuesday", "BBQ chicken or BBQ steak sandwich on ciabatta, with banana "
+                            "pepper and grilled onions.", "$12"),
+                ("Wednesday", "Chef bowl.", "$12"),
+                ("Thursday", "Burger night.", "$12"),
+            ],
+            "family": ("Family Pasta Deal, Monday through Saturday", "$30",
+                       "Feeds four. Alfredo or spaghetti, house or caesar salad, bread and "
+                       "sauce. This is the one we tell people about, and the answer to the "
+                       "school-night problem above."),
+            "note": "A plate cooked to order for $12 is drive-through money in California now. "
+                    "We think it is the best value in town, and it is not close.",
+        },
         "disclosure": "No connection here beyond a standing table. We eat there, we order from "
                       "there on the busy nights, and we send people there.",
         "schema": {
@@ -230,6 +246,29 @@ TRUSTED = [
             "address": {"@type": "PostalAddress", "streetAddress": "601 W. 7th Street",
                         "addressLocality": "Hanford", "addressRegion": "CA",
                         "postalCode": "93230", "addressCountry": "US"},
+            "hasMenu": {
+                "@type": "Menu",
+                "name": "Weekly specials",
+                "hasMenuSection": [{
+                    "@type": "MenuSection",
+                    "name": "Recurring weekly specials",
+                    "hasMenuItem": [
+                        {"@type": "MenuItem", "name": "Monday pasta night",
+                         "description": "Buy one, the second is half off."},
+                        {"@type": "MenuItem", "name": "Tuesday BBQ chicken or steak sandwich",
+                         "description": "Ciabatta, BBQ sauce, banana pepper, grilled onions.",
+                         "offers": {"@type": "Offer", "price": "12", "priceCurrency": "USD"}},
+                        {"@type": "MenuItem", "name": "Wednesday chef bowl",
+                         "offers": {"@type": "Offer", "price": "12", "priceCurrency": "USD"}},
+                        {"@type": "MenuItem", "name": "Thursday burger night",
+                         "offers": {"@type": "Offer", "price": "12", "priceCurrency": "USD"}},
+                        {"@type": "MenuItem", "name": "Family Pasta Deal",
+                         "description": "Monday through Saturday. Feeds four. Alfredo or "
+                                        "spaghetti, house or caesar salad, bread and sauce.",
+                         "offers": {"@type": "Offer", "price": "30", "priceCurrency": "USD"}},
+                    ],
+                }],
+            },
             "amenityFeature": [
                 {"@type": "LocationFeatureSpecification", "name": "Full bar", "value": True},
                 {"@type": "LocationFeatureSpecification", "name": "Takeout", "value": True},
@@ -1448,6 +1487,25 @@ def page_trusted():
             ent.setdefault("@id", f"{SITE}/trusted#{t['name'].lower().replace(' ', '-')}")
             entities.append(ent)
 
+        # Recurring specials are not an event: they do not expire, so they get
+        # their own block and no `until` date.
+        sp = t.get("specials")
+        sp_html = ""
+        if sp:
+            rows = "".join(
+                f'<li><span class="specday">{e(day)}</span>'
+                f'<span class="specwhat">{what}'
+                + (f' <b>{e(price)}</b>' if price else '')
+                + '</span></li>'
+                for day, what, price in sp["days"])
+            fam_name, fam_price, fam_note = sp["family"]
+            sp_html = (chr(10) + '        <div class="specials">'
+                       f'<h3>{e(sp["heading"])}</h3>'
+                       f'<ul class="speclist">{rows}</ul>'
+                       f'<p class="specfam"><strong>{e(fam_name)}, '
+                       f'<span class="specprice">{e(fam_price)}</span>.</strong> {fam_note}</p>'
+                       f'<p class="specnote">{sp["note"]}</p></div>')
+
         ev = t.get("event")
         ev_html = ""
         if ev and today <= ev["until"]:
@@ -1471,7 +1529,7 @@ def page_trusted():
       <div class="trustbody">
         <h2>{e(t["name"])}</h2>
         <p class="trustwhat">{t["what"]}</p>
-{paras}{ev_html}
+{paras}{sp_html}{ev_html}
         <p class="trustdisc">{t["disclosure"]}</p>
         <p class="trustgo"><a class="btn btn-gold" href="{e(t["url"])}"
            rel="noopener nofollow" target="_blank">{t["cta"]}</a></p>
