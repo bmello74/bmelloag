@@ -122,32 +122,62 @@ TRUSTED = [
         "name": "Michelle Mello",
         "slug": "michelle-mello",
         "what": "Shaklee \u2014 nutrition and supplements",
-        "teaser": "A Shaklee ambassador who keeps the routine she recommends. Twenty or thirty "
-                  "minutes a day, real food behind it, and a conversation before a product.",
+        "teaser": "A Shaklee ambassador who lives what she recommends. She starts with a "
+                  "conversation about where you are, and if she does not think you need "
+                  "something, she will tell you.",
         "url": "https://mymodlink.com/MichelleMello/",
         "cta": "Visit Michelle\u2019s page",
         "photo": "/assets/img/trusted/michelle-mello.jpg",
         "alt": "Michelle Mello, Shaklee ambassador",
         "body": [
-            "Shaklee has been making nutrition products since 1956, longer than most miracle "
-            "ingredients last. Michelle is a Shaklee ambassador, but the part worth knowing is "
-            "that she lives it \u2014 she does not hand anybody a routine she does not keep "
-            "herself, and she stays strong and active for her own sake and for the people who "
-            "count on her.",
-            "Her view is that whole-body health is not found, it is built. Twenty or thirty "
-            "minutes a day that belong to you, which does as much for your head as it does for "
-            "your body, with real food and quality supplements behind it. Keep at that and it "
-            "compounds into what everybody actually wants out of it: years of still being able, "
-            "and being there for the moments you would hate to miss.",
-            "Everybody is somewhere different, and at a different stage of life, so it starts "
-            "with a conversation: where you are now, what you are after, and what worries you. "
-            "What comes back is not the trendy answer. It is steps you can actually take, drawn "
-            "from seventy years of Shaklee\u2019s work and from her own years of doing it, "
-            "pointed at the long haul instead of the next six weeks. And if she thinks you do "
-            "not need a product, she will say so.",
+            "Shaklee has been developing nutrition products since 1956. What caught my attention "
+            "about the company is that it has spent decades researching nutrition, with 110+ "
+            "published clinical studies and 70+ patents and patents pending. Its quality "
+            "standards go well beyond the finished label, including screening new botanical "
+            "ingredients for more than 350 contaminants and conducting more than 100,000 quality "
+            "tests each year.",
+
+            "But the reason Michelle is the one I recommend is much simpler.",
+
+            "<strong>She lives it.</strong>",
+
+            "She takes care of herself, stays active, pays attention to what she puts in her "
+            "body, and uses the same products she shares with other people.",
+
+            "Michelle believes wellness should be personal and practical. There isn&rsquo;t one "
+            "routine that makes sense for everyone. Where you are in life, what you&rsquo;re "
+            "trying to improve, and what your everyday life actually looks like all matter.",
+
+            "So she starts with a conversation.",
+
+            "<em>Where are you now?<br>What are you hoping to improve?<br>What are you already "
+            "doing?<br>And what would actually be realistic for you?</em>",
+
+            "Then she helps you find a place to start.",
+
+            "Sometimes that includes Shaklee products. Sometimes it&rsquo;s a simple change. And "
+            "if she doesn&rsquo;t think you need something, she&rsquo;ll tell you.",
+
+            "That matters to me.",
+
+            "Shaklee&rsquo;s Landmark Studies, conducted in collaboration with researchers at UC "
+            "Berkeley, looked at long-term supplement users and found higher blood nutrient "
+            "levels and healthier measures across several biomarkers compared with non-users. A "
+            "10-year follow-up continued to examine those long-term users.",
+
+            "For us, this isn&rsquo;t about chasing the newest wellness trend.",
+
+            "It&rsquo;s about taking care of ourselves so we can keep doing the things we love "
+            "and showing up for the people who count on us.",
+
+            "Michelle is my wife. We both take Shaklee products every day.",
+
+            "That&rsquo;s why she&rsquo;s the first person I wanted on this page.",
+
+            "If you&rsquo;re looking for someone to help you make sense of your wellness goals "
+            "and find a simple place to start, Michelle is the person I&rsquo;d send you to.",
         ],
-        "disclosure": "Michelle is my wife. We both take the products every day \u2014 that is "
-                      "why she is the first name on this page.",
+        "disclosure": "Michelle is my wife. We both take Shaklee products every day.",
         "schema": {
             "@type": "Person",
             "name": "Michelle Mello",
@@ -1625,6 +1655,13 @@ def page_trusted_entry(t):
                    f'{flyer}<p><span class="evlabel">{e(ev["label"])}</span> '
                    f'{ev["text"]}</p></div>')
 
+    # The disclosure is a required field, but when somebody has already said it
+    # in their own words inside the copy, printing it a second time in a box
+    # reads like the page does not trust its own writing.
+    disc_html = ""
+    if t["disclosure"] not in " ".join(t["body"]):
+        disc_html = f'\n    <p class="trustdisc">{t["disclosure"]}</p>\n'
+
     share = f'{SHARE_DIR}/{t["slug"]}.jpg'
     body = f"""    <p class="backup"><a href="/trusted">All the people and companies we trust</a></p>
 
@@ -1632,8 +1669,7 @@ def page_trusted_entry(t):
 
 {paras}{sp_html}{ev_html}
 
-    <p class="trustdisc">{t["disclosure"]}</p>
-
+{disc_html}
     <p class="trustgo"><a class="btn btn-gold" href="{e(t["url"])}"
        rel="noopener nofollow" target="_blank">{t["cta"]}</a></p>
 
