@@ -120,7 +120,10 @@ NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
 TRUSTED = [
     {
         "name": "Michelle Mello",
+        "slug": "michelle-mello",
         "what": "Shaklee \u2014 nutrition and supplements",
+        "teaser": "A Shaklee ambassador who keeps the routine she recommends. Twenty or thirty "
+                  "minutes a day, real food behind it, and a conversation before a product.",
         "url": "https://mymodlink.com/MichelleMello/",
         "cta": "Visit Michelle\u2019s page",
         "photo": "/assets/img/trusted/michelle-mello.jpg",
@@ -159,7 +162,10 @@ TRUSTED = [
     },
     {
         "name": "Fugazzis",
+        "slug": "fugazzis",
         "what": "Bistro &amp; steakhouse \u2014 Hanford",
+        "teaser": "A steakhouse on 7th Street with weekly specials at $12, a family pasta deal "
+                  "that feeds four for $30, and a wine dinner worth clearing a night for.",
         "url": "https://www.fugazzisbistro.com/hanford",
         "cta": "See the menu",
         "photo": "/assets/img/trusted/fugazzis-store.jpg",
@@ -1460,81 +1466,45 @@ def page_subscribe(items):
 
 
 
+SHARE_DIR = "/assets/img/trusted/share"
+
+
+def trusted_pic(t, lazy=True):
+    if t.get("photo"):
+        w, h = t.get("size", (480, 600))
+        return (f'<img src="{t["photo"]}" alt="{e(t["alt"])}" width="{w}" height="{h}" '
+                + ('loading="lazy" ' if lazy else '')
+                + 'decoding="async">')
+    initials = "".join(w[0] for w in t["name"].split()[:2]).upper()
+    return f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
+
+
+def trusted_event_live(t):
+    ev = t.get("event")
+    return ev if ev and datetime.date.today().isoformat() <= ev["until"] else None
+
+
 def page_trusted():
-    """Not a directory and not an ad board. Everyone on it is somebody we pay
-    our own money to, which is the only qualification and the only reason the
-    page is worth anything to a reader."""
+    """The index. A picture, a name and a sentence, and that is the whole job.
+
+    Everything a reader might want about one of them lives on their own page,
+    which is also the page they can share -- that only works if it is a real
+    URL with its own share card, not a card buried a third of the way down a
+    growing list."""
     cards = []
-    entities = []          # one JSON-LD entity per card, plus any live event
-    today = datetime.date.today().isoformat()
     for t in TRUSTED:
-        if t.get("photo"):
-            w, h = t.get("size", (480, 600))
-            pic = (f'<img src="{t["photo"]}" alt="{e(t["alt"])}" '
-                   f'width="{w}" height="{h}" loading="lazy" decoding="async">')
-        else:
-            initials = "".join(w[0] for w in t["name"].split()[:2]).upper()
-            pic = f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
-        paras = "\n".join(f"          <p>{b}</p>" for b in t["body"])
-
-        # A dated event shows until its day is past and then stops, by itself.
-        # A stale "coming up" is a worse advert than no event at all.
-        # The entity goes in the page's structured data whether or not a reader
-        # scrolls this far. An expired event drops out of the markup the same
-        # day it drops off the page -- stale Event data is worse than none.
-        if t.get("schema"):
-            ent = dict(t["schema"])
-            ent.setdefault("@id", f"{SITE}/trusted#{t['name'].lower().replace(' ', '-')}")
-            entities.append(ent)
-
-        # Recurring specials are not an event: they do not expire, so they get
-        # their own block and no `until` date.
-        sp = t.get("specials")
-        sp_html = ""
-        if sp:
-            rows = "".join(
-                f'<li><span class="specday">{e(day)}</span>'
-                f'<span class="specwhat">{what}'
-                + (f' <b>{e(price)}</b>' if price else '')
-                + '</span></li>'
-                for day, what, price in sp["days"])
-            fam_name, fam_price, fam_note = sp["family"]
-            sp_html = (chr(10) + '        <div class="specials">'
-                       f'<h3>{e(sp["heading"])}</h3>'
-                       f'<ul class="speclist">{rows}</ul>'
-                       f'<p class="specfam"><strong>{e(fam_name)}, '
-                       f'<span class="specprice">{e(fam_price)}</span>.</strong> {fam_note}</p>'
-                       f'<p class="specnote">{sp["note"]}</p></div>')
-
-        ev = t.get("event")
-        ev_html = ""
-        if ev and today <= ev["until"]:
-            if ev.get("schema"):
-                entities.append(dict(ev["schema"]))
-            flyer = ""
-            if ev.get("flyer"):
-                # A link, not a button: if the script never loads, tapping it
-                # still opens the flyer.
-                flyer = (f'<a class="flyer" href="{ev["flyer"]}" target="_blank" rel="noopener" '
-                         f'aria-label="Enlarge the flyer">'
-                         f'<img src="{ev["flyer_thumb"]}" alt="{e(ev["flyer_alt"])}" '
-                         f'width="320" height="400" loading="lazy" decoding="async">'
-                         f'<span class="flyerhint">Tap to enlarge</span></a>')
-            ev_html = (chr(10) + '        <div class="trustevent">'
-                       f'{flyer}<p><span class="evlabel">{e(ev["label"])}</span> '
-                       f'{ev["text"]}</p></div>')
-        wide = " trust-wide" if t.get("wide") else ""
-        cards.append(f"""    <article class="trust{wide}">
-      <div class="trustpic">{pic}</div>
-      <div class="trustbody">
-        <h2>{e(t["name"])}</h2>
-        <p class="trustwhat">{t["what"]}</p>
-{paras}{sp_html}{ev_html}
-        <p class="trustdisc">{t["disclosure"]}</p>
-        <p class="trustgo"><a class="btn btn-gold" href="{e(t["url"])}"
-           rel="noopener nofollow" target="_blank">{t["cta"]}</a></p>
-      </div>
-    </article>""")
+        ev = trusted_event_live(t)
+        chip = '<span class="tchip">Coming up</span>' if ev else ''
+        href = f'/trusted/{t["slug"]}'
+        cards.append(f"""    <a class="tcard" href="{href}">
+      <span class="tcardpic">{trusted_pic(t)}</span>
+      <span class="tcardbody">
+        <span class="tcardname">{e(t["name"])}{chip}</span>
+        <span class="tcardwhat">{t["what"]}</span>
+        <span class="tcardsay">{t["teaser"]}</span>
+        <span class="tcardgo">Read more</span>
+      </span>
+    </a>""")
 
     body = """    <p class="lede">We only recommend products and services we use ourselves and think would
        enrich the lives of the people we care about. Everyone on this page clears that bar. Some of
@@ -1556,17 +1526,17 @@ def page_trusted():
       <h2>Where we stand</h2>
       <p>Nobody lands on this page because they asked to. They are here because we use them, and
          because we would want them for the people we love.</p>
-      <p>Where we have a personal connection to somebody listed, it is written on their card, in
+      <p>Where we have a personal connection to somebody listed, it is written on their page, in
          plain words.</p>
     </div>
 
+    <div class="tgrid">
 """ + "\n\n".join(cards) + """
+    </div>
 
     <p class="toolfoot">Know somebody who belongs on this page? The bar is that we use them
        ourselves, so tell us who they are and what they did for you.
-       <a href="/contact">Get in touch.</a></p>
-
-    <script src="/assets/trusted.js" defer></script>"""
+       <a href="/contact">Get in touch.</a></p>"""
 
     itemlist = {
         "@context": "https://schema.org",
@@ -1576,13 +1546,10 @@ def page_trusted():
         "itemListOrder": "https://schema.org/ItemListUnordered",
         "numberOfItems": len(TRUSTED),
         "itemListElement": [
-            {"@type": "ListItem", "position": n + 1,
-             "name": t["name"],
-             "url": t["url"]}
+            {"@type": "ListItem", "position": n + 1, "name": t["name"],
+             "url": f'{SITE}/trusted/{t["slug"]}'}
             for n, t in enumerate(TRUSTED)],
     }
-    blocks = [itemlist] + [dict(ent, **{"@context": "https://schema.org"})
-                           for ent in entities]
 
     return simple_page("/trusted", "Trusted",
                        "People and companies we use ourselves.",
@@ -1591,8 +1558,97 @@ def page_trusted():
                        "Hanford and the Central Valley \u2014 Shaklee nutrition, and Fugazzis "
                        "bistro and steakhouse.",
                        seo_title="Trusted \u2014 People & Companies We Use in Hanford, CA",
-                       extra_ld=blocks)
+                       extra_ld=[itemlist])
 
+
+def page_trusted_entry(t):
+    """One page per name. This is the page that gets shared, so it carries its
+    own share card: their picture with our mark in the corner, which is the
+    whole point -- when they post it, the picture is theirs and the credit
+    comes back here."""
+    entities = []
+    if t.get("schema"):
+        ent = dict(t["schema"])
+        ent.setdefault("@id", f'{SITE}/trusted/{t["slug"]}#entity')
+        entities.append(ent)
+
+    paras = "\n".join(f"    <p>{b}</p>" for b in t["body"])
+
+    sp = t.get("specials")
+    sp_html = ""
+    if sp:
+        rows = "".join(
+            f'<li><span class="specday">{e(day)}</span>'
+            f'<span class="specwhat">{what}'
+            + (f' <b>{e(price)}</b>' if price else '')
+            + '</span></li>'
+            for day, what, price in sp["days"])
+        fam_name, fam_price, fam_note = sp["family"]
+        sp_html = ('\n    <div class="specials">'
+                   f'<h2>{e(sp["heading"])}</h2>'
+                   f'<ul class="speclist">{rows}</ul>'
+                   f'<p class="specfam"><strong>{e(fam_name)}, '
+                   f'<span class="specprice">{e(fam_price)}</span>.</strong> {fam_note}</p>'
+                   f'<p class="specnote">{sp["note"]}</p></div>')
+
+    ev = trusted_event_live(t)
+    ev_html = ""
+    if ev:
+        if ev.get("schema"):
+            entities.append(dict(ev["schema"]))
+        flyer = ""
+        if ev.get("flyer"):
+            # A link, not a button: if the script never loads, tapping it
+            # still opens the flyer.
+            flyer = (f'<a class="flyer" href="{ev["flyer"]}" target="_blank" rel="noopener" '
+                     f'aria-label="Enlarge the flyer">'
+                     f'<img src="{ev["flyer_thumb"]}" alt="{e(ev["flyer_alt"])}" '
+                     f'width="320" height="400" loading="lazy" decoding="async">'
+                     f'<span class="flyerhint">Tap to enlarge</span></a>')
+        ev_html = ('\n    <div class="trustevent">'
+                   f'{flyer}<p><span class="evlabel">{e(ev["label"])}</span> '
+                   f'{ev["text"]}</p></div>')
+
+    share = f'{SHARE_DIR}/{t["slug"]}.jpg'
+    body = f"""    <p class="backup"><a href="/trusted">All the people and companies we trust</a></p>
+
+    <div class="entrypic">{trusted_pic(t, lazy=False)}</div>
+
+{paras}{sp_html}{ev_html}
+
+    <p class="trustdisc">{t["disclosure"]}</p>
+
+    <p class="trustgo"><a class="btn btn-gold" href="{e(t["url"])}"
+       rel="noopener nofollow" target="_blank">{t["cta"]}</a></p>
+
+    <p class="toolfoot">On this page because we use them ourselves. That is the only way onto
+       <a href="/trusted">our trusted list</a>.</p>
+
+    <script src="/assets/trusted.js" defer></script>"""
+
+    crumbs = ld_crumbs([("Home", "/"), ("Trusted", "/trusted"),
+                        (t["name"], f'/trusted/{t["slug"]}')])
+    blocks = [crumbs] + [dict(ent, **{"@context": "https://schema.org"}) for ent in entities]
+
+    h = head(f'{t["name"]} \u2014 Trusted by {BIZ}', t["teaser"],
+             f'/trusted/{t["slug"]}',
+             image=SITE + share, image_size=(1200, 630),
+             image_alt=f'{t["name"]}, recommended by {BIZ}',
+             ld=[ld_org()] + blocks)
+    return h + masthead("/trusted") + f"""
+<header class="pagehead">
+  <div class="wrap">
+    <div class="eyebrow"><a href="/trusted">Trusted</a></div>
+    <h1>{e(t["name"])}</h1>
+    <p class="tag">{t["what"]}</p>
+  </div>
+</header>
+<section>
+  <div class="wrap prose">
+{body}
+  </div>
+</section>
+""" + footer()
 
 
 def page_tools():
@@ -2753,6 +2809,8 @@ def sitemap(items):
         else:
             add(path, None, "monthly", "0.8")
     add("/subscribe", None, "monthly", "0.9")   # not in the nav, but very much a landing page
+    for t in TRUSTED:                           # one page per name, and each one shareable
+        add(f"/trusted/{t['slug']}", None, "monthly", "0.7")
 
     for k in SERIES_ORDER:
         sub = [i for i in items if i["series"] == k]
@@ -2811,6 +2869,8 @@ def build_site():
     write("about.html", page_about())
     write("contact.html", page_contact())
     write("trusted.html", page_trusted())
+    for t in TRUSTED:
+        write(f"trusted/{t['slug']}.html", page_trusted_entry(t))
     write("assets/trusted.js", TRUSTED_JS)
     write("field-tools.html", page_tools())
     write("assets/tools.js", TOOLS_JS)
