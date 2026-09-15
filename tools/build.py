@@ -122,6 +122,7 @@ TRUSTED = [
         "name": "Michelle Mello",
         "slug": "michelle-mello",
         "what": "Shaklee \u2014 nutrition and supplements",
+        "byline": "Michelle | Shaklee Ambassador",
         "teaser": "A Shaklee ambassador who lives what she recommends. She starts with a "
                   "conversation, and if she does not think you need something, she will "
                   "tell you.",
@@ -194,6 +195,7 @@ TRUSTED = [
         "name": "Fugazzis",
         "slug": "fugazzis",
         "what": "Bistro &amp; steakhouse \u2014 Hanford",
+        "byline": "Fugazzis | Bistro & Steakhouse, Hanford",
         "teaser": "A steakhouse on 7th Street with weekly specials at $12, a family pasta deal "
                   "that feeds four for $30, and a wine dinner worth clearing a night for.",
         "url": "https://www.fugazzisbistro.com/hanford",
@@ -1662,11 +1664,21 @@ def page_trusted_entry(t):
     if t["disclosure"] not in " ".join(t["body"]):
         disc_html = f'\n    <p class="trustdisc">{t["disclosure"]}</p>\n'
 
+    # A byline under the picture: the name they go by, then what they do. The
+    # separator is set apart in gold so it reads as a byline rather than as a
+    # sentence with a stray pipe in the middle of it.
+    byline = ""
+    if t.get("byline"):
+        bits = [b.strip() for b in t["byline"].split("|")]
+        byline = ('\n    <p class="entrybyline">'
+                  + '<span class="bsep">|</span>'.join(e(b) for b in bits)
+                  + '</p>')
+
     share = f'{SHARE_DIR}/{t["slug"]}.jpg'
     body = f"""    <p class="backup"><a href="/trusted">All the people and companies we trust</a></p>
 
     <div class="entrypic">{trusted_pic(t, lazy=False)}</div>
-
+{byline}
 {paras}{sp_html}{ev_html}
 
 {disc_html}
