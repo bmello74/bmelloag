@@ -11,7 +11,7 @@ archive. `publish` converts a Mailchimp email into a site page and adds/updates
 its catalog entry; `site` regenerates everything derived from the catalog.
 """
 
-import argparse, base64, hashlib, html, json, os, re, sys, datetime, pathlib
+import argparse, base64, hashlib, html, json, os, re, sys, datetime, pathlib, zoneinfo
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "tools" / "catalog.json"
@@ -1479,9 +1479,25 @@ def trusted_pic(t, lazy=True):
     return f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
 
 
+# The build no longer always runs on a machine in Hanford. A cloud container
+# sits on UTC, which is seven hours ahead, so from late afternoon onward it
+# thinks it is already tomorrow -- and a dated event would drop off the page a
+# day early. Dates here mean Bryan's dates.
+try:
+    PACIFIC = zoneinfo.ZoneInfo("America/Los_Angeles")
+except Exception:                       # Windows without the tzdata package
+    PACIFIC = None                      # his own machine is already on Pacific
+
+
+def today_local():
+    if PACIFIC is not None:
+        return datetime.datetime.now(PACIFIC).date()
+    return datetime.date.today()
+
+
 def trusted_event_live(t):
     ev = t.get("event")
-    return ev if ev and datetime.date.today().isoformat() <= ev["until"] else None
+    return ev if ev and today_local().isoformat() <= ev["until"] else None
 
 
 def page_trusted():
