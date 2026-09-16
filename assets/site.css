@@ -504,7 +504,7 @@ section.signup { padding:0; }
            color:var(--ink-soft);font-size:.88rem;line-height:1.56}
 /* The action row. More than one button now, so it wraps instead of running off
    the side of a phone. */
-.trustgo{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0}
+.trustgo{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0}
 
 /* Reservations: its own ask, set apart from the menu buttons above it. */
 .reserve{border-top:1px solid var(--hairline);margin:22px 0 0;padding:18px 0 0}

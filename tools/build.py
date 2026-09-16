@@ -199,12 +199,15 @@ TRUSTED = [
         "teaser": "A steakhouse on 7th Street with weekly specials at $12, a family pasta deal "
                   "that feeds four for $30, and a wine dinner worth clearing a night for.",
         "url": "https://www.fugazzisbistro.com/hanford",
-        "cta": "See the menu",
+        "cta": "Visit their website",
         # Two ways in at the bottom of the page: read the menu, or put an order
         # in. The second one is what turns a page view into dinner.
+        # Ordering is the one that matters, so it is the only gold button here.
+        # Their home page is a real destination but a quieter one, so it sits
+        # beside it as a plain button instead of competing for the same eye.
         "actions": [
-            ("See the menu", "https://www.fugazzisbistro.com/hanford", "gold"),
             ("Order food online", "https://www.fugazzisbistro.com/hanford/menu", "gold"),
+            ("Visit their website", "https://www.fugazzisbistro.com/hanford", "quiet"),
         ],
         "reserve": {
             "heading": "Reservations for a special occasion",
@@ -288,8 +291,6 @@ TRUSTED = [
                            "Phone the order in and ask for curbside. They will walk it out to "
                            "the car, so nobody has to unbuckle a back seat full of kids to "
                            "pick up dinner."),
-            "note": "A plate cooked to order for $12 is drive-through money in California now. "
-                    "We think it is the best value in town, and it is not close.",
         },
         "disclosure": "No connection here beyond a standing table. We eat there, we order from "
                       "there on the busy nights, and we send people there.",
@@ -1692,7 +1693,8 @@ def page_trusted_entry(t):
                    f'<p class="specfam"><strong>{e(fam_name)}, '
                    f'<span class="specprice">{e(fam_price)}</span>.</strong> {fam_note}</p>'
                    f'{fam_cta}'
-                   f'<p class="specnote">{sp["note"]}</p></div>')
+                   + (f'<p class="specnote">{sp["note"]}</p>' if sp.get("note") else "")
+                   + '</div>')
 
     ev = trusted_event_live(t)
     ev_html = ""
@@ -1752,11 +1754,10 @@ def page_trusted_entry(t):
 {byline}
 {paras}{sp_html}{ev_html}
 
-{disc_html}{rv_html}
     <p class="trustgo">{act_html}</p>
-
-    <p class="toolfoot">On this page because we use them ourselves. That is the only way onto
-       <a href="/trusted">our trusted list</a>.</p>
+{rv_html}{disc_html}
+    <p class="toolfoot">They are on this page because we use them ourselves. That is the only way
+       onto <a href="/trusted">our trusted list</a>.</p>
 
     <script src="/assets/trusted.js" defer></script>"""
 
