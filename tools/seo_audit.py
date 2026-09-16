@@ -17,7 +17,8 @@ def fail(p, m): fails.append((p, m))
 def warn(p, m): warns.append((p, m))
 
 pages = sorted(p for p in ROOT.rglob("*.html")
-               if "_to_delete" not in p.parts and "assets" not in p.parts
+               if not ({"_to_delete", "assets", "Old website photos", "Claude outputs",
+                        "Equipment videos and pictures", "Social media graphics", ".git"} & set(p.parts))
                and not p.name.startswith("B Mello "))
 
 titles, descs, canons = collections.defaultdict(list), collections.defaultdict(list), set()
@@ -31,6 +32,10 @@ skipped = 0
 for p in pages:
     rel = "/" + str(p.relative_to(ROOT)).replace("\\", "/").replace("/index.html", "").lstrip("/")
     rel = "/" if rel in ("/index.html", "/") else rel
+    # Pages live at <path>/index.html, so GitHub Pages serves them at <path>/ and
+    # 301s the slashless form. The URL we advertise must be the one that answers 200.
+    if rel != "/" and not rel.endswith(".html"):
+        rel += "/"
     h = p.read_text(encoding="utf-8", errors="replace")
 
     # A page that tells Google not to index it has nothing to optimise. The
@@ -63,6 +68,7 @@ for p in pages:
         if n > 165: warn(rel, f"description is {n} chars, over ~160 and it gets cut")
         if n < 70:  warn(rel, f"description is only {n} chars, room to say more")
     if not canon: fail(rel, "no canonical")
+    elif canon != SITE + rel: fail(rel, f"canonical {canon} is not the served URL {SITE + rel}")
     elif canon in canons: warn(rel, f"canonical duplicated: {canon}")
     else: canons.add(canon)
     if len(h1s) == 0: fail(rel, "no <h1>")
@@ -90,6 +96,9 @@ sm = (ROOT / "sitemap.xml")
 if sm.exists():
     listed = set(re.findall(r"<loc>(.*?)</loc>", sm.read_text(encoding="utf-8")))
     have = {SITE + (r if r != "/" else "/") for r, *_ in rows}
+    for x in sorted(listed):
+        if not x.endswith("/") and "." not in x.rsplit("/", 1)[-1]:
+            fail("sitemap", f"URL redirects (no trailing slash): {x}")
     missing = sorted(have - listed - {SITE + "/404", SITE + "/404.html"})
     for m in missing[:20]: warn("sitemap", f"page not in sitemap: {m}")
     # `build.py site` does not regenerate the archive issues, so on a partial
@@ -98,6 +107,14 @@ if sm.exists():
     for x in orphan[:20]: warn("sitemap", f"sitemap lists a page that was not built: {x}")
 else:
     fail("/", "no sitemap.xml")
+
+bad_links = collections.Counter()
+for p in pages:
+    h = p.read_text(encoding="utf-8", errors="replace")
+    for m in re.finditer(r'href="((?:https://bmelloag\.com)?/[A-Za-z0-9_/-]*[A-Za-z0-9_-])["#?]', h):
+        bad_links[m.group(1)] += 1
+for u, n in bad_links.most_common(20):
+    fail("links", f"{n} internal link(s) to {u}, which 301s to {u}/")
 
 print(f"{len(rows)} pages checked, {skipped} noindex redirect stubs skipped\n")
 print(f"{'PAGE':<34} {'DESC':>4}  SCHEMA")

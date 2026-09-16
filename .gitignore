@@ -39,3 +39,6 @@ Equipment videos and pictures/
 # Ready-to-post social graphics — kept here for convenience, not part of the site.
 # (the one file the site itself needs is assets/img/social-card.jpg)
 Social media graphics/
+
+# Python bytecode from running the build scripts
+__pycache__/

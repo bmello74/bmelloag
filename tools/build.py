@@ -779,8 +779,12 @@ def ld_crumbs(trail):
 
 
 def head(title, desc, path, extra_css="", extra_head="", image=None,
-         og_type="website", ld=None, lastmod=None, image_size=None, image_alt=None):
+         og_type="website", ld=None, lastmod=None, image_size=None, image_alt=None,
+         noindex=False):
     canon = SITE + path
+    robots = ("noindex, follow" if noindex else
+              "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1")
+    canon_tag = "" if noindex else f'<link rel="canonical" href="{e(canon)}">\n'
     img = image or DEFAULT_OG
     blocks = ld_json(*(ld or []))
     # Facebook and LinkedIn render the big card immediately when they are told the
@@ -800,8 +804,7 @@ def head(title, desc, path, extra_css="", extra_head="", image=None,
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
-<link rel="canonical" href="{e(canon)}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+{canon_tag}<meta name="robots" content="{robots}">
 <meta name="author" content="{e(BIZ)}">
 <meta name="geo.region" content="US-CA">
 <meta name="geo.placename" content="Hanford, California">
@@ -940,7 +943,8 @@ def footer():
 # resolved those from hay.html by itself; most hosts don't. Writing every page as
 # <path>/index.html makes the same URLs work on GitHub Pages, plain Apache/nginx,
 # cPanel — anywhere. The URLs themselves do not change.
-ROOT_FILES = {"index.html", "404.html"}
+LEGACY_FILES = {"About_Us.html", "Hay.html", "Home_Page.html", "Spreading.html"}
+ROOT_FILES = {"index.html", "404.html"} | LEGACY_FILES
 
 
 def out_path(path):
@@ -1045,18 +1049,50 @@ def dedash_html(html):
     return doc, n
 
 
+# ---------------------------------------------------------------- trailing slashes
+# Every page is written as <path>/index.html, and GitHub Pages answers /hay with a
+# 301 to /hay/. Search Console reported those as "Page with redirect" because the
+# canonicals, the sitemap and the nav all pointed at the slashless form. So every
+# internal page URL in the output ends in a slash. Source code can keep writing
+# "/hay"; write() fixes it on the way out. Files (anything with a dot) are left
+# alone, and so are RSS <guid>s so feed readers do not see every item as new.
+
+_SEG = r"/[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*"
+_ABS_RE  = re.compile(r"(https?://(?:www\.)?bmelloag\.com)(" + _SEG + r")(?=[\"'#?<\s,)\]]|$)")
+_HREF_RE = re.compile(r"""(\b(?:href|action)=["'])(""" + _SEG + r""")(?=["'#?])""")
+_GUID_RE = re.compile(r"<guid\b[^>]*>.*?</guid>", re.S)
+
+
+def slash_urls(doc):
+    keep = {}
+    def stash(m):
+        k = f"\x00G{len(keep)}\x00"
+        keep[k] = m.group(0)
+        return k
+    doc = _GUID_RE.sub(stash, doc)
+    doc = _ABS_RE.sub(lambda m: m.group(1) + m.group(2) + "/", doc)
+    doc = _HREF_RE.sub(lambda m: m.group(1) + m.group(2) + "/", doc)
+    for k, v in keep.items():
+        doc = doc.replace(k, v)
+    return doc
+
+
 def write(path, content):
     p = ROOT / out_path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
     # The feed is prose people read in a reader, so it gets the same treatment.
     if p.suffix == ".html" or p.name == "feed.xml":
         content, _ = dedash_html(content)
+    if p.suffix == ".html" or p.name in ("feed.xml", "sitemap.xml"):
+        content = slash_urls(content)
     p.write_text(content, encoding="utf-8")
     return p
 
 
 def redirect_page(to, note):
     """A real page that forwards — _redirects files are Cloudflare-only."""
+    if not to.endswith("/"):
+        to += "/"
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -2970,7 +3006,7 @@ def page_404(items):
                f'<a href="{url}">{e(latest["headline"])}</a>.</p>')
     h = head(f"Page not found — {BIZ}",
              "That page doesn't exist. Try the reports archive or the home page.",
-             "/404")
+             "/404", noindex=True)
     return h + masthead("") + f"""
 <header class="pagehead">
   <div class="wrap">
@@ -3024,13 +3060,21 @@ def build_site():
         ("fertilizer",         "/plant-nutrition", "Fertilizer is now Targeted Plant Nutrition."),
     ]:
         write(f"{old}/index.html", redirect_page(new, note))
+    # The 2020 site used flat Capitalised .html names; Google still remembers them.
+    for old, new in [("About_Us.html", "/about"), ("Hay.html", "/hay"),
+                     ("Home_Page.html", "/"), ("Spreading.html", "/tractor-spreaders")]:
+        write(old, redirect_page(new, "This page moved."))
     # Cloudflare honours this; other hosts ignore it. Harmless either way.
     write("_redirects",
           "/monthly-newsletter  /reports           301\n"
           "/newsletter          /reports           301\n"
           "/about-us            /about             301\n"
           "/contact-us          /contact           301\n"
-          "/fertilizer          /plant-nutrition   301\n")
+          "/fertilizer          /plant-nutrition   301\n"
+          "/About_Us.html       /about             301\n"
+          "/Hay.html            /hay               301\n"
+          "/Home_Page.html      /                  301\n"
+          "/Spreading.html      /tractor-spreaders 301\n")
     # GitHub Pages: skip Jekyll (it drops files beginning with _), and claim the domain.
     write(".nojekyll", "")
     write("CNAME", "bmelloag.com\n")
