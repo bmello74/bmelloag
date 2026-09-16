@@ -206,7 +206,7 @@ TRUSTED = [
         # Their home page is a real destination but a quieter one, so it sits
         # beside it as a plain button instead of competing for the same eye.
         "actions": [
-            ("Order food online", "https://www.fugazzisbistro.com/hanford/menu", "gold"),
+            ("Order for pickup", "https://www.fugazzisbistro.com/hanford/menu", "gold"),
             ("Visit their website", "https://www.fugazzisbistro.com/hanford", "quiet"),
         ],
         "reserve": {
