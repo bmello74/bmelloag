@@ -200,6 +200,22 @@ TRUSTED = [
                   "that feeds four for $30, and a wine dinner worth clearing a night for.",
         "url": "https://www.fugazzisbistro.com/hanford",
         "cta": "See the menu",
+        # Two ways in at the bottom of the page: read the menu, or put an order
+        # in. The second one is what turns a page view into dinner.
+        "actions": [
+            ("See the menu", "https://www.fugazzisbistro.com/hanford", "gold"),
+            ("Order food online", "https://www.fugazzisbistro.com/hanford/menu", "gold"),
+        ],
+        "reserve": {
+            "heading": "Reservations for a special occasion",
+            "note": "Anniversaries, birthdays, a table for the whole family, or one of their "
+                    "reservation-only nights. Call the restaurant or send a note and they will "
+                    "set the room up for it.",
+            "buttons": [
+                ("Call (559) 587-4568", "tel:+15595874568"),
+                ("Email for reservations", "mailto:armenta.anibal@yahoo.com"),
+            ],
+        },
         "photo": "/assets/img/trusted/fugazzis-store.jpg",
         "size": (1400, 847),
         "wide": True,
@@ -268,6 +284,10 @@ TRUSTED = [
                        "Feeds four. Alfredo or spaghetti, house or caesar salad, bread and "
                        "sauce. This is the one we tell people about, and the answer to the "
                        "school-night problem above."),
+            "family_cta": ("Call in the Family Pasta Deal", "tel:+15595874568",
+                           "Phone the order in and ask for curbside. They will walk it out to "
+                           "the car, so nobody has to unbuckle a back seat full of kids to "
+                           "pick up dinner."),
             "note": "A plate cooked to order for $12 is drive-through money in California now. "
                     "We think it is the best value in town, and it is not close.",
         },
@@ -281,6 +301,23 @@ TRUSTED = [
             "telephone": "+15595874568",
             "servesCuisine": ["Steakhouse", "American", "Bistro"],
             "priceRange": "$$$",
+            "acceptsReservations": True,
+            # Tells Google there is a real ordering endpoint behind the page,
+            # which is what can earn an order action in the listing.
+            "potentialAction": {
+                "@type": "OrderAction",
+                "target": {
+                    "@type": "EntryPoint",
+                    "urlTemplate": "https://www.fugazzisbistro.com/hanford/menu",
+                    "inLanguage": "en-US",
+                    "actionPlatform": [
+                        "https://schema.org/DesktopWebPlatform",
+                        "https://schema.org/IOSPlatform",
+                        "https://schema.org/AndroidPlatform",
+                    ],
+                },
+                "deliveryMethod": ["https://schema.org/OnSitePickup"],
+            },
             "address": {"@type": "PostalAddress", "streetAddress": "601 W. 7th Street",
                         "addressLocality": "Hanford", "addressRegion": "CA",
                         "postalCode": "93230", "addressCountry": "US"},
@@ -1609,6 +1646,16 @@ def page_trusted():
                        extra_ld=[itemlist])
 
 
+def action_btn(label, href, style="gold"):
+    """One button. A tel: or mailto: link must NOT open in a new tab: on a phone
+    that hands the dialer the call and leaves a blank tab sitting behind it, and
+    on a desktop it opens an empty window next to the mail client. Only real
+    http links get target and rel."""
+    ext = href.startswith("http")
+    attrs = ' rel="noopener nofollow" target="_blank"' if ext else ""
+    return f'<a class="btn btn-{style}" href="{e(href)}"{attrs}>{e(label)}</a>'
+
+
 def page_trusted_entry(t):
     """One page per name. This is the page that gets shared, so it carries its
     own share card: their picture with our mark in the corner, which is the
@@ -1632,11 +1679,19 @@ def page_trusted_entry(t):
             + '</span></li>'
             for day, what, price in sp["days"])
         fam_name, fam_price, fam_note = sp["family"]
+        # The family deal is a phone order, so the button that orders it belongs
+        # against the deal itself rather than down in the row at the bottom.
+        fam_cta = ""
+        if sp.get("family_cta"):
+            lab, href, note = sp["family_cta"]
+            fam_cta = (f'<p class="specfamgo">{action_btn(lab, href)}'
+                       f'<span class="specfamnote">{note}</span></p>')
         sp_html = ('\n    <div class="specials">'
                    f'<h2>{e(sp["heading"])}</h2>'
                    f'<ul class="speclist">{rows}</ul>'
                    f'<p class="specfam"><strong>{e(fam_name)}, '
                    f'<span class="specprice">{e(fam_price)}</span>.</strong> {fam_note}</p>'
+                   f'{fam_cta}'
                    f'<p class="specnote">{sp["note"]}</p></div>')
 
     ev = trusted_event_live(t)
@@ -1674,6 +1729,22 @@ def page_trusted_entry(t):
                   + '<span class="bsep">|</span>'.join(e(b) for b in bits)
                   + '</p>')
 
+    # Reservations are their own ask, so they get their own block instead of
+    # being a third and fourth button in a row about menus.
+    rv = t.get("reserve")
+    rv_html = ""
+    if rv:
+        btns = "".join(action_btn(lab, href, "quiet") for lab, href in rv["buttons"])
+        rv_html = ('\n    <div class="reserve">'
+                   f'<h2>{e(rv["heading"])}</h2>'
+                   f'<p>{rv["note"]}</p>'
+                   f'<p class="reservego">{btns}</p></div>\n')
+
+    # Falls back to the single cta/url pair for an entry that has not been given
+    # a set of actions.
+    acts = t.get("actions") or [(t["cta"], t["url"], "gold")]
+    act_html = "".join(action_btn(lab, href, sty) for lab, href, sty in acts)
+
     share = f'{SHARE_DIR}/{t["slug"]}.jpg'
     body = f"""    <p class="backup"><a href="/trusted">All the people and companies we trust</a></p>
 
@@ -1681,9 +1752,8 @@ def page_trusted_entry(t):
 {byline}
 {paras}{sp_html}{ev_html}
 
-{disc_html}
-    <p class="trustgo"><a class="btn btn-gold" href="{e(t["url"])}"
-       rel="noopener nofollow" target="_blank">{t["cta"]}</a></p>
+{disc_html}{rv_html}
+    <p class="trustgo">{act_html}</p>
 
     <p class="toolfoot">On this page because we use them ourselves. That is the only way onto
        <a href="/trusted">our trusted list</a>.</p>
