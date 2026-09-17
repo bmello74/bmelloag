@@ -749,13 +749,11 @@ def ld_org():
                 "@type": "Service", "name": "Spreader truck application",
                 "description": "Open ground broadcast, pre-plant rows and woodchip "
                                "spreading from Bakersfield to Madera."}},
-            {"@type": "Offer", "itemOffered": {
-                "@type": "Product", "name": "Custom dry fertilizer blends",
-                "description": "Blends mixed to the soil sample rather than to a catalog."}},
-            {"@type": "Offer", "itemOffered": {
-                "@type": "Product", "name": "Dry soil amendments and solution grade products",
-                "description": "Gypsum, agricultural limestone, elemental sulfur, compost, "
-                               "humic and biological products, and solution grade fertilizer."}},
+            {"@type": "Offer", "name": "Custom dry fertilizer blends",
+             "description": "Blends mixed to the soil sample rather than to a catalog."},
+            {"@type": "Offer", "name": "Dry soil amendments and solution grade products",
+             "description": "Gypsum, agricultural limestone, elemental sulfur, compost, "
+                            "humic and biological products, and solution grade fertilizer."},
         ],
     }
 
@@ -1361,7 +1359,7 @@ def page_nutrition():
         "hasOfferCatalog": {
             "@type": "OfferCatalog", "name": "Soil amendments and fertilizer",
             "itemListElement": [
-                {"@type": "Offer", "itemOffered": {"@type": "Product", "name": n}}
+                {"@type": "Offer", "name": n}
                 for n in ["Custom dry fertilizer blends", "Gypsum", "Agricultural limestone",
                           "Elemental sulfur", "Ammonium sulfate", "Compost",
                           "Humic and fulvic products", "Biological soil products",
