@@ -623,3 +623,33 @@ section.signup { padding:0; }
         border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;
         font-size:1.7rem;line-height:1;cursor:pointer}
 .lclose:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ------------------------------------------------------------------ partners
+   The working end of the business: suppliers, labs, shops, haulers. Deliberately
+   flatter than a /trusted card. Trusted is a story and earns a picture; a partner
+   is a credential and earns a line, a mark and the connection stated out loud.
+   A logo column that becomes a small square above the words on a phone. */
+.pcat{margin:38px 0 4px;padding-top:26px;border-top:1px solid var(--hairline)}
+.pcat:first-of-type{margin-top:30px}
+.pcat h2{margin:0 0 6px;font-size:.82rem;font-weight:700;letter-spacing:.11em;
+         text-transform:uppercase;color:var(--ink)}
+.pcatsay{margin:0;font-size:.92rem;line-height:1.6;color:var(--ink-soft)}
+
+.pcard{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:start;
+       margin:20px 0 0;padding:20px;border:1px solid var(--hairline);border-radius:4px;
+       background:var(--surface);box-shadow:var(--shadow)}
+@media (max-width:640px){.pcard{grid-template-columns:minmax(0,1fr);gap:16px;padding:18px}
+                         .ppic{max-width:120px}}
+.ppic img{display:block;width:100%;height:auto;border-radius:3px}
+.ppic .mono{aspect-ratio:1/1;border-radius:3px}
+.pbody h3{margin:0 0 4px;font-size:1.1rem;letter-spacing:.01em}
+.pwhat{margin:0 0 13px;font-size:.74rem;font-weight:600;letter-spacing:.08em;
+       text-transform:uppercase;color:var(--ink-soft)}
+.pbody p{line-height:1.66}
+.pdisc{border-left:3px solid var(--gold);padding:6px 0 6px 13px;margin:16px 0 0;
+       font-size:.88rem;line-height:1.58;color:var(--ink-soft)}
+.pdisc strong{color:var(--ink)}
+.pgo{margin:16px 0 0 !important}
+.pgo a{font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+       text-decoration:none;color:var(--ink);border-bottom:2px solid var(--gold);
+       padding-bottom:2px}

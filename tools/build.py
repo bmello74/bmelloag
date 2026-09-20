@@ -104,9 +104,10 @@ PAST_LABEL = {
 }
 
 NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
-       ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Spreader Trucks"),
+       ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Trucks"),
        ("/hay", "Hay"), ("/reports", "Reports"), ("/field-tools", "Tools"),
-       ("/trusted", "Trusted"), ("/about", "About"), ("/contact", "Contact")]
+       ("/trusted", "Trusted"), ("/partners", "Partners"),
+       ("/about", "About"), ("/contact", "Contact")]
 
 
 
@@ -1681,6 +1682,224 @@ def page_trusted():
                        extra_ld=[itemlist])
 
 
+# ------------------------------------------------------------------ partners
+# Companies B. Mello Ag Services uses in the daily running of the business:
+# where the material comes from, where the samples go, who keeps the iron
+# running, and who moves the loads.
+#
+# This is a different argument from /trusted. Trusted is personal, and every
+# entry there gets its own page because a recommendation is a story somebody
+# might want to share. A partner is a credential instead: a grower wants to
+# know the program is backed by real companies, and that reads best as a
+# roster they can scan in one screen. So this is one page, grouped by what
+# the company does, with no per-entry pages until an entry earns one.
+#
+# `disclosure` is required and enforced in page_partners(). Where money flows
+# to us it has to say so. Where nothing flows it still has to say that, since
+# a page of unexplained logos is exactly what nobody believes.
+PARTNER_CATS = [
+    ("material", "Material suppliers",
+     "Where the gypsum, lime, sulfur, compost and biologicals come from."),
+    ("lab", "Soil and water labs",
+     "Where the samples go. Every number behind every program we write starts here."),
+    ("equipment", "Equipment and service",
+     "The shops that keep the spreaders and the trucks working."),
+    ("logistics", "Trucking and logistics",
+     "Who moves material from the pile to the field."),
+]
+
+PARTNERS = [
+    {
+        "cat": "material",
+        "name": "Superior Soil Supplements",
+        "what": "Soil amendments and custom blends, Hanford, CA",
+        "url": "https://superiorsoil.com/",
+        "cta": "Visit Superior Soil",
+        "logo": None,
+        "body": [
+            "Soil testing and soil amendments out of Hanford, a few miles from our own yard. "
+            "Compost blends, gypsum, sulfur, limestone, zeolite and water soluble products, "
+            "along with the silos and applicators to put them out.",
+            "Local matters more here than it sounds like it should. A blend that has to travel "
+            "the length of the state arrives when it arrives, and a program is only as good as "
+            "the day the material actually lands.",
+        ],
+        "disclosure": "Bryan Mello also works as an independent salesperson for Superior Soil "
+                      "Supplements, so this is a paid relationship. We list them because we use "
+                      "their material, and you should weigh the connection for yourself.",
+        "schema": {
+            "@type": "Organization",
+            "name": "Superior Soil Supplements, LLC",
+            "url": "https://superiorsoil.com/",
+            "address": {"@type": "PostalAddress", "streetAddress": "10367 Houston Ave",
+                        "addressLocality": "Hanford", "addressRegion": "CA",
+                        "postalCode": "93230", "addressCountry": "US"},
+        },
+    },
+    {
+        "cat": "material",
+        "name": "Tesh Ag",
+        "what": "Natural, organic and biological amendments, Hanford, CA",
+        "url": None,
+        "cta": "",
+        "logo": None,
+        "body": [
+            "Teshuva Agriculture, which everyone around here calls Tesh Ag. Natural, organic and "
+            "biological soil amendments, out of Hanford. We carry their material and sell it to "
+            "our own customers, and when a program calls for something in their line, we write "
+            "it into the program.",
+            "The referrals run both ways. We send growers to them when they are the better fit "
+            "for the job, and they send growers to us when we are. That only works between two "
+            "outfits that would rather the grower get the right answer than keep the work, and "
+            "it is the part of this arrangement worth telling you about.",
+        ],
+        "disclosure": "Tesh Ag is both a supplier and a sales partner. We buy their material and "
+                      "resell it, we refer customers to them and they refer customers to us. "
+                      "They also share ownership with Esajian Family Farms, who buy amendments "
+                      "and spreading from us, so money moves in both directions between us. "
+                      "Weigh the recommendation with that in front of you.",
+        "schema": {
+            "@type": "Organization",
+            "name": "Teshuva Agriculture LLC",
+            "alternateName": "Tesh Ag",
+            "address": {"@type": "PostalAddress", "addressLocality": "Hanford",
+                        "addressRegion": "CA", "addressCountry": "US"},
+        },
+    },
+    {
+        "cat": "lab",
+        "name": "Brookside Laboratories",
+        "what": "Independent soil and plant analysis, New Bremen, OH",
+        "url": "https://www.blinc.com/",
+        "cta": "Visit Brookside Laboratories",
+        "logo": None,
+        "body": [
+            "An independent analytical lab that has been testing soil since 1937 and has run as "
+            "Brookside since 1952. Their soil audit is the report sitting underneath every "
+            "program we write, and the reason a recommendation can point at a number instead of "
+            "at an opinion.",
+            "Using an outside lab is a deliberate choice. The company recommending the material "
+            "should not also be the company grading the soil.",
+        ],
+        "disclosure": "No financial relationship of any kind. They run our samples, we pay them "
+                      "for the work, and that is the whole of it.",
+        "schema": {
+            "@type": "Organization",
+            "name": "Brookside Laboratories, Inc.",
+            "url": "https://www.blinc.com/",
+            "address": {"@type": "PostalAddress", "streetAddress": "200 White Mountain Drive",
+                        "addressLocality": "New Bremen", "addressRegion": "OH",
+                        "postalCode": "45869", "addressCountry": "US"},
+        },
+    },
+]
+
+
+def partner_pic(p):
+    """A logo if we have been given one, otherwise the monogram tile that
+    /trusted already uses. A missing logo should read as a deliberate blank,
+    never as a broken image."""
+    if p.get("logo"):
+        w, h = p.get("logo_size", (320, 160))
+        return (f'<img src="{p["logo"]}" alt="{e(p["name"])} logo" width="{w}" '
+                f'height="{h}" loading="lazy" decoding="async">')
+    initials = "".join(w[0] for w in p["name"].split()[:2]).upper()
+    return f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
+
+
+def page_partners():
+    """A roster, not a set of stories. Grouped by what each company does, and a
+    category with nothing in it simply does not render, so the page can grow
+    one entry at a time without anybody having to tidy up the empty rooms."""
+    for p in PARTNERS:
+        if not p.get("disclosure"):
+            raise SystemExit(f"partner {p['name']!r} has no disclosure. A card cannot go up "
+                             f"without one.")
+
+    sections = []
+    for key, label, blurb in PARTNER_CATS:
+        rows = [p for p in PARTNERS if p["cat"] == key]
+        if not rows:
+            continue
+        cards = []
+        for p in rows:
+            paras = "\n".join(f'        <p>{t}</p>' for t in p["body"])
+            go = ""
+            if p.get("url"):
+                go = (f'        <p class="pgo"><a href="{e(p["url"])}" '
+                      f'rel="noopener nofollow" target="_blank">{e(p["cta"])}</a></p>\n')
+            elif p.get("phone"):
+                go = (f'        <p class="pgo"><a href="tel:{e(p["phone"][1])}">'
+                      f'{e(p["phone"][0])}</a></p>\n')
+            cards.append(f"""    <div class="pcard">
+      <div class="ppic">{partner_pic(p)}</div>
+      <div class="pbody">
+        <h3>{e(p["name"])}</h3>
+        <p class="pwhat">{p["what"]}</p>
+{paras}
+        <p class="pdisc"><strong>Our connection.</strong> {e(p["disclosure"])}</p>
+{go}
+      </div>
+    </div>""")
+        sections.append(f"""    <div class="pcat">
+      <h2>{e(label)}</h2>
+      <p class="pcatsay">{e(blurb)}</p>
+    </div>
+
+""" + "\n\n".join(cards))
+
+    body = """    <p class="lede">These are the companies we actually use to run this business. The
+       material we spread, the lab that grades your soil, the shops that keep the equipment
+       working and the trucks that move the loads. If a name is on this page, it is because we
+       depend on it ourselves.</p>
+
+    <p>A soil program is only worth what is behind it. Anybody can write a recommendation. What
+       decides whether it is worth anything is whether the sample went to a real lab, whether the
+       blend is what the ticket says it is, and whether the spreader shows up. So rather than ask
+       you to take our word for it, here is the list.</p>
+
+    <div class="standing">
+      <h2>How this page works</h2>
+      <p>Every entry says what our connection is, in plain words. Where we are paid by a company
+         on this page, it says so on the card. Where nothing changes hands, it says that too.</p>
+      <p>Nobody bought a place here, and nobody is here as a favor. If we stop using a company,
+         they come off the page.</p>
+      <p>This is not the same list as <a href="/trusted">Trusted</a>. That page is people and
+         places we recommend personally, in and out of farming. This one is the working end of
+         our own business.</p>
+    </div>
+
+""" + "\n\n".join(sections) + """
+
+    <p class="toolfoot">Work with us and think you belong on this page? The bar is that we use
+       you, so start there. <a href="/contact">Get in touch.</a></p>"""
+
+    entities = [p["schema"] for p in PARTNERS if p.get("schema")]
+    itemlist = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "@id": SITE + "/partners#list",
+        "name": "Companies B. Mello Ag Services works with",
+        "itemListOrder": "https://schema.org/ItemListUnordered",
+        "numberOfItems": len(PARTNERS),
+        "itemListElement": [
+            {k: v for k, v in
+             {"@type": "ListItem", "position": n + 1, "name": p["name"],
+              "url": p.get("url")}.items() if v is not None}
+            for n, p in enumerate(PARTNERS)],
+    }
+    for ent in entities:
+        ent.setdefault("@context", "https://schema.org")
+
+    return simple_page("/partners", "Partners",
+                       "The companies behind the work.",
+                       body,
+                       "The suppliers, labs, shops and haulers B. Mello Ag Services uses to run "
+                       "its soil and plant nutrition programs in California\u2019s Central Valley.",
+                       seo_title="Partners \u2013 Suppliers & Labs Behind Our Soil Programs",
+                       extra_ld=[itemlist] + entities)
+
+
 def action_btn(label, href, style="gold"):
     """One button. A tel: or mailto: link must NOT open in a new tab: on a phone
     that hands the dialer the call and leaves a blank tab sitting behind it, and
@@ -3041,6 +3260,7 @@ def build_site():
     for t in TRUSTED:
         write(f"trusted/{t['slug']}.html", page_trusted_entry(t))
     write("assets/trusted.js", TRUSTED_JS)
+    write("partners.html", page_partners())
     write("field-tools.html", page_tools())
     write("assets/tools.js", TOOLS_JS)
     write("subscribe.html", page_subscribe(items))
