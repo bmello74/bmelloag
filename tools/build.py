@@ -1700,6 +1700,9 @@ def page_trusted():
 PARTNER_CATS = [
     ("material", "Material suppliers",
      "Where the gypsum, lime, sulfur, compost and biologicals come from."),
+    ("referral", "Who we send you to",
+     "Companies whose line suits some ground better than ours does. We do not sell their "
+     "products and we are not paid to name them."),
     ("lab", "Soil and water labs",
      "Where the samples go. Every number behind every program we write starts here."),
     ("equipment", "Equipment and service",
@@ -1745,31 +1748,37 @@ PARTNERS = [
         },
     },
     {
-        "cat": "material",
+        "cat": "referral",
         "name": "Tesh Ag",
         "what": "Natural, organic and biological amendments, Hanford, CA",
         "url": None,
         "email": "info@teshag.com",
         "cta": "Email Tesh Ag",
+        "note": "If you get in touch with them, mention you heard about them from us. They "
+                "always let us know when somebody comes their way on our recommendation.",
         "logo": "/assets/img/partners/tesh-ag.png",
         "logo_size": (240, 156),
         "body": [
             "Teshuva Agriculture, which everyone around here calls Tesh Ag. It is the input "
             "line of Esajian Family Farms in Hanford, run by Eddie Esajian. Natural, organic and "
-            "biological soil amendments, out of Hanford. We carry their material and sell it to "
-            "our own customers, and when a program calls for something in their line, we write "
-            "it into the program.",
+            "biological soil amendments, out of Hanford.",
+
+            "We do not sell their products. What we do is name them in a program when their "
+            "line is the better answer for what the ground actually needs. If your situation "
+            "is better served by something of theirs than by anything of ours, that is what "
+            "the recommendation will say, and we will tell you which of their products to "
+            "ask for.",
             "The referrals run both ways. We send growers to them when they are the better fit "
             "for the job, and they send growers to us when we are. That only works between two "
             "outfits that would rather the grower get the right answer than keep the work, and "
             "it is the part of this arrangement worth telling you about.",
         ],
-        "disclosure": "Tesh Ag is both a supplier and a sales partner. We buy their material and "
-                      "resell it, we refer customers to them and they refer customers to us. "
-                      "Tesh Ag is the input brand of Esajian Family Farms, who also buy "
-                      "amendments and spreading from us, so money moves in both directions "
-                      "between the two of us. "
-                      "Weigh the recommendation with that in front of you.",
+        "disclosure": "No money changes hands between us and Tesh Ag. We do not buy or resell "
+                      "their products, and neither of us is paid for a referral. Tesh Ag is the "
+                      "input brand of Esajian Family Farms, who do buy amendments and spreading "
+                      "from us, so there is a commercial relationship with the family even "
+                      "though there is not one with Tesh Ag itself. Weigh the recommendation "
+                      "with that in front of you.",
         "schema": {
             "@type": "Organization",
             "name": "Teshuva Agriculture LLC",
@@ -1818,13 +1827,13 @@ def page_partners():
                 btns = "".join(action_btn(l, h, s) for l, h, s in p["actions"])
                 go += f'        <p class="pacts">{btns}</p>\n'
             elif p.get("url"):
-                go = (f'        <p class="pgo"><a href="{e(p["url"])}" '
+                go += (f'        <p class="pgo"><a href="{e(p["url"])}" '
                       f'rel="noopener nofollow" target="_blank">{e(p["cta"])}</a></p>\n')
             elif p.get("email"):
-                go = (f'        <p class="pgo"><a href="mailto:{e(p["email"])}">'
+                go += (f'        <p class="pgo"><a href="mailto:{e(p["email"])}">'
                       f'{e(p.get("cta") or "Email " + p["name"])}</a></p>\n')
             elif p.get("phone"):
-                go = (f'        <p class="pgo"><a href="tel:{e(p["phone"][1])}">'
+                go += (f'        <p class="pgo"><a href="tel:{e(p["phone"][1])}">'
                       f'{e(p["phone"][0])}</a></p>\n')
             cards.append(f"""    <div class="pcard">
       <div class="ppic">{partner_pic(p)}</div>
@@ -1843,9 +1852,10 @@ def page_partners():
 
 """ + "\n\n".join(cards))
 
-    body = """    <p class="lede">These are the companies we actually use to run this business. The
-       material we spread, the shops that keep the equipment working and the trucks that move
-       the loads. If a name is on this page, it is because we depend on it ourselves.</p>
+    body = """    <p class="lede">These are the companies behind the work. The material we spread, the
+       shops that keep the equipment working, the trucks that move the loads, and the outfits we
+       point you to when their line suits your ground better than ours. If a name is on this
+       page, it is because we rely on it or recommend it ourselves.</p>
 
     <p>A soil program is only worth what is behind it. Anybody can write a recommendation. What
        decides whether it is worth anything is whether the blend is what the ticket says it is,
