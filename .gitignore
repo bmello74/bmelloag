@@ -42,3 +42,7 @@ Social media graphics/
 
 # Python bytecode from running the build scripts
 __pycache__/
+
+# Session screenshots and scratch renders. Kept out of the repo because GitHub
+# Pages publishes the whole branch, so anything committed here is live on the site.
+Claude outputs/

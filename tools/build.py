@@ -3076,7 +3076,10 @@ def build_site():
     # GitHub Pages: skip Jekyll (it drops files beginning with _), and claim the domain.
     write(".nojekyll", "")
     write("CNAME", "bmelloag.com\n")
-    write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
+    # /tools holds the build scripts. They must stay in the repo (GitHub Pages
+    # serves the whole branch and .assetsignore is a Cloudflare-only file), but
+    # they are not part of the website, so keep crawlers out of them.
+    write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /tools/\nSitemap: {SITE}/sitemap.xml\n")
     print(f"site: {len(items)} issues in catalog, static pages rebuilt")
 
 
