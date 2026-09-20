@@ -1715,7 +1715,15 @@ PARTNERS = [
         "what": "Soil amendments and custom blends, Hanford, CA",
         "url": "https://superiorsoil.com/",
         "cta": "Visit Superior Soil",
-        "logo": None,
+        "note": "Bryan Mello is Superior Soil\u2019s sales rep for this area, so pricing, "
+                "orders and questions on their material come straight through us.",
+        "actions": [
+            ("Call " + PHONE_TXT, "tel:" + PHONE_TEL, "gold"),
+            ("Email " + EMAIL, "mailto:" + EMAIL, "quiet"),
+            ("Superior Soil website", "https://superiorsoil.com/", "quiet"),
+        ],
+        "logo": "/assets/img/partners/superior-soil.png",
+        "logo_size": (300, 248),
         "body": [
             "Soil testing and soil amendments out of Hanford, a few miles from our own yard. "
             "Compost blends, gypsum, sulfur, limestone, zeolite and water soluble products, "
@@ -1741,10 +1749,13 @@ PARTNERS = [
         "name": "Tesh Ag",
         "what": "Natural, organic and biological amendments, Hanford, CA",
         "url": None,
-        "cta": "",
-        "logo": None,
+        "email": "info@teshag.com",
+        "cta": "Email Tesh Ag",
+        "logo": "/assets/img/partners/tesh-ag.png",
+        "logo_size": (240, 156),
         "body": [
-            "Teshuva Agriculture, which everyone around here calls Tesh Ag. Natural, organic and "
+            "Teshuva Agriculture, which everyone around here calls Tesh Ag. It is the input "
+            "line of Esajian Family Farms in Hanford, run by Eddie Esajian. Natural, organic and "
             "biological soil amendments, out of Hanford. We carry their material and sell it to "
             "our own customers, and when a program calls for something in their line, we write "
             "it into the program.",
@@ -1755,41 +1766,17 @@ PARTNERS = [
         ],
         "disclosure": "Tesh Ag is both a supplier and a sales partner. We buy their material and "
                       "resell it, we refer customers to them and they refer customers to us. "
-                      "They also share ownership with Esajian Family Farms, who buy amendments "
-                      "and spreading from us, so money moves in both directions between us. "
+                      "Tesh Ag is the input brand of Esajian Family Farms, who also buy "
+                      "amendments and spreading from us, so money moves in both directions "
+                      "between the two of us. "
                       "Weigh the recommendation with that in front of you.",
         "schema": {
             "@type": "Organization",
             "name": "Teshuva Agriculture LLC",
             "alternateName": "Tesh Ag",
+            "email": "info@teshag.com",
             "address": {"@type": "PostalAddress", "addressLocality": "Hanford",
                         "addressRegion": "CA", "addressCountry": "US"},
-        },
-    },
-    {
-        "cat": "lab",
-        "name": "Brookside Laboratories",
-        "what": "Independent soil and plant analysis, New Bremen, OH",
-        "url": "https://www.blinc.com/",
-        "cta": "Visit Brookside Laboratories",
-        "logo": None,
-        "body": [
-            "An independent analytical lab that has been testing soil since 1937 and has run as "
-            "Brookside since 1952. Their soil audit is the report sitting underneath every "
-            "program we write, and the reason a recommendation can point at a number instead of "
-            "at an opinion.",
-            "Using an outside lab is a deliberate choice. The company recommending the material "
-            "should not also be the company grading the soil.",
-        ],
-        "disclosure": "No financial relationship of any kind. They run our samples, we pay them "
-                      "for the work, and that is the whole of it.",
-        "schema": {
-            "@type": "Organization",
-            "name": "Brookside Laboratories, Inc.",
-            "url": "https://www.blinc.com/",
-            "address": {"@type": "PostalAddress", "streetAddress": "200 White Mountain Drive",
-                        "addressLocality": "New Bremen", "addressRegion": "OH",
-                        "postalCode": "45869", "addressCountry": "US"},
         },
     },
 ]
@@ -1825,9 +1812,17 @@ def page_partners():
         for p in rows:
             paras = "\n".join(f'        <p>{t}</p>' for t in p["body"])
             go = ""
-            if p.get("url"):
+            if p.get("note"):
+                go += f'        <p class="pnote">{e(p["note"])}</p>\n'
+            if p.get("actions"):
+                btns = "".join(action_btn(l, h, s) for l, h, s in p["actions"])
+                go += f'        <p class="pacts">{btns}</p>\n'
+            elif p.get("url"):
                 go = (f'        <p class="pgo"><a href="{e(p["url"])}" '
                       f'rel="noopener nofollow" target="_blank">{e(p["cta"])}</a></p>\n')
+            elif p.get("email"):
+                go = (f'        <p class="pgo"><a href="mailto:{e(p["email"])}">'
+                      f'{e(p.get("cta") or "Email " + p["name"])}</a></p>\n')
             elif p.get("phone"):
                 go = (f'        <p class="pgo"><a href="tel:{e(p["phone"][1])}">'
                       f'{e(p["phone"][0])}</a></p>\n')
@@ -1849,14 +1844,13 @@ def page_partners():
 """ + "\n\n".join(cards))
 
     body = """    <p class="lede">These are the companies we actually use to run this business. The
-       material we spread, the lab that grades your soil, the shops that keep the equipment
-       working and the trucks that move the loads. If a name is on this page, it is because we
-       depend on it ourselves.</p>
+       material we spread, the shops that keep the equipment working and the trucks that move
+       the loads. If a name is on this page, it is because we depend on it ourselves.</p>
 
     <p>A soil program is only worth what is behind it. Anybody can write a recommendation. What
-       decides whether it is worth anything is whether the sample went to a real lab, whether the
-       blend is what the ticket says it is, and whether the spreader shows up. So rather than ask
-       you to take our word for it, here is the list.</p>
+       decides whether it is worth anything is whether the blend is what the ticket says it is,
+       whether the material lands when it was promised, and whether the spreader is running. So
+       rather than ask you to take our word for it, here is the list.</p>
 
     <div class="standing">
       <h2>How this page works</h2>
@@ -1894,9 +1888,9 @@ def page_partners():
     return simple_page("/partners", "Partners",
                        "The companies behind the work.",
                        body,
-                       "The suppliers, labs, shops and haulers B. Mello Ag Services uses to run "
+                       "The suppliers, shops and haulers B. Mello Ag Services uses to run "
                        "its soil and plant nutrition programs in California\u2019s Central Valley.",
-                       seo_title="Partners \u2013 Suppliers & Labs Behind Our Soil Programs",
+                       seo_title="Partners \u2013 The Companies Behind Our Soil Programs",
                        extra_ld=[itemlist] + entities)
 
 

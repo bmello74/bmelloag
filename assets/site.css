@@ -653,3 +653,18 @@ section.signup { padding:0; }
 .pgo a{font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
        text-decoration:none;color:var(--ink);border-bottom:2px solid var(--gold);
        padding-bottom:2px}
+/* A supplier we are the way in to gets a row of buttons and a line saying why,
+   instead of a single link out to a company that would then have to hand the
+   caller back to us. */
+.pnote{margin:16px 0 0 !important;font-size:.9rem;line-height:1.58;color:var(--ink-soft)}
+.pacts{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0 !important}
+.pacts .btn{flex:0 0 auto}
+/* A partner's own logo almost always arrives on a white background, and this
+   site has a dark mode. Rather than fight it, the mark sits on a deliberate
+   light plate with a hairline, the same trick the masthead uses to keep the
+   B Mello logo readable on black. */
+.ppic img{background:#FFFFFF;border:1px solid var(--hairline);
+          /* Partner logos arrive in every shape there is: Superior Soil is nearly
+             square, Tesh Ag is wide. A fixed plate with the mark contained inside
+             keeps the column even however many get added. */
+          aspect-ratio:4/3;object-fit:contain;padding:6px;border-radius:3px}
