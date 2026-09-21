@@ -679,3 +679,11 @@ section.signup { padding:0; }
 .entrylogo img{width:auto;max-width:380px;max-height:215px;object-fit:contain;background:#FFFFFF;
                border:1px solid var(--hairline);border-radius:4px;padding:22px;
                box-shadow:var(--shadow)}
+/* A shop's capability list. Lives on the company's own page, never on the index
+   card, which is meant to be one sentence. */
+.pservices{margin:16px 0 0;padding:0 0 0 20px}
+.pservices li{margin:0 0 5px;line-height:1.6;color:var(--ink-soft)}
+/* A mark drawn for a dark ground keeps one. Its own artwork carries the edge,
+   so the plate just gets out of the way. */
+.partnerpic img.darklogo,.entrylogo img.darklogo,.ppic img.darklogo{background:#0A0404;
+                                                                   border-color:#2E2323}

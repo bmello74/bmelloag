@@ -1751,6 +1751,64 @@ PARTNERS = [
         },
     },
     {
+        # DO NOT list camshaft regrinding here. RPM does not regrind camshafts,
+        # and Bryan asked for it kept off every listing and referral. It is an
+        # obvious thing to assume a machine shop does, so it is written down.
+        "cat": "equipment",
+        "name": "RPM Machine",
+        "slug": "rpm-machine",
+        "teaser": "Engine rebuilding in Tulare with the machine work done in house. Heads, rods, "
+                  "cranks and blocks for diesel, natural gas and gasoline engines.",
+        "what": "Engine rebuilding and machine work, Tulare, CA",
+        "url": None,
+        "logo": "/assets/img/partners/rpm-machine.jpg",
+        "logo_size": (395, 450),
+        "logo_bg": "dark",
+        "note": "Monday to Friday, 8:00 to 5:00, closed noon to one. Saturdays by appointment.",
+        "actions": [
+            ("Call (559) 684-7766", "tel:+15596847766", "gold"),
+            ("Email peanut@rpmmachineinc.com", "mailto:peanut@rpmmachineinc.com", "quiet"),
+            ("rpmmachineinc.com", "https://www.rpmmachineinc.com", "quiet"),
+        ],
+        "body": [
+            "RPM Machine rebuilds engines in Tulare, and does the machine work in house rather "
+            "than sending it up to Fresno or down to Bakersfield. Cylinder heads, connecting "
+            "rods, crankshafts and engine blocks, for diesel, natural gas and gasoline engines, "
+            "along with complete aftermarket engine and overhaul kits.",
+
+            "For a Valley operation the natural gas and diesel side is the part that matters. "
+            "Irrigation pump engines, tractor and harvester power units, standby generator sets "
+            "and Class 8 truck engines all come across the same bench. Industrial, automotive or "
+            "heavy duty, it is one shop and one phone call, and the owners answer their own "
+            "phones.",
+
+            "Daniel &ldquo;Peanut&rdquo; Wilson and Darrell &ldquo;D-rail&rdquo; Thomas run the "
+            "shop day to day, with partners Brandy Wilson and Gloria Sage.",
+        ],
+        "services": [
+            "Cylinder head repair and rebuilds",
+            "Crankshaft grinding and repair",
+            "Connecting rod reconditioning",
+            "Engine block machining, boring, honing, decking, line boring",
+            "Complete engine rebuilding, industrial, automotive and heavy duty",
+            "Engine kits and overhaul kits",
+            "Custom machine work and fabrication",
+        ],
+        "disclosure": "We have had work done at RPM and we paid for it like anybody else. No "
+                      "referral fee, no commission, no arrangement of any kind. They are here "
+                      "because the work came back right.",
+        "schema": {
+            "@type": "Organization",
+            "name": "RPM Machine, Inc.",
+            "url": "https://www.rpmmachineinc.com",
+            "telephone": "+15596847766",
+            "email": "peanut@rpmmachineinc.com",
+            "address": {"@type": "PostalAddress", "addressLocality": "Tulare",
+                        "addressRegion": "CA", "postalCode": "93274",
+                        "addressCountry": "US"},
+        },
+    },
+    {
         "cat": "referral",
         "name": "Tesh Ag",
         "slug": "tesh-ag",
@@ -1808,7 +1866,8 @@ def partner_pic(p, lazy=True):
     if p.get("logo"):
         w, h = p.get("logo_size", (320, 160))
         lz = 'loading="lazy" ' if lazy else ''
-        return (f'<img src="{p["logo"]}" alt="{e(p["name"])} logo" width="{w}" '
+        cls = ' class="darklogo"' if p.get("logo_bg") == "dark" else ''
+        return (f'<img src="{p["logo"]}"{cls} alt="{e(p["name"])} logo" width="{w}" '
                 f'height="{h}" {lz}decoding="async">')
     initials = "".join(w[0] for w in p["name"].split()[:2]).upper()
     return f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
@@ -1953,6 +2012,10 @@ def page_partners_entry(p):
     carries its own share card: their logo with our mark in the corner. When
     somebody texts the link, the logo is what shows up."""
     paras = "\n".join('    <p>' + t + '</p>' for t in p["body"])
+    if p.get("services"):
+        paras += ('\n    <ul class="pservices">\n'
+                  + "\n".join('      <li>' + t + '</li>' for t in p["services"])
+                  + '\n    </ul>')
     note = ""
     if p.get("note"):
         note = '\n    <p class="pnote">' + e(p["note"]) + '</p>'
