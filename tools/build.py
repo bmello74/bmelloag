@@ -1715,6 +1715,9 @@ PARTNERS = [
     {
         "cat": "material",
         "name": "Superior Soil Supplements",
+        "slug": "superior-soil",
+        "teaser": "Soil testing and amendments out of Hanford, a few miles from our own yard. "
+                  "Bryan Mello is their sales rep for this area, so orders come through us.",
         "what": "Soil amendments and custom blends, Hanford, CA",
         "url": "https://superiorsoil.com/",
         "cta": "Visit Superior Soil",
@@ -1750,10 +1753,17 @@ PARTNERS = [
     {
         "cat": "referral",
         "name": "Tesh Ag",
+        "slug": "tesh-ag",
+        "teaser": "Natural, organic and biological amendments from Eddie Esajian in Hanford. "
+                  "When their line fits your ground better than ours, this is who we name.",
         "what": "Natural, organic and biological amendments, Hanford, CA",
         "url": None,
         "email": "info@teshag.com",
         "cta": "Email Tesh Ag",
+        "actions": [
+            ("Call Eddie (559) 904-7689", "tel:+15599047689", "gold"),
+            ("Email info@teshag.com", "mailto:info@teshag.com", "quiet"),
+        ],
         "note": "If you get in touch with them, mention you heard about them from us. They "
                 "always let us know when somebody comes their way on our recommendation.",
         "logo": "/assets/img/partners/tesh-ag.png",
@@ -1791,26 +1801,75 @@ PARTNERS = [
 ]
 
 
-def partner_pic(p):
+def partner_pic(p, lazy=True):
     """A logo if we have been given one, otherwise the monogram tile that
     /trusted already uses. A missing logo should read as a deliberate blank,
     never as a broken image."""
     if p.get("logo"):
         w, h = p.get("logo_size", (320, 160))
+        lz = 'loading="lazy" ' if lazy else ''
         return (f'<img src="{p["logo"]}" alt="{e(p["name"])} logo" width="{w}" '
-                f'height="{h}" loading="lazy" decoding="async">')
+                f'height="{h}" {lz}decoding="async">')
     initials = "".join(w[0] for w in p["name"].split()[:2]).upper()
     return f'<div class="mono" aria-hidden="true">{e(initials)}</div>'
 
 
-def page_partners():
-    """A roster, not a set of stories. Grouped by what each company does, and a
-    category with nothing in it simply does not render, so the page can grow
-    one entry at a time without anybody having to tidy up the empty rooms."""
+PARTNER_SHARE_DIR = "/assets/img/partners/share"
+
+# What an entry page calls the relationship in its title and its share card.
+# A company we buy from and a company we merely point you at are not the same
+# claim, and the page title is the first thing a search result shows.
+PARTNER_RELATION = {
+    "material": "Partner of",
+    "referral": "Recommended by",
+    "lab": "Partner of",
+    "equipment": "Partner of",
+    "logistics": "Partner of",
+}
+
+
+def partner_actions(p):
+    """Every way in to one partner, in the order we want them used. An entry
+    may set `actions` explicitly; otherwise we build a sensible row from
+    whatever contact details it has, first one gold and the rest quiet."""
+    if p.get("actions"):
+        return list(p["actions"])
+    acts = []
+    if p.get("url"):
+        acts.append((p.get("cta") or "Visit " + p["name"], p["url"], "gold"))
+    if p.get("phone"):
+        acts.append((p["phone"][0], "tel:" + p["phone"][1],
+                     "gold" if not acts else "quiet"))
+    if p.get("email"):
+        acts.append((p.get("email_cta") or "Email " + p["name"],
+                     "mailto:" + p["email"], "gold" if not acts else "quiet"))
+    return acts
+
+
+def partners_checked():
+    """Nothing gets on this page without the three things that make it worth
+    reading: who they are, what the connection is, and a page of its own to
+    send somebody."""
+    seen = set()
     for p in PARTNERS:
-        if not p.get("disclosure"):
-            raise SystemExit(f"partner {p['name']!r} has no disclosure. A card cannot go up "
-                             f"without one.")
+        for field in ("slug", "teaser", "disclosure"):
+            if not p.get(field):
+                raise SystemExit("partner %r has no %s" % (p.get("name"), field))
+        if p["slug"] in seen:
+            raise SystemExit("two partners share the slug %r" % p["slug"])
+        seen.add(p["slug"])
+        if p["cat"] not in dict((k, lab) for k, lab, _ in PARTNER_CATS):
+            raise SystemExit("partner %r has unknown cat %r" % (p["name"], p["cat"]))
+    return PARTNERS
+
+
+def page_partners():
+    """The index. A logo, a name and a sentence, and that is the whole job.
+
+    Everything about one company lives on its own page, because that is the
+    page somebody forwards in a text message, and a link only previews a logo
+    if it is a real URL with its own share card."""
+    partners_checked()
 
     sections = []
     for key, label, blurb in PARTNER_CATS:
@@ -1819,38 +1878,22 @@ def page_partners():
             continue
         cards = []
         for p in rows:
-            paras = "\n".join(f'        <p>{t}</p>' for t in p["body"])
-            go = ""
-            if p.get("note"):
-                go += f'        <p class="pnote">{e(p["note"])}</p>\n'
-            if p.get("actions"):
-                btns = "".join(action_btn(l, h, s) for l, h, s in p["actions"])
-                go += f'        <p class="pacts">{btns}</p>\n'
-            elif p.get("url"):
-                go += (f'        <p class="pgo"><a href="{e(p["url"])}" '
-                      f'rel="noopener nofollow" target="_blank">{e(p["cta"])}</a></p>\n')
-            elif p.get("email"):
-                go += (f'        <p class="pgo"><a href="mailto:{e(p["email"])}">'
-                      f'{e(p.get("cta") or "Email " + p["name"])}</a></p>\n')
-            elif p.get("phone"):
-                go += (f'        <p class="pgo"><a href="tel:{e(p["phone"][1])}">'
-                      f'{e(p["phone"][0])}</a></p>\n')
-            cards.append(f"""    <div class="pcard">
-      <div class="ppic">{partner_pic(p)}</div>
-      <div class="pbody">
-        <h3>{e(p["name"])}</h3>
-        <p class="pwhat">{p["what"]}</p>
-{paras}
-        <p class="pdisc"><strong>Our connection.</strong> {e(p["disclosure"])}</p>
-{go}
-      </div>
-    </div>""")
-        sections.append(f"""    <div class="pcat">
-      <h2>{e(label)}</h2>
-      <p class="pcatsay">{e(blurb)}</p>
-    </div>
-
-""" + "\n\n".join(cards))
+            cards.append(
+                '    <a class="tcard" href="/partners/' + p["slug"] + '">\n'
+                '      <span class="tcardpic partnerpic">' + partner_pic(p) + '</span>\n'
+                '      <span class="tcardbody">\n'
+                '        <span class="tcardname">' + e(p["name"]) + '</span>\n'
+                '        <span class="tcardwhat">' + p["what"] + '</span>\n'
+                '        <span class="tcardsay">' + e(p["teaser"]) + '</span>\n'
+                '        <span class="tcardgo">Read more</span>\n'
+                '      </span>\n'
+                '    </a>')
+        sections.append(
+            '    <div class="pcat">\n'
+            '      <h2>' + e(label) + '</h2>\n'
+            '      <p class="pcatsay">' + e(blurb) + '</p>\n'
+            '    </div>\n\n'
+            '    <div class="tgrid">\n' + "\n\n".join(cards) + '\n    </div>')
 
     body = """    <p class="lede">These are the companies behind the work. The material we spread, the
        shops that keep the equipment working, the trucks that move the loads, and the outfits we
@@ -1865,7 +1908,7 @@ def page_partners():
     <div class="standing">
       <h2>How this page works</h2>
       <p>Every entry says what our connection is, in plain words. Where we are paid by a company
-         on this page, it says so on the card. Where nothing changes hands, it says that too.</p>
+         on this page, it says so on their page. Where nothing changes hands, it says that too.</p>
       <p>Nobody bought a place here, and nobody is here as a favor. If we stop using a company,
          they come off the page.</p>
       <p>This is not the same list as <a href="/trusted">Trusted</a>. That page is people and
@@ -1876,9 +1919,8 @@ def page_partners():
 """ + "\n\n".join(sections) + """
 
     <p class="toolfoot">Work with us and think you belong on this page? The bar is that we use
-       you, so start there. <a href="/contact">Get in touch.</a></p>"""
+       you or would send a grower to you, so start there. <a href="/contact">Get in touch.</a></p>"""
 
-    entities = [p["schema"] for p in PARTNERS if p.get("schema")]
     itemlist = {
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -1887,21 +1929,65 @@ def page_partners():
         "itemListOrder": "https://schema.org/ItemListUnordered",
         "numberOfItems": len(PARTNERS),
         "itemListElement": [
-            {k: v for k, v in
-             {"@type": "ListItem", "position": n + 1, "name": p["name"],
-              "url": p.get("url")}.items() if v is not None}
+            {"@type": "ListItem", "position": n + 1, "name": p["name"],
+             "url": SITE + "/partners/" + p["slug"]}
             for n, p in enumerate(PARTNERS)],
     }
-    for ent in entities:
-        ent.setdefault("@context", "https://schema.org")
 
     return simple_page("/partners", "Partners",
                        "The companies behind the work.",
                        body,
                        "The suppliers, shops and haulers B. Mello Ag Services uses to run "
-                       "its soil and plant nutrition programs in California\u2019s Central Valley.",
-                       seo_title="Partners \u2013 The Companies Behind Our Soil Programs",
-                       extra_ld=[itemlist] + entities)
+                       "its soil and plant nutrition programs in California’s Central Valley.",
+                       seo_title="Partners – The Companies Behind Our Soil Programs",
+                       extra_ld=[itemlist])
+
+
+def page_partners_entry(p):
+    """One page per company. This is the page that gets forwarded, so it
+    carries its own share card: their logo with our mark in the corner. When
+    somebody texts the link, the logo is what shows up."""
+    paras = "\n".join('    <p>' + t + '</p>' for t in p["body"])
+    note = ""
+    if p.get("note"):
+        note = '\n    <p class="pnote">' + e(p["note"]) + '</p>'
+    act_html = "".join(action_btn(l, h, s) for l, h, s in partner_actions(p))
+    share = PARTNER_SHARE_DIR + "/" + p["slug"] + ".jpg"
+    relation = PARTNER_RELATION.get(p["cat"], "Partner of")
+
+    body = (
+        '    <p class="backup"><a href="/partners">All the companies behind our work</a></p>\n\n'
+        '    <div class="entrypic entrylogo">' + partner_pic(p, lazy=False) + '</div>\n\n'
+        + paras + '\n\n'
+        '    <p class="pdisc"><strong>Our connection.</strong> ' + e(p["disclosure"]) + '</p>'
+        + note + '\n\n'
+        '    <p class="trustgo">' + act_html + '</p>\n\n'
+        '    <p class="toolfoot">Every company on this page says what our connection is, in '
+        'plain words. <a href="/partners">See the rest of them.</a></p>')
+
+    crumbs = ld_crumbs([("Home", "/"), ("Partners", "/partners"),
+                        (p["name"], "/partners/" + p["slug"])])
+    entities = []
+    if p.get("schema"):
+        entities.append(dict(p["schema"], **{"@context": "https://schema.org"}))
+
+    h = head(p["name"] + " — " + relation + " " + BIZ, p["teaser"],
+             "/partners/" + p["slug"],
+             image=SITE + share, image_size=(1200, 630),
+             image_alt=p["name"] + ", " + relation.lower() + " " + BIZ,
+             ld=[ld_org(), crumbs] + entities)
+    return h + masthead("/partners") + (
+        '\n<header class="pagehead">\n'
+        '  <div class="wrap">\n'
+        '    <div class="eyebrow"><a href="/partners">Partners</a></div>\n'
+        '    <h1>' + e(p["name"]) + '</h1>\n'
+        '    <p class="tag">' + p["what"] + '</p>\n'
+        '  </div>\n'
+        '</header>\n'
+        '<section>\n'
+        '  <div class="wrap prose">\n' + body + '\n'
+        '  </div>\n'
+        '</section>\n') + footer()
 
 
 def action_btn(label, href, style="gold"):
@@ -3203,6 +3289,8 @@ def sitemap(items):
     add("/subscribe", None, "monthly", "0.9")   # not in the nav, but very much a landing page
     for t in TRUSTED:                           # one page per name, and each one shareable
         add(f"/trusted/{t['slug']}", None, "monthly", "0.7")
+    for p in PARTNERS:                          # same again for the partner pages
+        add(f"/partners/{p['slug']}", None, "monthly", "0.7")
 
     for k in SERIES_ORDER:
         sub = [i for i in items if i["series"] == k]
@@ -3265,6 +3353,8 @@ def build_site():
         write(f"trusted/{t['slug']}.html", page_trusted_entry(t))
     write("assets/trusted.js", TRUSTED_JS)
     write("partners.html", page_partners())
+    for p in PARTNERS:                          # one page per company, each one forwardable
+        write(f"partners/{p['slug']}.html", page_partners_entry(p))
     write("field-tools.html", page_tools())
     write("assets/tools.js", TOOLS_JS)
     write("subscribe.html", page_subscribe(items))

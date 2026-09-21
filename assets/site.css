@@ -668,3 +668,13 @@ section.signup { padding:0; }
              square, Tesh Ag is wide. A fixed plate with the mark contained inside
              keeps the column even however many get added. */
           aspect-ratio:4/3;object-fit:contain;padding:6px;border-radius:3px}
+/* Partner index cards reuse the trusted grid, but a logo must be contained on a
+   plate rather than cropped to fill like a photograph. */
+.partnerpic img{height:210px;object-fit:contain;background:#FFFFFF;padding:22px;
+                border-bottom:1px solid var(--hairline)}
+/* A company's own page leads with its mark, not a full-bleed picture. */
+.entrypic.entrylogo{display:flex;align-items:center;justify-content:center;
+                    border:0;background:none;padding:0;overflow:visible}
+.entrylogo img{width:auto;max-width:380px;max-height:215px;object-fit:contain;background:#FFFFFF;
+               border:1px solid var(--hairline);border-radius:4px;padding:22px;
+               box-shadow:var(--shadow)}
