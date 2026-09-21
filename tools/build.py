@@ -1785,6 +1785,22 @@ PARTNERS = [
             "Daniel &ldquo;Peanut&rdquo; Wilson and Darrell &ldquo;D-rail&rdquo; Thomas run the "
             "shop day to day, with partners Brandy Wilson and Gloria Sage.",
         ],
+        "gallery": [
+            ("/assets/img/partners/rpm/rod-single.jpg",
+             "A reconditioned connecting rod standing on the bench at RPM Machine, with more "
+             "rods and pistons laid out behind it"),
+            ("/assets/img/partners/rpm/rods-row.jpg",
+             "Six matched connecting rods lined up across the bench after reconditioning"),
+            ("/assets/img/partners/rpm/v8-boring.jpg",
+             "A V8 block set up under the Rottler boring machine"),
+            ("/assets/img/partners/rpm/block-surfacer.jpg",
+             "A green tractor engine block clamped in the surfacing machine"),
+            ("/assets/img/partners/rpm/block-honing.jpg",
+             "A small block clamped on the honing machine"),
+            ("/assets/img/partners/rpm/inline-six.jpg",
+             "A finished inline six, painted and assembled, on the bench with racked "
+             "crankshafts behind it"),
+        ],
         "services": [
             "Cylinder head repair and rebuilds",
             "Crankshaft grinding and repair",
@@ -2007,6 +2023,49 @@ def page_partners():
                        extra_ld=[itemlist])
 
 
+def partner_gallery(p):
+    """A crossfade built out of stacked images and one animation, staggered.
+
+    No script. It keeps running with JavaScript switched off, and there is
+    nothing to fail on a phone with one bar. Every frame is a real <img> with
+    real dimensions, so the box holds its shape while they load and the page
+    does not jump. The keyframes are generated from however many photographs
+    there are, so adding a seventh needs no arithmetic here. Anyone whose
+    system asks for less motion simply gets the first photograph."""
+    shots = p.get("gallery") or []
+    if not shots:
+        return ""
+    n = len(shots)
+    seg = 100.0 / n                      # each photograph's share of the cycle
+    fade = min(4.0, seg * 0.26)          # the crossfade, as a share of the cycle
+    dur = n * 5                          # five seconds a photograph
+    keys = ("@keyframes shopfade{0%{opacity:0}"
+            + "%.3f%%{opacity:1}" % fade
+            + "%.3f%%{opacity:1}" % seg
+            + "%.3f%%{opacity:0}" % min(seg + fade, 100.0)
+            + "100%{opacity:0}}")
+    # Every delay is pulled back by one fade length so the first photograph is
+    # already up when the page paints. Without this the frame sits empty for the
+    # length of a fade while image one climbs from nothing, which reads as a
+    # broken picture rather than a slideshow. Shifting all of them equally keeps
+    # the handovers aligned.
+    fade_s = dur * fade / 100.0
+    imgs = []
+    for i, (src, alt) in enumerate(shots):
+        lazy = "" if i == 0 else 'loading="lazy" '
+        delay = i * (dur / float(n)) - fade_s
+        imgs.append('      <img src="' + src + '" alt="' + e(alt) + '" '
+                    'width="700" height="933" ' + lazy + 'decoding="async" '
+                    'style="animation-delay:' + ("%.2fs" % delay) + '">')
+    return ("\n    <style>" + keys
+            + ".shopshow img{animation:shopfade " + str(dur)
+            + "s linear infinite both}</style>\n"
+            + '    <div class="shopshow" role="img" aria-label="Photographs from the floor at '
+            + e(p["name"]) + '">\n'
+            + "\n".join(imgs)
+            + "\n    </div>\n")
+
+
 def page_partners_entry(p):
     """One page per company. This is the page that gets forwarded, so it
     carries its own share card: their logo with our mark in the corner. When
@@ -2016,6 +2075,7 @@ def page_partners_entry(p):
         paras += ('\n    <ul class="pservices">\n'
                   + "\n".join('      <li>' + t + '</li>' for t in p["services"])
                   + '\n    </ul>')
+    paras += partner_gallery(p)
     note = ""
     if p.get("note"):
         note = '\n    <p class="pnote">' + e(p["note"]) + '</p>'
