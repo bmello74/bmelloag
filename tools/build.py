@@ -15,6 +15,23 @@ import argparse, base64, hashlib, html, json, os, re, sys, datetime, pathlib, zo
 import urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+
+def asset_ver(rel="assets/site.css"):
+    """A short content hash for a static asset, cached for the run.
+
+    Appended to the stylesheet URL so that changing the stylesheet changes its
+    URL. Browsers then fetch the new one instead of serving the old one from
+    cache for as long as they feel like it."""
+    key = "_ver_" + rel
+    cached = globals().get(key)
+    if cached is None:
+        try:
+            cached = "?v=" + hashlib.sha1((ROOT / rel).read_bytes()).hexdigest()[:10]
+        except OSError:
+            cached = ""
+        globals()[key] = cached
+    return cached
 CATALOG = ROOT / "tools" / "catalog.json"
 
 SITE = "https://bmelloag.com"
@@ -824,7 +841,7 @@ def head(title, desc, path, extra_css="", extra_head="", image=None,
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css{asset_ver()}">
 {blocks}{extra_css}{extra_head}</head>
 <body>
 '''
@@ -2062,9 +2079,17 @@ def partner_gallery(p):
         imgs.append('      <img src="' + src + '" alt="' + e(alt) + '" '
                     'width="700" height="933" ' + lazy + 'decoding="async" '
                     'style="animation-delay:' + ("%.2fs" % delay) + '">')
-    return ("\n    <style>" + keys
+    layout = (".shopshow{position:relative;aspect-ratio:3/4;max-width:420px;"
+              "margin:26px auto 0;overflow:hidden}"
+              ".shopshow img{position:absolute;inset:0;width:100%;height:100%;"
+              "object-fit:cover;display:block;opacity:0}"
+              "@media (max-width:480px){.shopshow{max-width:100%}}")
+    reduce = ("@media (prefers-reduced-motion:reduce){"
+              ".shopshow img{animation:none !important;opacity:0}"
+              ".shopshow img:first-of-type{opacity:1}}")
+    return ("\n    <style>" + layout + keys
             + ".shopshow img{animation:shopfade " + str(dur)
-            + "s linear infinite both}</style>\n"
+            + "s linear infinite both}" + reduce + "</style>\n"
             + '    <div class="shopshow" role="img" aria-label="Photographs from the floor at '
             + e(p["name"]) + '">\n'
             + "\n".join(imgs)
@@ -3475,6 +3500,25 @@ def page_404(items):
 """ + footer()
 
 
+def refresh_asset_links():
+    """Point every already-published page at the current stylesheet URL.
+
+    Issue pages come from publish-all, which needs the newsletter source. A
+    normal `site` build cannot regenerate them, so without this they would keep
+    an unversioned stylesheet link and go on serving whatever CSS a visitor
+    happened to cache. Rewrites the one attribute and leaves the rest alone."""
+    ver = asset_ver()
+    pat = re.compile(r'href="/assets/site\.css(?:\?v=[a-f0-9]+)?"')
+    touched = 0
+    for f in sorted(ROOT.glob("reports/**/index.html")):
+        old = f.read_text(encoding="utf-8")
+        new = pat.sub('href="/assets/site.css%s"' % ver, old)
+        if new != old:
+            f.write_text(new, encoding="utf-8", newline="\n")
+            touched += 1
+    return touched
+
+
 def build_site():
     items = load_catalog()
     write("index.html", page_home(items))
@@ -3531,6 +3575,7 @@ def build_site():
     # serves the whole branch and .assetsignore is a Cloudflare-only file), but
     # they are not part of the website, so keep crawlers out of them.
     write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /tools/\nSitemap: {SITE}/sitemap.xml\n")
+    n = refresh_asset_links()   # keep published issue pages on the current CSS url
     print(f"site: {len(items)} issues in catalog, static pages rebuilt")
 
 
