@@ -1819,6 +1819,14 @@ PARTNER_SHARE_DIR = "/assets/img/partners/share"
 # What an entry page calls the relationship in its title and its share card.
 # A company we buy from and a company we merely point you at are not the same
 # claim, and the page title is the first thing a search result shows.
+PARTNER_CHIP = {
+    "material": "Partner",
+    "referral": "Recommended",
+    "lab": "Partner",
+    "equipment": "Partner",
+    "logistics": "Partner",
+}
+
 PARTNER_RELATION = {
     "material": "Partner of",
     "referral": "Recommended by",
@@ -1871,29 +1879,23 @@ def page_partners():
     if it is a real URL with its own share card."""
     partners_checked()
 
-    sections = []
-    for key, label, blurb in PARTNER_CATS:
-        rows = [p for p in PARTNERS if p["cat"] == key]
-        if not rows:
-            continue
-        cards = []
-        for p in rows:
-            cards.append(
-                '    <a class="tcard" href="/partners/' + p["slug"] + '">\n'
-                '      <span class="tcardpic partnerpic">' + partner_pic(p) + '</span>\n'
-                '      <span class="tcardbody">\n'
-                '        <span class="tcardname">' + e(p["name"]) + '</span>\n'
-                '        <span class="tcardwhat">' + p["what"] + '</span>\n'
-                '        <span class="tcardsay">' + e(p["teaser"]) + '</span>\n'
-                '        <span class="tcardgo">Read more</span>\n'
-                '      </span>\n'
-                '    </a>')
-        sections.append(
-            '    <div class="pcat">\n'
-            '      <h2>' + e(label) + '</h2>\n'
-            '      <p class="pcatsay">' + e(blurb) + '</p>\n'
-            '    </div>\n\n'
-            '    <div class="tgrid">\n' + "\n\n".join(cards) + '\n    </div>')
+    order = [k for k, _lab, _b in PARTNER_CATS]
+    rows = sorted(PARTNERS, key=lambda p: order.index(p["cat"]))
+    cards = []
+    for p in rows:
+        chip = PARTNER_CHIP.get(p["cat"], "Partner")
+        cards.append(
+            '    <a class="tcard" href="/partners/' + p["slug"] + '">\n'
+            '      <span class="tcardpic partnerpic">' + partner_pic(p) + '</span>\n'
+            '      <span class="tcardbody">\n'
+            '        <span class="tcardname">' + e(p["name"])
+            + '<span class="tchip">' + e(chip) + '</span></span>\n'
+            '        <span class="tcardwhat">' + p["what"] + '</span>\n'
+            '        <span class="tcardsay">' + e(p["teaser"]) + '</span>\n'
+            '        <span class="tcardgo">Read more</span>\n'
+            '      </span>\n'
+            '    </a>')
+    sections = ['    <div class="tgrid">\n' + "\n\n".join(cards) + '\n    </div>']
 
     body = """    <p class="lede">These are the companies behind the work. The material we spread, the
        shops that keep the equipment working, the trucks that move the loads, and the outfits we
@@ -1911,6 +1913,9 @@ def page_partners():
          on this page, it says so on their page. Where nothing changes hands, it says that too.</p>
       <p>Nobody bought a place here, and nobody is here as a favor. If we stop using a company,
          they come off the page.</p>
+      <p>A card marked <strong>Partner</strong> is a company we buy from or work through.
+         <strong>Recommended</strong> means we do not sell their products at all, and we name them
+         when their line suits your ground better than ours.</p>
       <p>This is not the same list as <a href="/trusted">Trusted</a>. That page is people and
          places we recommend personally, in and out of farming. This one is the working end of
          our own business.</p>

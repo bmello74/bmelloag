@@ -670,8 +670,9 @@ section.signup { padding:0; }
           aspect-ratio:4/3;object-fit:contain;padding:6px;border-radius:3px}
 /* Partner index cards reuse the trusted grid, but a logo must be contained on a
    plate rather than cropped to fill like a photograph. */
-.partnerpic img{height:210px;object-fit:contain;background:#FFFFFF;padding:22px;
+.partnerpic img{height:240px;object-fit:contain;background:#FFFFFF;padding:16px;
                 border-bottom:1px solid var(--hairline)}
+@media (max-width:720px){.partnerpic img{height:200px;padding:14px}}
 /* A company's own page leads with its mark, not a full-bleed picture. */
 .entrypic.entrylogo{display:flex;align-items:center;justify-content:center;
                     border:0;background:none;padding:0;overflow:visible}
