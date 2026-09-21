@@ -12,6 +12,7 @@ its catalog entry; `site` regenerates everything derived from the catalog.
 """
 
 import argparse, base64, hashlib, html, json, os, re, sys, datetime, pathlib, zoneinfo
+import urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "tools" / "catalog.json"
@@ -1764,6 +1765,7 @@ PARTNERS = [
         "logo": "/assets/img/partners/rpm-machine.jpg",
         "logo_size": (395, 450),
         "logo_bg": "dark",
+        "address": "1630 W Tulare Ave, Tulare, CA 93274",
         "note": "Monday to Friday, 8:00 to 5:00, closed noon to one. Saturdays by appointment.",
         "actions": [
             ("Call (559) 684-7766", "tel:+15596847766", "gold"),
@@ -1771,8 +1773,9 @@ PARTNERS = [
             ("rpmmachineinc.com", "https://www.rpmmachineinc.com", "quiet"),
         ],
         "body": [
-            "RPM Machine rebuilds engines in Tulare, and does the machine work in house rather "
-            "than sending it up to Fresno or down to Bakersfield. Cylinder heads, connecting "
+            "RPM Machine has been rebuilding engines at the same West Tulare Avenue address "
+            "for roughly twenty-five years, and does the machine work in house rather than "
+            "sending it up to Fresno or down to Bakersfield. Cylinder heads, connecting "
             "rods, crankshafts and engine blocks, for diesel, natural gas and gasoline engines, "
             "along with complete aftermarket engine and overhaul kits.",
 
@@ -1819,7 +1822,9 @@ PARTNERS = [
             "url": "https://www.rpmmachineinc.com",
             "telephone": "+15596847766",
             "email": "peanut@rpmmachineinc.com",
-            "address": {"@type": "PostalAddress", "addressLocality": "Tulare",
+            "address": {"@type": "PostalAddress",
+                        "streetAddress": "1630 W Tulare Ave",
+                        "addressLocality": "Tulare",
                         "addressRegion": "CA", "postalCode": "93274",
                         "addressCountry": "US"},
         },
@@ -2077,8 +2082,12 @@ def page_partners_entry(p):
                   + '\n    </ul>')
     paras += partner_gallery(p)
     note = ""
+    if p.get("address"):
+        q = urllib.parse.quote_plus(p["address"])
+        note += ('\n    <p class="pnote"><a href="https://maps.google.com/?q=' + q
+                 + '" rel="noopener" target="_blank">' + e(p["address"]) + '</a></p>')
     if p.get("note"):
-        note = '\n    <p class="pnote">' + e(p["note"]) + '</p>'
+        note += '\n    <p class="pnote">' + e(p["note"]) + '</p>'
     act_html = "".join(action_btn(l, h, s) for l, h, s in partner_actions(p))
     share = PARTNER_SHARE_DIR + "/" + p["slug"] + ".jpg"
     relation = PARTNER_RELATION.get(p["cat"], "Partner of")
