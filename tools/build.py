@@ -211,6 +211,83 @@ TRUSTED = [
         },
     },
     {
+        "name": "Mello Acres",
+        "slug": "mello-acres",
+        "what": "Dahlias, geese and hatching eggs, Hanford",
+        "byline": "Michelle Mello | Mello Acres, Hanford",
+        "teaser": "Michelle's farm in Hanford: dahlias cut in the cool of the morning, "
+                  "Sebastopol, Embden and Toulouse geese, and hatching eggs, sold by "
+                  "conversation.",
+        "url": "https://melloacres.com/",
+        "cta": "Visit Mello Acres",
+        "actions": [
+            ("Visit Mello Acres", "https://melloacres.com/", "gold"),
+            ("Call (559) 836-2880", "tel:+15598362880", "quiet"),
+            ("Email Michelle", "mailto:connect@melloacres.com", "quiet"),
+        ],
+        # Michelle's own Farm, Flock, Flowers collage, square, trimmed of its
+        # frame. The index card crops it at center 20%, which keeps the title.
+        "photo": "/assets/img/trusted/mello-acres.jpg",
+        "size": (1000, 1000),
+        "alt": "Mello Acres, farm, flock, flowers: a peach dahlia, a Sebastopol goose, a "
+               "Shorthorn calf, a cream dahlia, a duck and a fluffy chick",
+        "body": [
+            "Mello Acres is Michelle&rsquo;s family farm in Hanford, where she raises geese, "
+            "ducks and chickens and grows dahlias. It runs on the same idea as the rest of this "
+            "page: do it properly, let the season set the schedule, and keep it small enough "
+            "to know every bird and every row.",
+
+            "<strong>The flock.</strong> Three breeds of geese: Sebastopol, with their long, "
+            "curling, ribbon-soft feathers; Embden, big, bright white and sturdy, the classic "
+            "farmyard goose; and Toulouse, handsome grey birds with an easygoing nature. She "
+            "sells started goslings and hatching eggs for all three, along with Bresse chicken "
+            "hatching eggs and mixed duck and chicken hatching eggs. Geese lay with the "
+            "seasons, so goose eggs and goslings are only around for part of the year. Ask "
+            "what is coming and she will put you on the list.",
+
+            "<strong>The flowers.</strong> Dahlias, cut in the cool of the morning and ready "
+            "the same day. Single stems, mixed bunches, or whole buckets for people doing their "
+            "own arranging, and she will plan around a date for a wedding, an event or a "
+            "standing weekly order. Our warm Central Valley fall keeps the patch blooming after "
+            "most growers are finished, and in winter she divides tubers from her own clumps "
+            "for spring planting.",
+
+            "She also keeps a small herd of registered Shorthorn and Shorthorn Plus cattle, and "
+            "has two free guides on her site for anyone starting out: hatching chicken eggs, "
+            "and raising baby chicks.",
+
+            "There is no shopping cart, and that is on purpose. You call or send a note, she "
+            "tells you what is ready and what is coming, and you pick up at the farm or ask "
+            "about shipping eggs. If waiting a few weeks or choosing something else would suit "
+            "you better, she will tell you.",
+
+            "Michelle is my wife, and Mello Acres is her farm.",
+
+            "Call her at <a href=\"tel:+15598362880\">(559) 836-2880</a> or email "
+            "<a href=\"mailto:connect@melloacres.com\">connect@melloacres.com</a>.",
+        ],
+        "disclosure": "Michelle is my wife, and Mello Acres is her farm.",
+        "schema": {
+            "@type": "LocalBusiness",
+            "name": "Mello Acres",
+            "url": "https://melloacres.com/",
+            "telephone": "+15598362880",
+            "email": "connect@melloacres.com",
+            "address": {"@type": "PostalAddress", "addressLocality": "Hanford",
+                        "addressRegion": "CA", "addressCountry": "US"},
+            "areaServed": "Central Valley, California",
+            "founder": {"@type": "Person", "name": "Michelle Mello"},
+            "knowsAbout": ["dahlias", "cut flowers", "dahlia tubers", "Sebastopol geese",
+                           "Embden geese", "Toulouse geese", "goslings", "hatching eggs",
+                           "Bresse chickens", "ducks", "Shorthorn cattle"],
+            "makesOffer": [
+                {"@type": "Offer", "itemOffered": {"@type": "Product", "name": n}}
+                for n in ("Fresh cut dahlias", "Dahlia tubers", "Started goslings",
+                          "Goose hatching eggs", "Bresse chicken hatching eggs",
+                          "Duck and chicken hatching eggs")],
+        },
+    },
+    {
         "name": "Fugazzis",
         "slug": "fugazzis",
         "what": "Bistro &amp; steakhouse \u2014 Hanford",
@@ -1693,9 +1770,9 @@ def page_trusted():
     return simple_page("/trusted", "Trusted",
                        "People and companies we use ourselves.",
                        body,
-                       "People and businesses B. Mello Ag Services uses and trusts around "
-                       "Hanford and the Central Valley \u2014 Shaklee nutrition, and Fugazzis "
-                       "bistro and steakhouse.",
+                       "People and businesses B. Mello Ag Services uses and trusts in "
+                       "Hanford: Shaklee nutrition, Fugazzis bistro and steakhouse, and "
+                       "Mello Acres dahlias and geese.",
                        seo_title="Trusted \u2014 People & Companies We Use in Hanford, CA",
                        extra_ld=[itemlist])
 
