@@ -1,5 +1,34 @@
 [
   {
+    "id": "energy/2026-09-28",
+    "series": "energy",
+    "slug": "2026-09-28",
+    "date": "2026-09-28",
+    "date_display": "Sep 28",
+    "title": "Weekly Energy Update, September 28, 2026",
+    "headline": "Diesel confirmed the top. Gasoline is the new number to watch.",
+    "summary": "California diesel closed Sunday at $8.4160, the first weekly decline this cycle, and Los Angeles wholesale confirmed the top by rising just 13 cents. Gasoline went the other way, up 20 cents to $6.3528 and nine cents from the all-time state record. WTI fell 8% on Iran peace hopes while Brent held near $104. Our call for September 28 through October 4.",
+    "meta": "Week 40 · Week in review Sep 21–27",
+    "source": "26 Weekly Energy Update/B Mello Weekly Energy Update - September 28 2026.html",
+    "path": "reports/energy/2026-09-28.html",
+    "topics": [
+      "California diesel prices",
+      "gasoline prices",
+      "crude oil",
+      "Brent crude",
+      "WTI crude",
+      "refinery margins",
+      "refinery outages",
+      "Strait of Hormuz",
+      "EIA inventory data",
+      "carbon and LCFS costs",
+      "California fuel taxes",
+      "natural gas",
+      "electricity rates",
+      "harvest fuel budgeting"
+    ]
+  },
+  {
     "id": "ag-labor/2026-09",
     "series": "ag-labor",
     "slug": "2026-09",
