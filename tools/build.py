@@ -678,7 +678,7 @@ SERIES_SEO = {
         "In-depth alerts when a fertilizer or commodity market moves hard enough that "
         "waiting for the monthly is not good enough."),
     "holiday": (
-        "Holiday Greetings",
+        "Holiday Greetings from B. Mello Ag Services, Hanford CA",
         "Holiday notes from the B. Mello family to our customers and neighbours."),
 }
 
@@ -743,9 +743,35 @@ def seo_issue_title(entry):
     # title. Only the regular dated issues get the templated one, or two issues in
     # the same month would end up with identical titles.
     if not tpl or not DATE_SLUG.fullmatch(entry["slug"]):
-        return f'{entry["title"]} \u00b7 {BIZ}'
-    base = tpl.format(dd=entry["date_display"], yr=y, month=MONTH[m])
-    return f"{base} \u00b7 {BIZ}"
+        # No em dashes in B Mello copy: catalog titles carry them from the email.
+        base = entry["title"].replace(" \u2014 ", ", ").replace("\u2014", ", ")
+    else:
+        base = tpl.format(dd=entry["date_display"], yr=y, month=MONTH[m])
+    full = f"{base} \u00b7 {BIZ}"
+    # Google cuts titles past ~65 characters. When the full business name would
+    # push a dated issue over, the shorter "B. Mello Ag" keeps the brand visible
+    # instead of letting Google chop it to "B. Mello Ag Se...".
+    return full if len(full) <= TITLE_MAX else f"{base} \u00b7 {BIZ_SHORT}"
+
+
+TITLE_MAX = 65
+BIZ_SHORT = "B. Mello Ag"
+
+# A page gets exactly one <h1>: the issue headline in the page header. Newsletter
+# bodies arrive with their own <h1> (the masthead title in the email), so it is
+# demoted to an <h2> marked data-h1, and the email's own h1 CSS is pointed at
+# that marker so the issue looks exactly as it did.
+_H1_OPEN = re.compile(r"<h1(?=[\s>])", re.I)
+_H1_CLOSE = re.compile(r"</h1\s*>", re.I)
+_H1_SEL = re.compile(r"(?<![\w.#-])h1(?![\w-])", re.I)
+
+
+def demote_body_h1(body):
+    return _H1_CLOSE.sub("</h2>", _H1_OPEN.sub("<h2 data-h1", body))
+
+
+def retarget_h1_css(styles):
+    return _H1_SEL.sub("h2[data-h1]", styles)
 
 
 def seo_issue_desc(entry):
@@ -3866,6 +3892,8 @@ def render_issue(entry, styles, body, items):
         inner = " &middot; ".join(e(t) for t in topics)
         topic_html = f'<p class="intopics"><span>In this issue</span> {inner}</p>'
 
+    body = demote_body_h1(body)
+    styles = retarget_h1_css(styles)
     h = head(seo_issue_title(entry), seo_issue_desc(entry),
              "/" + entry["path"].removesuffix(".html"),
              extra_css=styles + "\n",
