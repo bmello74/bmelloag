@@ -523,7 +523,8 @@ section.signup { padding:0; }
              text-transform:uppercase;color:var(--ink-soft)}
 /* A flyer can float beside the day list; the box grows around it. */
 .specials{display:flow-root}
-@media (min-width:621px){.specials .flyer{width:168px;margin-left:20px}}
+/* A flyer inside a day's row sits under that day's words, not floated. */
+.speclist .flyer{float:none;width:150px;margin:10px 0 4px}
 .speclist{list-style:none;margin:0;padding:0}
 .speclist li{display:grid;grid-template-columns:104px minmax(0,1fr);gap:4px 14px;
              padding:7px 0;border-top:1px solid var(--hairline);font-size:.93rem;line-height:1.55}

@@ -381,7 +381,7 @@ TRUSTED = [
             ],
             # Their own promo art for the Thursday burger. Same lightbox as the
             # event flyer; the thumb is 3:4, so it carries its own size.
-            "flyer": ("/assets/img/trusted/fugazzis-burgerthursday.jpg",
+            "flyer": ("Thursday", "/assets/img/trusted/fugazzis-burgerthursday.jpg",
                       "/assets/img/trusted/fugazzis-burgerthursday-thumb.jpg", (300, 400),
                       "Burger Thursday at Fugazzis Hanford: a stacked burger with bacon, "
                       "roasted peppers and white sauce beside a board of fries"),
@@ -2287,10 +2287,21 @@ def page_trusted_entry(t):
     sp = t.get("specials")
     sp_html = ""
     if sp:
+        # A flyer belongs to one day, so it sits in that row, right under
+        # the words it illustrates.
+        sp_flyer, fday = "", None
+        if sp.get("flyer"):
+            fday, full, thumb, (tw, th), alt = sp["flyer"]
+            sp_flyer = (f'<a class="flyer" href="{full}" target="_blank" rel="noopener" '
+                        f'aria-label="Enlarge the flyer">'
+                        f'<img src="{thumb}" alt="{e(alt)}" width="{tw}" height="{th}" '
+                        f'loading="lazy" decoding="async">'
+                        f'<span class="flyerhint">Tap to enlarge</span></a>')
         rows = "".join(
             f'<li><span class="specday">{e(day)}</span>'
             f'<span class="specwhat">{what}'
             + (f' <b>{e(price)}</b>' if price else '')
+            + (sp_flyer if day == fday else '')
             + '</span></li>'
             for day, what, price in sp["days"])
         fam_name, fam_price, fam_note = sp["family"]
@@ -2301,16 +2312,8 @@ def page_trusted_entry(t):
             lab, href, note = sp["family_cta"]
             fam_cta = (f'<p class="specfamgo">{action_btn(lab, href)}'
                        f'<span class="specfamnote">{note}</span></p>')
-        sp_flyer = ""
-        if sp.get("flyer"):
-            full, thumb, (tw, th), alt = sp["flyer"]
-            sp_flyer = (f'<a class="flyer" href="{full}" target="_blank" rel="noopener" '
-                        f'aria-label="Enlarge the flyer">'
-                        f'<img src="{thumb}" alt="{e(alt)}" width="{tw}" height="{th}" '
-                        f'loading="lazy" decoding="async">'
-                        f'<span class="flyerhint">Tap to enlarge</span></a>')
         sp_html = ('\n    <div class="specials">'
-                   f'<h2>{e(sp["heading"])}</h2>{sp_flyer}'
+                   f'<h2>{e(sp["heading"])}</h2>'
                    f'<ul class="speclist">{rows}</ul>'
                    f'<p class="specfam"><strong>{e(fam_name)}, '
                    f'<span class="specprice">{e(fam_price)}</span>.</strong> {fam_note}</p>'
