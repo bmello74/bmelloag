@@ -377,8 +377,14 @@ TRUSTED = [
                 ("Tuesday", "BBQ chicken or BBQ steak sandwich on ciabatta, with banana "
                             "pepper and grilled onions.", "$12"),
                 ("Wednesday", "Chef bowl.", "$12"),
-                ("Thursday", "Burger night.", "$12"),
+                ("Thursday", "Burger Thursday.", "$12"),
             ],
+            # Their own promo art for the Thursday burger. Same lightbox as the
+            # event flyer; the thumb is 3:4, so it carries its own size.
+            "flyer": ("/assets/img/trusted/fugazzis-burgerthursday.jpg",
+                      "/assets/img/trusted/fugazzis-burgerthursday-thumb.jpg", (300, 400),
+                      "Burger Thursday at Fugazzis Hanford: a stacked burger with bacon, "
+                      "roasted peppers and white sauce beside a board of fries"),
             "family": ("Family Pasta Deal, Monday through Saturday", "$30",
                        "Feeds four. Alfredo or spaghetti, house or caesar salad, bread and "
                        "sauce. This is the one we tell people about, and the answer to the "
@@ -2295,8 +2301,16 @@ def page_trusted_entry(t):
             lab, href, note = sp["family_cta"]
             fam_cta = (f'<p class="specfamgo">{action_btn(lab, href)}'
                        f'<span class="specfamnote">{note}</span></p>')
+        sp_flyer = ""
+        if sp.get("flyer"):
+            full, thumb, (tw, th), alt = sp["flyer"]
+            sp_flyer = (f'<a class="flyer" href="{full}" target="_blank" rel="noopener" '
+                        f'aria-label="Enlarge the flyer">'
+                        f'<img src="{thumb}" alt="{e(alt)}" width="{tw}" height="{th}" '
+                        f'loading="lazy" decoding="async">'
+                        f'<span class="flyerhint">Tap to enlarge</span></a>')
         sp_html = ('\n    <div class="specials">'
-                   f'<h2>{e(sp["heading"])}</h2>'
+                   f'<h2>{e(sp["heading"])}</h2>{sp_flyer}'
                    f'<ul class="speclist">{rows}</ul>'
                    f'<p class="specfam"><strong>{e(fam_name)}, '
                    f'<span class="specprice">{e(fam_price)}</span>.</strong> {fam_note}</p>'
