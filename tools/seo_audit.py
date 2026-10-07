@@ -38,9 +38,10 @@ for p in pages:
         rel += "/"
     h = p.read_text(encoding="utf-8", errors="replace")
 
-    # A page that tells Google not to index it has nothing to optimise. The
-    # old-URL redirect stubs are all of these.
-    if re.search(r'<meta name="robots"[^>]*noindex', h, re.I):
+    # Redirect stubs (meta refresh to the new URL) and noindex pages have
+    # nothing to optimise.
+    if re.search(r'<meta http-equiv="refresh"', h, re.I) or \
+       re.search(r'<meta name="robots"[^>]*noindex', h, re.I):
         skipped += 1
         continue
 
@@ -116,7 +117,7 @@ for p in pages:
 for u, n in bad_links.most_common(20):
     fail("links", f"{n} internal link(s) to {u}, which 301s to {u}/")
 
-print(f"{len(rows)} pages checked, {skipped} noindex redirect stubs skipped\n")
+print(f"{len(rows)} pages checked, {skipped} redirect stubs / noindex pages skipped\n")
 print(f"{'PAGE':<34} {'DESC':>4}  SCHEMA")
 for rel, title, dn, types in rows:
     print(f"{rel:<34} {dn:>4}  {','.join(sorted(set(t for t in types if t))) or '-'}")

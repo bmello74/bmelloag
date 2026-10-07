@@ -1216,7 +1216,12 @@ def write(path, content):
 
 
 def redirect_page(to, note):
-    """A real page that forwards — _redirects files are Cloudflare-only."""
+    """A real page that forwards — _redirects files are Cloudflare-only.
+
+    No robots noindex here on purpose: Google reads a 0-second meta refresh as a
+    permanent redirect and consolidates to the canonical. Adding noindex on top
+    sends a conflicting signal and can stop the old URL passing anything along.
+    """
     if not to.endswith("/"):
         to += "/"
     return f"""<!doctype html>
@@ -1226,7 +1231,6 @@ def redirect_page(to, note):
 <title>Moved &mdash; {e(BIZ)}</title>
 <link rel="canonical" href="{SITE}{to}">
 <meta http-equiv="refresh" content="0; url={to}">
-<meta name="robots" content="noindex">
 <style>body{{font-family:system-ui,sans-serif;margin:16vh auto;max-width:34em;padding:0 24px;
 line-height:1.6;color:#16150F;background:#FBF9F3}}a{{color:#A8860A}}</style>
 </head>
