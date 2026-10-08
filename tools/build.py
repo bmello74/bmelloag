@@ -618,6 +618,13 @@ TOPICS = {
         ("elemental sulfur", r"elemental"), ("custom blends", r"blend"),
         ("global supply", r"global|export|Qatar|Russia"),
         ("fertilizer market alerts", r"price alert|market"),
+        ("red dyed diesel", r"red diesel|dyed diesel|dyed fuel"),
+        ("diesel prices", r"diesel"), ("federal diesel excise tax", r"excise|24\.4"),
+        ("fuel tax relief", r"fuel tax|tax relief|tax holiday"),
+        ("executive orders", r"executive order"), ("Treasury and IRS guidance", r"Treasury|\bIRS\b"),
+        ("CDTFA fuel enforcement", r"CDTFA"), ("state fuel tax actions", r"governor|Sacramento"),
+        ("farm trucking and hauling", r"haul|farm truck"), ("fuel records and IFTA", r"IFTA|fuel receipt|fuel record"),
+        ("harvest fuel costs", r"harvest"),
     ],
 }
 
@@ -681,7 +688,7 @@ SERIES_SEO = {
         "priced, what crude and refining margins did, and why."),
     "special": (
         "Special Reports - Fertilizer & Commodity Market Alerts",
-        "In-depth alerts when a fertilizer or commodity market moves hard enough that "
+        "In-depth alerts when a fertilizer, fuel or commodity market moves hard enough that "
         "waiting for the monthly is not good enough."),
     "holiday": (
         "Holiday Greetings from B. Mello Ag Services, Hanford CA",
@@ -719,7 +726,7 @@ COVERAGE = {
         "means for a harvest fuel budget.",
         "What the report tracks"),
     "special": (
-        "Published when a fertilizer or commodity market moves hard enough that waiting for "
+        "Published when a fertilizer, fuel or commodity market moves hard enough that waiting for "
         "the monthly would cost you money. One subject, in depth.",
         "Subjects covered so far"),
 }
