@@ -760,6 +760,12 @@ def seo_issue_title(entry):
         base = entry["title"].replace(" \u2014 ", ", ").replace("\u2014", ", ")
     else:
         base = tpl.format(dd=entry["date_display"], yr=y, month=MONTH[m])
+        pr = entry.get("prices", {}) if entry["series"] == "energy" else {}
+        if pr.get("diesel"):
+            fuel = f'California Diesel ${pr["diesel"]["usd"]}'
+            if pr.get("regular"):
+                fuel += f' & Gas ${pr["regular"]["usd"]}'
+            base = f'{fuel}, {entry["date_display"]}, {y}'
     full = f"{base} \u00b7 {BIZ}"
     # Google cuts titles past ~65 characters. When the full business name would
     # push a dated issue over, the shorter "B. Mello Ag" keeps the brand visible
@@ -787,7 +793,110 @@ def retarget_h1_css(styles):
     return _H1_SEL.sub("h2[data-h1]", styles)
 
 
+# ---- Weekly Energy Update: the price is what people search for
+#
+# Search Console (Oct 2026): three quarters of the site's impressions came from
+# fuel price searches ("california diesel price", "price of diesel in california
+# today"), ranking near the top with zero clicks. A dated title with no number
+# loses that click to any result that shows the price. So every issue carries
+# its statewide prices in the catalog ("prices"), and the issue title, the issue
+# description and the landing page lead with them.
+#
+# Read at publish time from the stat strip near the top of each issue
+# ("CA Diesel $8.416 statewide \u00b7 AAA 9/27"), with the AAA prose as a fallback.
+# Values already in the catalog win, so a hand correction survives publish-all.
+
+MON = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+_EN_DIESEL = re.compile(
+    r"CA Diesel \$(\d\.\d{2,4}) statewide\s*\u00b7\s*(AAA|EIA)\D{0,6}(\d{1,2}/\d{1,2})")
+_EN_REGULAR = re.compile(
+    r"CA Regular(?: Gasoline)? \$(\d\.\d{2,4}) statewide(?: avg)?\s*\u00b7\s*(AAA|EIA)"
+    r"\D{0,6}(\d{1,2}/\d{1,2})")
+_EN_DIESEL_AAA = re.compile(
+    r"AAA[\u2019']s (?:\w+, )?(\w+) (\d{1,2}) read[^$]{0,60}?California diesel"
+    r"(?: had)?(?: \w+)?(?: at)? \$(\d\.\d{2,4})")
+_EN_REGULAR_AAA = [
+    re.compile(r"AAA[\u2019']s (?:\w+, )?(\w+) (\d{1,2}) read.{0,220}?Regular finished at "
+               r"\$(\d\.\d{2,4})"),
+    re.compile(r"AAA[\u2019']s (?:\w+, )?(?:(\w+) (\d{1,2}) )?read put California regular"
+               r"(?: gasoline)? at \$(\d\.\d{2,4})"),
+]
+_MONTH_NUM = {n.lower(): i for i, n in enumerate(MONTH) if n}
+
+
+def _usd(x):
+    return f"{float(x):.3f}"
+
+
+def energy_prices(plain):
+    """Statewide California diesel and regular from an issue's text, as
+    {"diesel": {"usd", "src", "on"}, "regular": {...}}. "on" is M/D."""
+    t = " ".join(plain.split())
+    out = {}
+    m = _EN_DIESEL.search(t)
+    if m:
+        out["diesel"] = {"usd": _usd(m[1]), "src": m[2], "on": m[3]}
+    else:
+        m = _EN_DIESEL_AAA.search(t)
+        if m and m[1].lower() in _MONTH_NUM:
+            out["diesel"] = {"usd": _usd(m[3]), "src": "AAA",
+                             "on": f"{_MONTH_NUM[m[1].lower()]}/{m[2]}"}
+    m = _EN_REGULAR.search(t)
+    if m:
+        out["regular"] = {"usd": _usd(m[1]), "src": m[2], "on": m[3]}
+    else:
+        for rx in _EN_REGULAR_AAA:
+            m = rx.search(t)
+            if not m:
+                continue
+            if m[1] and m[1].lower() in _MONTH_NUM:
+                on = f"{_MONTH_NUM[m[1].lower()]}/{m[2]}"
+            elif "diesel" in out and out["diesel"]["src"] == "AAA":
+                on = out["diesel"]["on"]
+            else:
+                continue
+            out["regular"] = {"usd": _usd(m[3]), "src": "AAA", "on": on}
+            break
+    return out
+
+
+def _on_label(on):
+    mo, d = (int(x) for x in on.split("/"))
+    return f"{MON[mo]} {d}"
+
+
+def price_phrase(prices):
+    """'California diesel $8.416, regular $6.353 (AAA, Sep 27).'"""
+    d, r = prices.get("diesel"), prices.get("regular")
+    def cite(x):
+        return f'{x["src"]}, {_on_label(x["on"])}'
+    if d and r:
+        if (d["src"], d["on"]) == (r["src"], r["on"]):
+            return f'California diesel ${d["usd"]}, regular ${r["usd"]} ({cite(d)}).'
+        return (f'California diesel ${d["usd"]} ({cite(d)}), '
+                f'regular ${r["usd"]} ({cite(r)}).')
+    if d:
+        return f'California diesel ${d["usd"]} ({cite(d)}).'
+    if r:
+        return f'California regular gasoline ${r["usd"]} ({cite(r)}).'
+    return ""
+
+
+def latest_energy(items):
+    """Newest energy issue that carries a diesel price."""
+    for i in sorted(items, key=lambda i: i["date"], reverse=True):
+        if i["series"] == "energy" and i.get("prices", {}).get("diesel"):
+            return i
+    return None
+
+
 def seo_issue_desc(entry):
+    if entry["series"] == "energy" and entry.get("prices"):
+        lead = price_phrase(entry["prices"])
+        if lead:
+            return clip(lead + " " + entry["summary"])
     d = clip(entry["summary"])
     tops = entry.get("topics", [])
     if tops and len(d) < 100:
@@ -1480,7 +1589,7 @@ def page_nutrition():
        out how.</p>
 
     <h3>How do I get a quote?</h3>
-    <p>Call {PHONE_TXT} or <a href="/contact">send us the block details</a>. Bring your most recent
+    <p>Call <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> or <a href="/contact">send us the block details</a>. Bring your most recent
        soil report if you have one; if you do not, that is where we start.</p>
 
     <p><a href="/contact">Call for a quote today</a>.</p>"""
@@ -1533,7 +1642,7 @@ def page_hay():
     </ul>
     <p>Big bales and small bales alike.</p>
 
-    <h2>Stacking and hauling</h2>
+    <h2>Hay hauling and stacking</h2>
     <p>We run our own balewagons and retriever trucks, so roadsiding, retrieving, stacking and trucking
        are handled in house rather than subcontracted out. Big-bale stacks go up several high; small
        bales are stacked tall and tight for the haul.</p>
@@ -1547,49 +1656,103 @@ def page_hay():
                        "in house.",
                        "/assets/img/hay-fleet.jpg",
                        strip_alt="B. Mello balewagons stacking hay",
-                       seo_title="Hay Sales, Stacking & Hauling — Central Valley California",
+                       seo_title="Hay Hauling, Stacking & Sales — Central Valley California",
                        image=SITE + "/assets/img/hay-fleet.jpg")
 
 
 def page_tractor():
-    body = f"""    <p>Tractor spreaders are how we get dry material into standing crops. Trees, vines, kiwis and
-       tomato beds &mdash; the compact profile is the point. We can work trellis and overhead rows,
-       and bed ground, that other spreaders have to drive around.</p>
+    # Search Console (Oct 2026) had this page around position 22, for searches
+    # like "vineyard fertilizer spreader". At under 300 words it was too thin to
+    # reach page one, so it now answers what a grower actually asks.
+    body = f"""    <p>Tractor spreaders are how we get dry fertilizer and soil amendments into standing crops.
+       Almond and walnut orchards, pistachios, citrus, vineyards, kiwis and tomato beds: the compact
+       profile is the point. We work trellis and overhead rows, and bed ground, that a truck or a
+       full-size spreader has to drive around.</p>
 
-    <h2>Crops</h2>
+    <h2>Orchard and vineyard fertilizer spreading</h2>
     <p>Where the tractor spreaders go most often:</p>
     <ul class="taglist">
-      <li>Almonds</li><li>Pistachios</li><li>Citrus</li><li>Walnuts</li>
-      <li>Fruit trees</li><li>Pomegranates</li><li>Vines</li><li>Kiwis</li>
+      <li>Almonds</li><li>Pistachios</li><li>Walnuts</li><li>Citrus</li>
+      <li>Fruit trees</li><li>Pomegranates</li><li>Wine and table grapes</li><li>Kiwis</li>
       <li>Tomato beds</li>
     </ul>
     <p>That is where we spend most of our hours, not a list of what we are willing to do.
        <strong>We are not limited to these crops.</strong> If you need it spread, call us and we
        will work out how to get it done.</p>
 
-    <h2>Application</h2>
-    <p>Banding, side discharge and broadcast of any dry material. Your material goes out at the rate
-       you specify, placed the way you want it &mdash; and our crews leave a clean drop site behind
-       them.</p>
+    <h2>Vineyards and tight rows</h2>
+    <p>Vineyard rows and trellised blocks are where a lot of spreaders give up. Ours are sized to
+       fit down the row, under the canopy and between the stakes, so material lands in the row
+       where the roots are instead of being thrown at the block from the avenue. The same goes for
+       kiwi on overhead trellis and for tomato beds, where the job is to place material on the bed
+       without running over it.</p>
+
+    <h2>How we apply it</h2>
+    <p>Banding, side discharge and broadcast of any dry material. Banding puts fertilizer in a strip
+       down the tree or vine row where the roots can use it. Side discharge reaches under the canopy
+       without driving on the berm. Broadcast covers the whole floor when the whole floor needs it,
+       as with gypsum or compost across an orchard.</p>
+    <p>Your material goes out at the rate you specify, placed the way you want it, and our crews
+       leave a clean drop site behind them.</p>
+
+    <h2>What we spread in standing crops</h2>
+    <ul>
+      <li><strong>Custom dry fertilizer blends</strong>, mixed to your soil report rather than a
+          catalog.</li>
+      <li><strong>Gypsum</strong>, for water penetration and sodium on tight ground.</li>
+      <li><strong>Agricultural limestone</strong> and <strong>elemental sulfur</strong>, to move
+          pH where the soil test says it needs to go.</li>
+      <li><strong>Compost</strong>, humic and biological products, to build organic matter.</li>
+      <li><strong>Ammonium sulfate</strong> and the other dry materials your program calls for.</li>
+    </ul>
+
+    <h2>Start with the soil</h2>
+    <p>The most expensive ton of material is the one you did not need. Most of our tractor spreader
+       work follows a <a href="/plant-nutrition">targeted plant nutrition</a> program: GPS-guided soil
+       sampling, a plan written block by block, then application at the rate the plan calls for.
+       Spreading is the last step, and it only pays if the first two were right.</p>
 
     <h2>Where we work</h2>
-    <p>{SPREAD_AREA}, throughout the Central Valley.</p>
+    <p>Custom spreading runs {SPREAD_AREA}, throughout the Central Valley: Kern, Tulare, Kings, Fresno
+       and Madera counties. We are based in Hanford, in Kings County.</p>
 
     <h2>Material too, if you want it</h2>
-    <p>We sell the <a href="/plant-nutrition">gypsum, limestone, sulfur, compost and dry blends</a> as well
-       as spreading them, so one quote can cover both. <a href="/contact">Call for your quote
-       today</a>.</p>"""
-    return simple_page("/tractor-spreaders", "Tractor Spreaders",
-                       "Trees, vines, kiwis and tomato beds &mdash; including the rows nothing "
+    <p>We sell the <a href="/plant-nutrition">gypsum, limestone, sulfur, compost and dry blends</a> as
+       well as spreading them, so one quote covers the material and the application, and the rate on
+       the plan is the rate that reaches the ground.</p>
+
+    <h2>Questions we get</h2>
+
+    <h3>Tractor spreader or spreader truck?</h3>
+    <p>Tractor spreaders for standing crops, where the rows are too tight for a truck.
+       <a href="/spreader-trucks">Spreader trucks</a> for open ground, pre-plant and large tonnage.
+       If you are not sure which fits, describe the job and we will tell you.</p>
+
+    <h3>Will you spread material I already bought?</h3>
+    <p>Yes. We spread your material at your rate, or we can quote the material and the application
+       together.</p>
+
+    <h3>My crop is not on your list. Can you still do it?</h3>
+    <p>Probably. The list is where we work most, not the limit. Call and describe the block, the row
+       spacing and the material, and we will work out how to get it done.</p>
+
+    <h3>How do I get a quote?</h3>
+    <p>Call <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> or <a href="/contact">send us the block
+       details</a>: the crop, the acreage, the material and rate, and where the ranch is. Bring your
+       soil report if you have one.</p>
+
+    <p><a href="/contact">Call for your quote today</a>.</p>"""
+    return simple_page("/tractor-spreaders", "Tractor Spreaders for Orchards & Vineyards",
+                       "Trees, vines, kiwis and tomato beds, including the rows nothing "
                        "else fits down.",
                        body,
-                       "Custom spreading in almonds, walnuts, pistachios, citrus, pomegranates, "
-                       "grapes, kiwis and tomato beds, Bakersfield to Madera. Not limited to "
-                       "these crops.",
+                       "Orchard and vineyard fertilizer spreading in almonds, pistachios, walnuts, "
+                       "citrus, grapes, kiwis and tomato beds, Bakersfield to Madera. Not limited "
+                       "to these crops.",
                        "/assets/img/tractor-loading.mp4",
                        strip_alt="A wheel loader carrying a bucket of material to a B. Mello "
                                  "tractor spreader and dumping it in, beside a young orchard",
-                       seo_title="Orchard & Vineyard Fertilizer Spreading — Central Valley",
+                       seo_title="Orchard & Vineyard Fertilizer Spreaders, Central Valley CA",
                        image=SITE + "/assets/img/tractor-loading.jpg",
                        extra_ld=[{
                            "@context": "https://schema.org", "@type": "Service",
@@ -1602,53 +1765,107 @@ def page_tractor():
                                                   "(Bakersfield to Madera)"},
                            "description": ("Custom spreading of dry fertilizer and soil amendments "
                                            "in almonds, pistachios, walnuts, citrus, fruit trees, "
-                                           "pomegranates, vines, kiwis and tomato beds, including "
-                                           "narrow rows. Not limited to these crops."),
+                                           "pomegranates, vineyards, kiwis and tomato beds, "
+                                           "including narrow and trellised rows. Not limited to "
+                                           "these crops."),
                        }])
 
 
 def page_trucks():
-    body = f"""    <p>Spreader trucks are for open ground. They carry far more material per load than a tractor rig,
-       which is what makes large acreage practical &mdash; and they place it accurately enough that
-       volume does not cost you precision.</p>
+    # Search Console (Oct 2026) had this page around position 24, for searches
+    # like "custom spreaders" and "fertilizer truck". Same fix as the tractor
+    # page: enough substance to deserve page one, in the words people search.
+    body = f"""    <p>Spreader trucks are for open ground. A fertilizer spreader truck carries far more material
+       per load than a tractor rig, which is what makes large acreage practical, and it places that
+       material accurately enough that volume does not cost you precision. If you need a custom
+       spreader for gypsum, lime, compost or a dry blend on open ground anywhere from Bakersfield to
+       Madera, this is the work these trucks do.</p>
 
-    <h2>What they do</h2>
+    <h2>What our spreader trucks do</h2>
     <ul class="taglist">
       <li>Open ground broadcast</li><li>Pre-plant rows</li><li>Woodchip spreading</li>
+      <li>Large tonnage jobs</li>
     </ul>
     <p style="margin-top:16px">Any job where the acreage or the tonnage would have a tractor spreader
-       running all week. They are not limited to wide-open ground either &mdash; they can work tighter
+       running all week. They are not limited to wide-open ground either; they can work tighter
        areas when the job calls for it.</p>
 
+    <h2>Materials we spread</h2>
+    <ul>
+      <li><strong>Gypsum</strong>, for water penetration and sodium on tight ground.</li>
+      <li><strong>Agricultural limestone</strong>, to bring pH up on acid soils.</li>
+      <li><strong>Elemental sulfur</strong>, to bring pH down on alkaline ground.</li>
+      <li><strong>Compost</strong>, to build organic matter and feed soil biology.</li>
+      <li><strong>Custom dry fertilizer blends</strong>, mixed to a soil report rather than a
+          catalog.</li>
+      <li><strong>Woodchips</strong>, spread evenly across open ground.</li>
+    </ul>
+
+    <h2>Pre-plant is the cheapest time to fix a field</h2>
+    <p>Open ground is the best chance you get to correct a block before it is planted. Once trees or
+       vines go in, every pass afterward has to fit between the rows. Before planting, gypsum, lime,
+       sulfur or compost can go on across the whole field at the rate the soil test calls for. Our
+       trucks handle the open ground broadcast and pre-plant row work, and the
+       <a href="/tractor-spreaders">tractor spreaders</a> take over once the crop is in.</p>
+
+    <h2>Applied at the rate you specify</h2>
+    <p>The most expensive ton of material is the one you did not need. That cuts both ways: too
+       little and the field stays short, too much and you paid for material the ground could not
+       use. We spread at the rate you specify, keep it even across the field, and leave a clean drop
+       site behind us.</p>
+
     <h2>Where we work</h2>
-    <p>{SPREAD_AREA}, throughout the Central Valley.</p>
+    <p>Custom spreading runs {SPREAD_AREA}, throughout the Central Valley: Kern, Tulare, Kings, Fresno
+       and Madera counties. We are based in Hanford, in Kings County.</p>
 
     <h2>Material too, if you want it</h2>
-    <p>Gypsum, limestone, sulfur, compost and dry blends &mdash; we can
-       <a href="/plant-nutrition">quote the material</a> alongside the application.
-       <a href="/contact">Call for your quote today</a>.</p>"""
-    return simple_page("/spreader-trucks", "Spreader Trucks",
+    <p>We sell the <a href="/plant-nutrition">gypsum, limestone, sulfur, compost and dry blends</a> as
+       well as spreading them, so one quote covers the material and the application, and the rate on
+       the plan is the rate that reaches the ground.</p>
+
+    <h2>Questions we get</h2>
+
+    <h3>Spreader truck or tractor spreader?</h3>
+    <p>Trucks for open ground, pre-plant and large tonnage. <a href="/tractor-spreaders">Tractor
+       spreaders</a> for standing crops: orchards, vineyards, kiwis and tomato beds, where the rows
+       are too tight for a truck. If you are not sure, describe the job and we will tell you which
+       fits.</p>
+
+    <h3>Will you spread material I already bought?</h3>
+    <p>Yes. We spread your material at your rate, or we can quote the material and the application
+       together.</p>
+
+    <h3>Do you spread compost and woodchips?</h3>
+    <p>Yes, both, along with gypsum, lime, sulfur and dry fertilizer blends.</p>
+
+    <h3>How do I get a quote?</h3>
+    <p>Call <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> or <a href="/contact">send us the job</a>:
+       the material, the rate or tonnage, the acreage, and where the field is. Bring your soil report
+       if you have one.</p>
+
+    <p><a href="/contact">Call for your quote today</a>.</p>"""
+    return simple_page("/spreader-trucks", "Custom Spreader Trucks",
                        "Open ground, at volume, without losing the placement.",
                        body,
-                       "Open ground broadcast, pre-plant rows and woodchip spreading from "
-                       "Bakersfield to Madera. Gypsum, limestone, sulfur, compost and custom dry "
-                       "blends placed at rate.",
+                       "Custom spreader trucks for gypsum, lime, sulfur, compost, woodchips and dry "
+                       "fertilizer blends on open ground and pre-plant, Bakersfield to Madera.",
                        "/assets/img/trucks-spreading.mp4",
                        strip_alt="Two B. Mello spreader trucks working open ground, the second "
                                  "pulling away and starting to spread",
-                       seo_title="Custom Fertilizer Spreading Trucks — Open Ground & Pre-Plant",
+                       seo_title="Custom Spreader Trucks: Fertilizer & Gypsum, Central Valley CA",
                        image=SITE + "/assets/img/trucks-spreading.jpg",
                        extra_ld=[{
                            "@context": "https://schema.org", "@type": "Service",
                            "name": "Spreader truck application",
-                           "serviceType": "Open ground broadcast, pre-plant and woodchip spreading",
+                           "serviceType": "Custom fertilizer and soil amendment spreading, "
+                                          "open ground and pre-plant",
                            "provider": {"@id": ORG_ID},
                            "url": SITE + "/spreader-trucks",
                            "areaServed": {"@type": "Place",
                                           "name": "Central Valley, California "
                                                   "(Bakersfield to Madera)"},
-                           "description": ("High-capacity spreader trucks for open fields and large "
-                                           "blocks: gypsum, agricultural limestone, sulfur, compost, "
+                           "description": ("Spreader trucks for open fields and large blocks: "
+                                           "gypsum, agricultural limestone, sulfur, compost, "
                                            "woodchips and custom dry blends."),
                        }])
 
@@ -3468,6 +3685,33 @@ def series_pages(items):
         banner = SERIES[k].get("banner")
         img = f"{SITE}/assets/img/reports/{banner}.jpg" if banner else None
 
+        # The fuel report's landing page is the one that should answer "what is
+        # diesel in California right now", so it leads with the newest numbers,
+        # in the title, the description and on the page itself.
+        price_html = ""
+        latest = latest_energy(subset) if k == "energy" else None
+        if latest:
+            pr = latest["prices"]
+            d, r = pr["diesel"], pr.get("regular")
+            seo_t = f'California Diesel Price ${d["usd"]}' + (
+                f', Gas ${r["usd"]}' if r else "") + " \u00b7 Weekly Report"
+            seo_d = clip(price_phrase(pr) + " Free weekly report: where California fuel "
+                         "priced, what crude and refining did, and our call for the week ahead.")
+            iurl = "/" + latest["path"].removesuffix(".html")
+            reg = (f' &middot; Regular gasoline <strong>${e(r["usd"])}</strong>' if r else "")
+            src = f'{d["src"]} statewide average, {_on_label(d["on"])}'
+            if r and (r["src"], r["on"]) != (d["src"], d["on"]):
+                src = (f'Diesel {d["src"]} {_on_label(d["on"])}, regular '
+                       f'{r["src"]} {_on_label(r["on"])}, statewide averages')
+            price_html = (
+                '<section class="tight">\n  <div class="wrap prose">\n'
+                '    <h2>Latest California diesel and gas prices</h2>\n'
+                f'    <p class="pricebox">Diesel <strong>${e(d["usd"])}</strong>{reg}</p>\n'
+                f'    <p class="tagnote">{e(src)}. From the <a href="{iurl}">'
+                f'{e(latest["date_display"])} issue</a>, with what moved the price and our '
+                'call for the week ahead. A new issue every Monday.</p>\n'
+                '  </div>\n</section>\n')
+
         # What this title covers, proven by the terms that have actually appeared.
         topics = series_topics(k, items)
         cov = COVERAGE.get(k)
@@ -3523,7 +3767,7 @@ def series_pages(items):
   </div>
 </header>
 {banner_html}
-{cover_html}
+{price_html}{cover_html}
 {signup_band()}
 <main class="wrap" style="padding:22px 26px 10px">
 {chr(10).join(rows)}
@@ -3963,6 +4207,11 @@ def publish_one(entry, items, source_root):
     # Record what this issue actually talks about, so the archive can say so.
     plain = html.unescape(re.sub(r"<[^>]+>", " ", body))
     entry["topics"] = issue_topics(entry["series"], plain)
+    if entry["series"] == "energy" and not entry.get("prices"):
+        found = energy_prices(plain)
+        if found:
+            entry["prices"] = found
+        print(f"  prices  {entry['id']}: {price_phrase(found) or 'NONE FOUND, add by hand'}")
     write(entry["path"], render_issue(entry, styles, body, items))
     print(f"  ok  {entry['path']}  ({len(body)//1024}K html, {len(imgs)} image(s) extracted)")
     return True

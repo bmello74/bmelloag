@@ -202,7 +202,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "diesel": {
+        "usd": "8.416",
+        "src": "AAA",
+        "on": "9/27"
+      },
+      "regular": {
+        "usd": "6.353",
+        "src": "AAA",
+        "on": "9/27"
+      }
+    }
   },
   {
     "id": "ag-labor/2026-09",
@@ -342,7 +354,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "diesel": {
+        "usd": "8.424",
+        "src": "AAA",
+        "on": "9/20"
+      },
+      "regular": {
+        "usd": "6.153",
+        "src": "AAA",
+        "on": "9/20"
+      }
+    }
   },
   {
     "id": "fishing/2026-09-16",
@@ -481,7 +505,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "diesel": {
+        "usd": "8.137",
+        "src": "AAA",
+        "on": "9/13"
+      },
+      "regular": {
+        "usd": "5.988",
+        "src": "AAA",
+        "on": "9/13"
+      }
+    }
   },
   {
     "id": "fishing/2026-09-09",
@@ -623,7 +659,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "diesel": {
+        "usd": "7.811",
+        "src": "AAA",
+        "on": "9/6"
+      },
+      "regular": {
+        "usd": "5.847",
+        "src": "AAA",
+        "on": "9/6"
+      }
+    }
   },
   {
     "id": "fishing/2026-09-02",
@@ -778,7 +826,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "diesel": {
+        "usd": "7.295",
+        "src": "AAA",
+        "on": "8/30"
+      },
+      "regular": {
+        "usd": "5.680",
+        "src": "AAA",
+        "on": "8/30"
+      }
+    }
   },
   {
     "id": "fishing/2026-08-26",
@@ -891,7 +951,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "diesel": {
+        "usd": "7.142",
+        "src": "AAA",
+        "on": "8/23"
+      },
+      "regular": {
+        "usd": "5.611",
+        "src": "AAA",
+        "on": "8/23"
+      }
+    }
   },
   {
     "id": "fishing/2026-08-19",
@@ -1002,7 +1074,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "diesel": {
+        "usd": "6.618",
+        "src": "EIA",
+        "on": "8/10"
+      },
+      "regular": {
+        "usd": "5.580",
+        "src": "AAA",
+        "on": "8/14"
+      }
+    }
   },
   {
     "id": "economic-update/2026-08",
@@ -1191,7 +1275,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "regular": {
+        "usd": "5.609",
+        "src": "AAA",
+        "on": "8/7"
+      },
+      "diesel": {
+        "usd": "6.877",
+        "src": "AAA",
+        "on": "8/7"
+      }
+    }
   },
   {
     "id": "fishing/2026-08-07",
@@ -1289,7 +1385,19 @@
       "natural gas",
       "electricity rates",
       "harvest fuel budgeting"
-    ]
+    ],
+    "prices": {
+      "regular": {
+        "usd": "5.651",
+        "src": "AAA",
+        "on": "7/31"
+      },
+      "diesel": {
+        "usd": "6.910",
+        "src": "AAA",
+        "on": "7/31"
+      }
+    }
   },
   {
     "id": "field-report/2026-08",
