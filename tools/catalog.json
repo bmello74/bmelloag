@@ -1,5 +1,38 @@
 [
   {
+    "id": "economic-update/2026-10",
+    "series": "economic-update",
+    "slug": "2026-10",
+    "date": "2026-10-15",
+    "date_display": "Oct 15",
+    "title": "October 2026 Economic Update",
+    "headline": "Corn drops 50¢ while diesel holds near its record",
+    "summary": "December corn fell 50 cents to $4.82 after the October WASDE raised the crop, but California diesel is still $8.39 a gallon, 5 cents under its September 22 record. The Class III and IV spread blew back out to $2.90 with powder at $2.27, and the Climate Prediction Center now gives a historic El Niño an 83 percent chance.",
+    "meta": "Milk & dairy · Futures · Fuel · Weather · Water",
+    "source": "26 Economic Update Newsletter/B_Mello_Economic_Update_October_2026.html",
+    "path": "reports/economic-update/2026-10.html",
+    "topics": [
+      "Class I milk price",
+      "Class III milk price",
+      "Class IV milk price",
+      "dairy margins",
+      "corn futures",
+      "wheat futures",
+      "soybean futures",
+      "cotton futures",
+      "WASDE report",
+      "diesel prices",
+      "CVP allocation",
+      "State Water Project",
+      "groundwater and SGMA",
+      "Tulare Lake Basin",
+      "irrigation district allocations",
+      "Valley weather outlook",
+      "El Nino and La Nina",
+      "fertilizer pricing"
+    ]
+  },
+  {
     "id": "fishing/2026-10-14",
     "series": "fishing",
     "slug": "2026-10-14",
