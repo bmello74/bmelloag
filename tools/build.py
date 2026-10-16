@@ -72,6 +72,10 @@ DEAD_ARCHIVE = [
 
 CONTACT_ENDPOINT = ""     # Cloudflare Worker / Formspree endpoint for the contact form
 
+# Google Analytics 4: account "B. Mello Ag Services", property "bmelloag.com"
+# (property 559295687, web stream 16143344459). Blank turns tracking off everywhere.
+GA4_ID = "G-R7N0WL7SR3"
+
 SPREAD_AREA = "Bakersfield to Madera"
 SALES_AREA = "all of California and into the western states"
 
@@ -1020,6 +1024,33 @@ def ld_crumbs(trail):
     }
 
 
+def analytics_tag():
+    """The GA4 tag plus the small event script (assets/analytics.js).
+
+    Emitted by head() on every page, so every page the builder makes is tracked.
+    Empty when GA4_ID is blank."""
+    if not GA4_ID:
+        return ""
+    return (f'<!-- Google tag (gtag.js) -->\n'
+            f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA4_ID}"></script>\n'
+            f'<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}'
+            f"gtag('js',new Date());gtag('config','{GA4_ID}');</script>\n"
+            f'<script src="/assets/analytics.js{asset_ver("assets/analytics.js")}" defer></script>\n')
+
+
+def add_analytics(doc):
+    """Put the GA4 tag into a finished page that does not have it yet.
+
+    Idempotent. Skips redirect stubs (a 0-second meta refresh is not a visit)
+    and anything without a </head>. write() runs every .html page through this,
+    which is what covers newsletter issue pages at publish time; it is also how
+    the already-published archive pages were retrofitted."""
+    if (not GA4_ID or "googletagmanager.com/gtag/js" in doc
+            or 'http-equiv="refresh"' in doc or "</head>" not in doc):
+        return doc
+    return doc.replace("</head>", analytics_tag() + "</head>", 1)
+
+
 def head(title, desc, path, extra_css="", extra_head="", image=None,
          og_type="website", ld=None, lastmod=None, image_size=None, image_alt=None,
          noindex=False):
@@ -1067,7 +1098,7 @@ def head(title, desc, path, extra_css="", extra_head="", image=None,
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="/assets/site.css{asset_ver()}">
-{blocks}{extra_css}{extra_head}</head>
+{analytics_tag()}{blocks}{extra_css}{extra_head}</head>
 <body>
 '''
 
@@ -1327,6 +1358,8 @@ def write(path, content):
         content, _ = dedash_html(content)
     if p.suffix == ".html" or p.name in ("feed.xml", "sitemap.xml"):
         content = slash_urls(content)
+    if p.suffix == ".html":
+        content = add_analytics(content)
     p.write_text(content, encoding="utf-8")
     return p
 
@@ -3076,6 +3109,71 @@ def reports_index(items):
 
 
 
+# Sends the site's own GA4 events. No library; does nothing if gtag is absent.
+#   phone_click      a tel: link        (phone_number, link_text)
+#   email_click      a mailto: link     (email_address, link_text)
+#   guide_download   a link to a .pdf   (file_name, link_url). GA's enhanced
+#                    measurement also logs its own file_download for the same click.
+#   newsletter_signup_click  a link to the Mailchimp signup form (the form itself
+#                    lives on Mailchimp, so the signup is counted there).
+#   generate_lead    a contact / quote / wait list / signup form on this site is
+#                    sent (form_name, page_path). A normal form fires on submit,
+#                    which the browser only allows once required fields are valid.
+#                    A form sent by fetch should carry data-ga-ajax and, after a
+#                    successful reply, call:
+#                    document.dispatchEvent(new CustomEvent("bm:lead", {detail: {form: "contact"}}))
+ANALYTICS_JS = r"""(function () {
+  "use strict";
+  if (typeof window.gtag !== "function") return;
+  function send(name, params) {
+    params = params || {};
+    params.page_path = location.pathname;
+    params.transport_type = "beacon";
+    try { window.gtag("event", name, params); } catch (e) {}
+  }
+  function label(el) {
+    return (el.textContent || el.getAttribute("aria-label") || "").replace(/\s+/g, " ").trim().slice(0, 100);
+  }
+  document.addEventListener("click", function (ev) {
+    var a = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    var low = href.toLowerCase();
+    if (low.indexOf("tel:") === 0) {
+      send("phone_click", { phone_number: href.slice(4), link_text: label(a) });
+    } else if (low.indexOf("mailto:") === 0) {
+      send("email_click", { email_address: href.slice(7).split("?")[0], link_text: label(a) });
+    } else if (/\.pdf($|[?#])/.test(low)) {
+      var name = href;
+      try { name = decodeURIComponent(new URL(a.href, location.href).pathname.split("/").pop()); } catch (e) {}
+      send("guide_download", { file_name: name, link_url: a.href, link_text: label(a) });
+    } else if (/mailchi\.mp|list-manage\.com/.test(low)) {
+      send("newsletter_signup_click", { link_url: a.href, link_text: label(a) });
+    }
+  }, true);
+  function formName(f) {
+    return f.getAttribute("data-ga-name") || f.getAttribute("name") || f.id ||
+      f.getAttribute("aria-label") || f.className || "form";
+  }
+  function isLeadForm(f) {
+    if (f.getAttribute("role") === "search" || f.hasAttribute("data-ga-ignore")) return false;
+    return (f.getAttribute("method") || "get").toLowerCase() === "post" || f.hasAttribute("data-ga-name");
+  }
+  document.addEventListener("submit", function (ev) {
+    var f = ev.target;
+    if (!f || !isLeadForm(f) || f.hasAttribute("data-ga-ajax")) return;
+    setTimeout(function () {
+      if (!ev.defaultPrevented) send("generate_lead", { form_name: formName(f) });
+    }, 0);
+  });
+  document.addEventListener("bm:lead", function (ev) {
+    var d = (ev && ev.detail) || {};
+    send("generate_lead", { form_name: d.form || "form" });
+  });
+})();
+"""
+
+
 TRUSTED_JS = """(function () {
   'use strict';
   var links = [].slice.call(document.querySelectorAll('a.flyer'));
@@ -3896,6 +3994,8 @@ def refresh_asset_links():
 
 def build_site():
     items = load_catalog()
+    write("assets/analytics.js", ANALYTICS_JS)     # before any page, for asset_ver()
+    globals().pop("_ver_assets/analytics.js", None)
     write("index.html", page_home(items))
     write("404.html", page_404(items))
     write("plant-nutrition.html", page_nutrition())
