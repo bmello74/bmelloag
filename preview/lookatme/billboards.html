@@ -80,35 +80,47 @@
     </div>
   </section>
 
-  <!-- READABILITY TESTER -->
+    <!-- READABILITY TESTER -->
   <section class="band" id="test">
-    <div class="wrap tester">
-      <div>
-        <p class="eyebrow">Try it</p>
-        <h2 style="margin-top:14px">Will your ad read at 55&nbsp;mph?</h2>
-        <p class="lede" style="color:var(--band-muted);margin-top:18px">At 55 mph a driver covers about 80 feet every second. The best billboards say one thing in seven words or fewer, plus a phone number. Type your headline and see how it holds up.</p>
-      </div>
-      <div>
-        <label for="headline">Your billboard headline</label>
-        <input id="headline" type="text" maxlength="90" value="Fresh tamales. Next right.">
-        <div style="margin-top:22px">
-          <div class="mini-board" style="color:var(--ink)">
-            <div class="msg" id="msg">Fresh tamales. Next right.</div>
-            <div class="ph">YOUR<br>PHONE #</div>
+    <div class="wrap">
+      <div class="try-banner"><span class="try-badge">Try it</span><span>Type your own ad below and watch the billboard change.</span></div>
+      <div class="tester">
+        <div>
+          <h2>Will your ad read at 55&nbsp;mph?</h2>
+          <p class="lede" style="color:var(--band-muted);margin-top:18px">At 55 mph a driver covers about 80 feet every second. The best billboards say one thing in seven words or fewer, plus a phone number. Type your headline and see how it holds up.</p>
+        </div>
+        <div>
+          <label for="headline" class="try-label">Type your billboard headline here <span aria-hidden="true">&#8595;</span></label>
+          <div class="try-input">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            <input id="headline" type="text" maxlength="90" value="Fresh tamales. Next right." placeholder="Type your ad here" autocomplete="off">
           </div>
-          <div class="mini-legs" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="try-chips">
+            <span class="chip-label">Or tap an example:</span>
+            <button type="button" class="chip" data-ad="Fresh tamales. Next right.">Restaurant</button>
+            <button type="button" class="chip" data-ad="Roofs done right. Call today.">Roofer</button>
+            <button type="button" class="chip" data-ad="Hanford's friendliest family dentist, now taking new patients with evening and weekend hours">A long one</button>
+          </div>
+          <div style="margin-top:22px">
+            <div class="mini-board" style="color:var(--ink)">
+              <div class="msg" id="msg">Fresh tamales. Next right.</div>
+              <div class="ph">YOUR<br>PHONE #</div>
+            </div>
+            <div class="mini-legs" aria-hidden="true"><span></span><span></span><span></span></div>
+          </div>
+          <p class="try-live"><i aria-hidden="true"></i>Live preview: the sign updates as you type</p>
+          <div class="verdict mono">
+            <div><b id="vWords">4</b><small>words</small></div>
+            <div><b id="vSecs">1.3</b><small>seconds to read</small></div>
+            <div><b id="vFeet">108</b><small>feet driven while reading</small></div>
+          </div>
+          <p id="verdictText" class="ok">Reads in a glance. That's a billboard.</p>
         </div>
-        <div class="verdict mono">
-          <div><b id="vWords">4</b><small>words</small></div>
-          <div><b id="vSecs">1.3</b><small>seconds to read</small></div>
-          <div><b id="vFeet">110</b><small>feet driven while reading</small></div>
-        </div>
-        <p id="verdictText" class="ok">Reads in a glance. That's a billboard.</p>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+<!-- HOW IT WORKS -->
   <section class="band" id="how">
     <div class="wrap">
       <div class="section-head">

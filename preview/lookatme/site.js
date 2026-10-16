@@ -32,6 +32,31 @@
     else{v.textContent='Too long for the road. Drivers will miss the end. Aim for 7 words.';v.className='warn';}
   }
   input.addEventListener('input',score); score();
+  var demoOn=true, timer=null;
+  var demos=['Fresh tamales. Next right.','Roofs done right. Call today.','Your business could be here.'];
+  function stopDemo(){ if(demoOn){ demoOn=false; clearTimeout(timer); } }
+  ['focus','pointerdown','keydown'].forEach(function(ev){ input.addEventListener(ev, stopDemo); });
+  [].forEach.call(document.querySelectorAll('.chip'), function(c){
+    c.addEventListener('click', function(){ stopDemo(); input.value=c.getAttribute('data-ad'); score(); input.focus(); });
+  });
+  function typeDemo(i){
+    if(!demoOn) return;
+    var target=demos[i%demos.length], n=0;
+    input.value=''; score();
+    (function step(){
+      if(!demoOn) return;
+      n++; input.value=target.slice(0,n); score();
+      if(n<target.length){ timer=setTimeout(step, 70); }
+      else { timer=setTimeout(function(){ typeDemo(i+1); }, 2200); }
+    })();
+  }
+  if(!still){
+    var started=false, start=function(){ if(!started){ started=true; timer=setTimeout(function(){ typeDemo(1); }, 1600); } };
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ start(); io.disconnect(); } }); },{threshold:.4});
+      io.observe(input);
+    } else start();
+  }
   }
 
   // Lead form: composes a message (live site will post to a form service)
