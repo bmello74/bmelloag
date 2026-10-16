@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Preview copy: remove the next line at launch so Google can index the site -->
+<meta name="robots" content="noindex, nofollow">
+<title>LookatMe Billboard Advertising</title>
+<meta name="description" content="LookatMe, Inc. is a locally owned mobile billboard company in Lemoore, CA. Mobile, trailer and highway billboards across Kings, Tulare and Fresno counties. Call (559) 880-8818 and talk to the owner.">
+<meta name="keywords" content="mobile billboard, billboard advertising, Lemoore billboard, Hanford billboard, Visalia billboard, Fresno billboard, Kings County advertising, Tulare County advertising, Central Valley billboards, trailer billboard">
+<meta property="og:title" content="LookatMe Billboard Advertising | Lemoore, CA">
+<meta property="og:description" content="Local billboards on the roads your customers drive every day. Talk to the owner every time you call.">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "additionalType": "https://schema.org/AdvertisingAgency",
+  "name": "LookatMe, Inc. Billboard Advertising",
+  "description": "Locally owned mobile billboard and trailer billboard advertising in California's Central Valley.",
+  "telephone": "+1-559-880-8818",
+  "email": "lookatmeincadvertising@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "19971 Fremont Ave",
+    "addressLocality": "Lemoore",
+    "addressRegion": "CA",
+    "postalCode": "93245",
+    "addressCountry": "US"
+  },
+  "areaServed": ["Kings County, CA", "Tulare County, CA", "Fresno County, CA", "Lemoore, CA", "Hanford, CA", "Visalia, CA", "Tulare, CA", "Fresno, CA", "Corcoran, CA", "Kingsburg, CA"]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Overpass:wght@400;600;800&family=Overpass+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: the page is a roadside. A billboard-face hero on trailer legs, then bands that read like signs passing at speed: big type, one idea per band. */
+:root{
+  --paper:#f5f6f3;      /* sign-face white, slightly cool */
+  --panel:#ffffff;
+  --ink:#121518;        /* sign lettering black */
+  --muted:#59606a;
+  --line:#d9dcd8;
+  --blue:#1f56d6;       /* LookatMe trailer blue */
+  --blue-ink:#ffffff;
+  --red:#d3262c;        /* trailer frame red, used sparingly */
+  --yellow:#f3c316;     /* highway warning-sign yellow, map + highlights */
+  --band:#121518;       /* dark band background */
+  --band-fg:#f1f2ef;
+  --band-muted:#a9afb6;
+  --map-land:#eceee8;
+  --map-road:#9aa1a8;
+  --font-display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --font-body:"Overpass", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono:"Overpass Mono", ui-monospace, Consolas, monospace;
+  --wrap:1180px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0f1215;--panel:#171b20;--ink:#eef0ec;--muted:#a3aab3;--line:#2a3038;
+  --blue:#5b8cff;--blue-ink:#0b0e12;--red:#ff5a5f;--yellow:#f3c316;
+  --band:#05070a;--band-fg:#eef0ec;--band-muted:#9aa2ab;--map-land:#1a1f25;--map-road:#56606b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1215;--panel:#171b20;--ink:#eef0ec;--muted:#a3aab3;--line:#2a3038;
+  --blue:#5b8cff;--blue-ink:#0b0e12;--red:#ff5a5f;--yellow:#f3c316;
+  --band:#05070a;--band-fg:#eef0ec;--band-muted:#9aa2ab;--map-land:#1a1f25;--map-road:#56606b;color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{height:auto}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-display);text-transform:uppercase;line-height:.95;letter-spacing:.005em;text-wrap:balance;margin:0}
+h2{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:900}
+h3{font-size:1.9rem;font-weight:800}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.lede{font-size:1.15rem;max-width:60ch;color:var(--muted)}
+section{padding-block:clamp(64px,9vw,120px)}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.nav{display:flex;gap:22px;font-weight:600;font-size:.95rem}
+.nav a{text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+@media (max-width:860px){.nav{display:none}}
+
+/* Logo */
+.logo{display:inline-flex;align-items:baseline;font-family:var(--font-body);font-weight:800;font-size:1.7rem;letter-spacing:-.02em;text-decoration:none;color:var(--ink);line-height:1}
+.logo .eyes{display:inline-flex;gap:1px;transform:translateY(.08em)}
+.logo svg{width:.72em;height:.72em;overflow:visible}
+.logo small{font-size:.48em;font-weight:600;margin-left:.3em}
+.eye-white{fill:var(--panel);stroke:var(--ink);stroke-width:2.4}
+.eye-lash{stroke:var(--ink);stroke-width:2.4;stroke-linecap:round}
+.pupil{fill:var(--ink);transition:transform .12s ease-out}
+
+.btn{display:inline-flex;align-items:center;gap:.5em;font-family:var(--font-body);font-weight:800;text-decoration:none;border-radius:6px;padding:.8em 1.2em;border:2px solid var(--ink);cursor:pointer;font-size:1rem;background:transparent;color:var(--ink)}
+.btn-blue{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+.btn:hover{transform:translateY(-1px)}
+.btn-sm{padding:.5em .9em;font-size:.9rem}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+/* Hero: a billboard on a trailer */
+.hero{padding-block:clamp(36px,6vw,72px) 0}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(24px,4vw,48px);align-items:end}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.board{position:relative;min-width:0}
+.board-face{background:var(--panel);border:6px solid var(--ink);padding:clamp(22px,4vw,48px);position:relative;z-index:1}
+.board-face h1{font-size:clamp(3rem,7.6vw,6.6rem);font-weight:900;line-height:.86}
+.board-face h1 em{font-style:normal;color:var(--blue)}
+.board-face .phone-line{margin-top:clamp(16px,2.4vw,28px);display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px}
+.board-face .big-phone{font-family:var(--font-display);font-weight:900;font-size:clamp(2.2rem,5vw,3.8rem);text-decoration:none;line-height:1}
+.board-face .big-phone:hover{color:var(--blue)}
+.board-brand{margin-top:clamp(18px,2.6vw,30px);padding-top:clamp(14px,2vw,22px);border-top:3px solid var(--ink);display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px}
+.board-brand .logo{font-size:clamp(2.4rem,5.4vw,4.2rem)}
+.board-brand .tagline{font-family:var(--font-body);font-weight:600;font-size:clamp(1.05rem,2vw,1.5rem);letter-spacing:-.01em}
+.legs{display:flex;justify-content:space-around;height:56px;margin:0 8%}
+.legs span{width:10px;background:var(--red)}
+.trailer{height:16px;background:var(--blue);border-radius:3px;position:relative;margin:0 2%}
+.trailer::before,.trailer::after{content:"";position:absolute;bottom:-22px;width:34px;height:34px;border-radius:50%;background:var(--ink);border:7px solid var(--muted)}
+.trailer::before{right:22%}.trailer::after{right:calc(22% + 40px)}
+.ground{height:30px}
+.hero-side{display:grid;gap:16px;padding-bottom:46px;min-width:0}
+.hero-side img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:4px}
+.hero-side p{font-size:1.1rem}
+.hero-side .cta{display:flex;flex-wrap:wrap;gap:10px}
+
+/* Owner band */
+.band{background:var(--band);color:var(--band-fg)}
+.band .eyebrow{color:var(--band-muted)}
+.owner-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:start}
+@media (max-width:860px){.owner-grid{grid-template-columns:1fr}}
+.owner-grid h2 span{color:var(--yellow)}
+.owner-grid .lede{color:var(--band-muted);margin-top:22px}
+.vs{width:100%;border-collapse:collapse;font-size:.98rem}
+.vs th,.vs td{text-align:left;padding:14px 10px;border-bottom:1px solid #ffffff22;vertical-align:top}
+.vs thead th{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--band-muted)}
+.vs td:first-child{color:var(--band-muted);width:30%}
+.vs td:last-child{font-weight:700}
+.vs td:last-child::before{content:"";display:inline-block;width:.6em;height:.6em;background:var(--yellow);margin-right:.5em;vertical-align:.05em}
+.table-scroll{overflow-x:auto;min-width:0}
+
+/* Formats */
+.section-head{display:grid;gap:14px;margin-bottom:clamp(32px,5vw,56px)}
+.formats{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,3vw,32px)}
+@media (max-width:760px){.formats{grid-template-columns:1fr}}
+.format{display:grid;grid-template-rows:auto 1fr;background:var(--panel);border:1px solid var(--line);min-width:0}
+.format img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.format-body{padding:22px 24px 26px;display:grid;gap:12px;align-content:start}
+.format .tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--font-mono);font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:1.5px solid var(--ink);padding:3px 8px;border-radius:3px}
+.tag.blue{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+
+/* Why */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:6px solid var(--ink)}
+@media (max-width:960px){.why{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:540px){.why{grid-template-columns:1fr}}
+.why > div{padding:26px 22px 8px 0;display:grid;gap:10px;align-content:start;min-width:0}
+.why .num{font-family:var(--font-display);font-weight:900;font-size:3rem;line-height:1;color:var(--blue)}
+.why p{color:var(--muted)}
+.events{margin-top:40px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.events .eyebrow{margin-right:6px}
+
+/* Readability tester */
+.tester{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,64px);align-items:center}
+@media (max-width:860px){.tester{grid-template-columns:1fr}}
+.tester label{font-weight:800;display:block;margin-bottom:8px}
+.tester input{width:100%;font:inherit;font-size:1.1rem;padding:14px 16px;border:2px solid var(--ink);border-radius:6px;background:var(--panel);color:var(--ink)}
+.mini-board{background:var(--panel);border:5px solid var(--ink);aspect-ratio:48/14;max-width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;padding:clamp(12px,3vw,28px)}
+.mini-board .msg{font-family:var(--font-display);font-weight:900;text-transform:uppercase;line-height:.9;font-size:clamp(1.4rem,4.4vw,3rem);overflow-wrap:anywhere;min-width:0}
+.mini-board .ph{font-family:var(--font-display);font-weight:800;font-size:clamp(.9rem,2vw,1.5rem);text-align:right;line-height:1.05}
+.mini-legs{display:flex;justify-content:space-around;height:26px;margin:0 12%}
+.mini-legs span{width:6px;background:var(--red)}
+.verdict{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.verdict div{border-top:3px solid var(--ink);padding-top:8px}
+.verdict b{display:block;font-family:var(--font-display);font-size:2.2rem;line-height:1}
+.verdict small{color:var(--muted);font-size:.85rem}
+#verdictText{margin-top:14px;font-weight:700}
+.ok{color:var(--blue)}.warn{color:var(--red)}
+
+/* Coverage map */
+.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+@media (max-width:860px){.map-grid{grid-template-columns:1fr}}
+.map-box{background:var(--panel);border:1px solid var(--line);padding:12px;min-width:0}
+.map-box svg{width:100%;height:auto;display:block}
+.m-land{fill:var(--map-land)}
+.m-road{fill:none;stroke:var(--map-road);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.m-road.i5{stroke-dasharray:2 7}
+.m-halo{fill:var(--blue);fill-opacity:.13;stroke:var(--blue);stroke-width:2}
+.m-ring{fill:none;stroke:var(--ink);stroke-opacity:.45;stroke-width:1.5;stroke-dasharray:6 6}
+.m-now{fill:var(--blue);stroke:var(--panel);stroke-width:2}
+.m-next{fill:var(--panel);stroke:var(--ink);stroke-width:2.5}
+.m-label{font-family:var(--font-body);font-size:13px;font-weight:700;fill:var(--ink)}
+.m-county{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;fill:var(--muted);text-transform:uppercase}
+.m-shield rect{fill:var(--panel);stroke:var(--ink);stroke-width:1.5}
+.m-shield text{font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--ink);text-anchor:middle}
+.m-home{fill:var(--yellow);stroke:var(--ink);stroke-width:1.5}
+.legend{display:grid;gap:12px;margin-top:26px}
+.legend div{display:flex;gap:12px;align-items:center}
+.legend i{width:16px;height:16px;border-radius:50%;flex:none}
+.legend .l-now{background:var(--blue)}
+.legend .l-next{border:2.5px solid var(--ink)}
+.legend .l-home{background:var(--yellow);border:1.5px solid var(--ink);transform:rotate(45deg);border-radius:2px;width:13px;height:13px}
+.note{font-size:.9rem;color:var(--muted);margin-top:18px}
+
+/* Gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:12px}
+.gallery figure{margin:0;position:relative;overflow:hidden;background:var(--line)}
+.gallery img{width:100%;height:100%!important;object-fit:cover;display:block;transition:transform .5s ease}
+.gallery figure:hover img{transform:scale(1.04)}
+.gallery figcaption{position:absolute;left:0;bottom:0;right:0;padding:24px 12px 10px;font-size:.82rem;font-weight:700;color:#fff;background:linear-gradient(transparent,#000000b0)}
+.gallery .wide{grid-column:span 2}
+.gallery .tall{grid-row:span 2}
+@media (max-width:860px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}}
+@media (max-width:480px){.gallery .wide{grid-column:span 2}.gallery .tall{grid-row:span 1}}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.steps li{list-style:none;display:grid;gap:10px;align-content:start;border-top:3px solid var(--band-fg);padding-top:16px}
+.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:var(--font-mono);font-weight:700;color:var(--yellow)}
+.steps p{color:var(--band-muted)}
+.steps{padding:0;margin:0}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px)}
+@media (max-width:860px){.contact-grid{grid-template-columns:1fr}}
+.contact-lines{display:grid;gap:18px;margin-top:28px}
+.contact-lines a{font-weight:800;font-size:1.25rem;text-decoration-thickness:2px;text-underline-offset:4px;overflow-wrap:anywhere}
+.contact-lines .big{font-family:var(--font-display);font-size:clamp(2.6rem,6vw,4rem);font-weight:900;text-decoration:none;line-height:1}
+form{display:grid;gap:14px;background:var(--panel);border:1px solid var(--line);padding:clamp(20px,3vw,32px)}
+.field{display:grid;gap:6px}
+.field label{font-weight:700;font-size:.92rem}
+.field input,.field select,.field textarea{font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);width:100%}
+.field textarea{min-height:110px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
+#formOut{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:14px}
+#formOut pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:.85rem;background:var(--paper);padding:12px;margin:0;border:1px solid var(--line);max-height:220px;overflow:auto}
+.out-actions{display:flex;flex-wrap:wrap;gap:10px}
+
+footer{border-top:6px solid var(--ink);padding-block:36px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:center;font-size:.92rem;color:var(--muted)}
+footer a{color:var(--ink);font-weight:700}
+
+/* Load moment: hero board raised into place */
+@keyframes raise{from{transform:translateY(14px)}to{transform:none}}
+.board-face{animation:raise .7s cubic-bezier(.2,.8,.2,1) both}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="LookatMe Inc. home">L<span class="eyes" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path class="eye-lash" d="M5 5 L3 1.5 M12 3.5 V0 M19 5 L21 1.5"/><circle class="eye-white" cx="12" cy="14" r="9"/><circle class="pupil" cx="12" cy="14" r="4.2"/></svg>
+      <svg viewBox="0 0 24 24"><path class="eye-lash" d="M5 5 L3 1.5 M12 3.5 V0 M19 5 L21 1.5"/><circle class="eye-white" cx="12" cy="14" r="9"/><circle class="pupil" cx="12" cy="14" r="4.2"/></svg>
+    </span>katMe<small>Inc.</small></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#formats">Billboards</a>
+      <a href="#why">Why local</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#work">Our work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-blue btn-sm" href="tel:+15598808818">(559) 880-8818</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="board">
+        <div class="board-face">
+          <p class="eyebrow">Billboard advertising · Lemoore, CA</p>
+          <h1 style="margin-top:14px">If you can read this, <em>so can your customers.</em></h1>
+          <div class="phone-line">
+            <a class="big-phone" href="tel:+15598808818">(559) 880-8818</a>
+            <span class="eyebrow">You'll talk to the owner</span>
+          </div>
+          <div class="board-brand">
+            <span class="logo" role="img" aria-label="LookatMe Inc.">L<span class="eyes" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path class="eye-lash" d="M5 5 L3 1.5 M12 3.5 V0 M19 5 L21 1.5"/><circle class="eye-white" cx="12" cy="14" r="9"/><circle class="pupil" cx="12" cy="14" r="4.2"/></svg>
+              <svg viewBox="0 0 24 24"><path class="eye-lash" d="M5 5 L3 1.5 M12 3.5 V0 M19 5 L21 1.5"/><circle class="eye-white" cx="12" cy="14" r="9"/><circle class="pupil" cx="12" cy="14" r="4.2"/></svg>
+            </span>katMe<small>Inc.</small></span>
+            <span class="tagline">Billboard Advertising</span>
+          </div>
+        </div>
+        <div class="legs" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div class="trailer" aria-hidden="true"></div>
+        <div class="ground" aria-hidden="true"></div>
+      </div>
+      <div class="hero-side">
+        <img src="img/see-better.jpg" alt="LookatMe trailer billboard for Family Eye Care Optometry at sunrise" width="1400" height="1050">
+        <p>Mobile and trailer billboards on the Central Valley roads your customers drive every day. Big, simple, local, and easy to start.</p>
+        <div class="cta">
+          <a class="btn btn-blue" href="#contact">Get a spot</a>
+          <a class="btn" href="#formats">See the billboards</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OWNER PROMISE -->
+  <section class="band" id="owner">
+    <div class="wrap owner-grid">
+      <div>
+        <p class="eyebrow">Locally owned. Locally answered.</p>
+        <h2 style="margin-top:14px">Call once. <span>Talk to the owner.</span></h2>
+        <p class="lede">LookatMe is not a national billboard chain. When you call, you get the owner or a live person every time. No call center, no phone tree, no account manager three states away. We know these roads because we drive them, and we'll tell you straight which spot will work for your business.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="vs">
+          <thead><tr><th></th><th>Big billboard companies</th><th>LookatMe</th></tr></thead>
+          <tbody>
+            <tr><td>Who answers</td><td>A sales rep or a web form</td><td>The owner or a live person</td></tr>
+            <tr><td>Where they are</td><td>Corporate offices out of town</td><td>Lemoore, Kings County</td></tr>
+            <tr><td>Locations</td><td>Big-city freeways</td><td>The local roads and intersections your customers use</td></tr>
+            <tr><td>Flexibility</td><td>Fixed boards, long contracts</td><td>Mobile boards we can move with your season</td></tr>
+            <tr><td>Permits and upkeep</td><td>Often your problem</td><td>We handle it</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATS -->
+  <section id="formats">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Our billboards</p>
+        <h2>Pick the board that fits the job</h2>
+        <p class="lede">Every board is big, double-checked for readability, and parked where traffic slows down enough to read it. We handle permits, location upkeep and sign production.</p>
+      </div>
+      <div class="formats">
+        <article class="format">
+          <img src="img/path-to-hope.jpg" alt="Mobile billboard trailer with Path to Hope and Karing for Kreatures Veterinary Hospital ads" loading="lazy" width="1334" height="750">
+          <div class="format-body">
+            <div class="tags"><span class="tag blue">Most flexible</span><span class="tag">Both sides</span></div>
+            <h3>Mobile billboard trailer</h3>
+            <p>Our most popular board. It's on wheels, so we can move it every three months, or on whatever schedule you choose, to follow your season and your customers. Perfect for farm shows, parades, rodeos and grand openings.</p>
+          </div>
+        </article>
+        <article class="format">
+          <img src="img/cotton-trailer.jpg" alt="Large cotton trailer billboard parked beside a highway" loading="lazy" width="1400" height="1050">
+          <div class="format-body">
+            <div class="tags"><span class="tag">Long-term</span><span class="tag">Both sides</span><span class="tag">1-year term</span></div>
+            <h3>Cotton trailer billboard</h3>
+            <p>A big board built on a cotton trailer and set at one strong location for the long haul. Ideal when you want to own a corner your customers pass every single day.</p>
+          </div>
+        </article>
+        <article class="format">
+          <img src="img/advertise-here-road.jpg" alt="Large LookatMe highway billboard on a four-lane road" loading="lazy" width="1400" height="647">
+          <div class="format-body">
+            <div class="tags"><span class="tag">Permanent</span><span class="tag">Hwy 198 &amp; Hwy 99</span><span class="tag">Waitlist</span></div>
+            <h3>Large highway signs</h3>
+            <p>Our biggest, permanent signs on Highway 198 and Highway 99. These fill up, so ask to get on the waitlist for the next one that opens.</p>
+          </div>
+        </article>
+        <article class="format">
+          <img src="img/lift-truck.jpg" alt="Truck-mounted billboard raised on a scissor lift" loading="lazy" width="1400" height="1050">
+          <div class="format-body">
+            <div class="tags"><span class="tag">Events</span><span class="tag">Short runs</span></div>
+            <h3>Truck-mounted boards</h3>
+            <p>Need to be seen at one place on one day? Our truck-mounted boards go where the crowd is, from the World Ag Expo to a Christmas parade. Additional charges may apply for events.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY LOCAL -->
+  <section id="why" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Why local billboards work</p>
+        <h2>The right eyes, with time to read</h2>
+      </div>
+      <div class="why">
+        <div><span class="num">1</span><h3>Right eyeballs</h3><p>A board on the road your customers actually use beats a freeway full of strangers passing through.</p></div>
+        <div><span class="num">2</span><h3>Time to read</h3><p>We favor intersections and local roads where traffic slows, so drivers catch your name and number.</p></div>
+        <div><span class="num">3</span><h3>Follow the season</h3><p>Mobile boards can move every 90 days to be where the decisions are being made.</p></div>
+        <div><span class="num">4</span><h3>Always on</h3><p>Your ad works 24 hours a day, 7 days a week. No skip button, no scrolling past.</p></div>
+      </div>
+      <div class="events">
+        <span class="eyebrow">Event-ready for</span>
+        <span class="tag">World Ag Expo, Tulare</span>
+        <span class="tag">Farm shows</span>
+        <span class="tag">Laton Rodeo</span>
+        <span class="tag">Christmas parades</span>
+        <span class="tag">Grand openings</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- READABILITY TESTER -->
+  <section class="band" id="test">
+    <div class="wrap tester">
+      <div>
+        <p class="eyebrow">Try it</p>
+        <h2 style="margin-top:14px">Will your ad read at 55&nbsp;mph?</h2>
+        <p class="lede" style="color:var(--band-muted);margin-top:18px">At 55 mph a driver covers about 80 feet every second. The best billboards say one thing in seven words or fewer, plus a phone number. Type your headline and see how it holds up.</p>
+      </div>
+      <div>
+        <label for="headline">Your billboard headline</label>
+        <input id="headline" type="text" maxlength="90" value="Fresh tamales. Next right.">
+        <div style="margin-top:22px">
+          <div class="mini-board" style="color:var(--ink)">
+            <div class="msg" id="msg">Fresh tamales. Next right.</div>
+            <div class="ph">YOUR<br>PHONE #</div>
+          </div>
+          <div class="mini-legs" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
+        <div class="verdict mono">
+          <div><b id="vWords">4</b><small>words</small></div>
+          <div><b id="vSecs">1.3</b><small>seconds to read</small></div>
+          <div><b id="vFeet">110</b><small>feet driven while reading</small></div>
+        </div>
+        <p id="verdictText" class="ok">Reads in a glance. That's a billboard.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COVERAGE -->
+  <section id="coverage">
+    <div class="wrap map-grid">
+      <div>
+        <p class="eyebrow">Coverage</p>
+        <h2 style="margin-top:14px">Home in Kings County. Growing across California.</h2>
+        <p class="lede" style="margin-top:18px">Today our boards cover Kings, Tulare and Fresno counties along Highways 99, 198, 41, 43 and 46. Next we're bringing the same local, owner-answered service up and down the Valley.</p>
+        <div class="legend">
+          <div><i class="l-home"></i><span><b>Home base:</b> Lemoore</span></div>
+          <div><i class="l-now"></i><span><b>Serving now:</b> Kings, Tulare &amp; Fresno counties</span></div>
+          <div><i class="l-next"></i><span><b>Coming next:</b> Madera, Merced, Kern and beyond</span></div>
+        </div>
+        <p class="note">Map shows general service areas only, not individual billboard locations. Call us to talk about a specific road or corner.</p>
+      </div>
+      <div class="map-box">
+        <svg viewBox="40 40 470 600" role="img" aria-labelledby="mapTitle">
+          <title id="mapTitle">Overview map of LookatMe service areas in California's Central Valley</title>
+          <rect class="m-land" x="40" y="40" width="470" height="600"/>
+          <circle class="m-ring" cx="340" cy="360" r="235"/>
+          <circle class="m-halo" cx="370" cy="390" r="92"/>
+          <text class="m-county" x="420" y="300">Fresno Co.</text>
+          <text class="m-county" x="232" y="478">Kings Co.</text>
+          <text class="m-county" x="455" y="488" text-anchor="middle">Tulare Co.</text>
+          <text class="m-county" x="300" y="625">Kern Co.</text>
+          <text class="m-county" x="250" y="240">Madera Co.</text>
+          <text class="m-county" x="120" y="205">Merced Co.</text>
+          <!-- roads -->
+          <polyline class="m-road i5" points="67,112 133,240 275,460 381,580 467,640"/>
+          <polyline class="m-road" points="90,68 136,132 219,200 286,268 330,312 358,346 368,358 400,418 416,506 419,524 453,586"/>
+          <polyline class="m-road" points="272,400 331,400 352,394 410,394 464,376"/>
+          <polyline class="m-road" points="341,240 330,312 331,400 302,458"/>
+          <polyline class="m-road" points="358,346 352,394 366,440 402,542 413,560"/>
+          <polyline class="m-road" points="288,536 402,542 419,524"/>
+          <!-- shields -->
+          <g class="m-shield"><rect x="243" y="255" width="26" height="16" rx="3"/><text x="256" y="267">99</text></g>
+          <g class="m-shield"><rect x="440" y="360" width="30" height="16" rx="3"/><text x="455" y="372">198</text></g>
+          <g class="m-shield"><rect x="296" y="425" width="24" height="16" rx="3"/><text x="308" y="437">41</text></g>
+          <g class="m-shield"><rect x="380" y="476" width="24" height="16" rx="3"/><text x="392" y="488">43</text></g>
+          <g class="m-shield"><rect x="320" y="528" width="24" height="16" rx="3"/><text x="332" y="540">46</text></g>
+          <g class="m-shield"><rect x="172" y="300" width="20" height="16" rx="3"/><text x="182" y="312">5</text></g>
+          <!-- next -->
+          <circle class="m-next" cx="90" cy="68" r="6"/><text class="m-label" x="100" y="72">Stockton</text>
+          <circle class="m-next" cx="136" cy="132" r="6"/><text class="m-label" x="146" y="136">Modesto</text>
+          <circle class="m-next" cx="219" cy="200" r="6"/><text class="m-label" x="229" y="204">Merced</text>
+          <circle class="m-next" cx="286" cy="268" r="6"/><text class="m-label" x="296" y="272">Madera</text>
+          <circle class="m-next" cx="238" cy="432" r="6"/><text class="m-label" x="178" y="420">Coalinga</text>
+          <circle class="m-next" cx="453" cy="446" r="6"/><text class="m-label" x="453" y="466" text-anchor="middle">Porterville</text>
+          <circle class="m-next" cx="416" cy="506" r="6"/><text class="m-label" x="428" y="510">Delano</text>
+          <circle class="m-next" cx="453" cy="586" r="6"/><text class="m-label" x="400" y="608">Bakersfield</text>
+          <!-- now -->
+          <circle class="m-now" cx="330" cy="312" r="7"/><text class="m-label" x="270" y="306">Fresno</text>
+          <circle class="m-now" cx="368" cy="358" r="6"/><text class="m-label" x="380" y="354">Kingsburg</text>
+          <circle class="m-now" cx="352" cy="394" r="6"/><text class="m-label" x="338" y="380" text-anchor="end">Hanford</text>
+          <circle class="m-now" cx="410" cy="394" r="6"/><text class="m-label" x="420" y="398">Visalia</text>
+          <circle class="m-now" cx="400" cy="418" r="6"/><text class="m-label" x="412" y="424">Tulare</text>
+          <circle class="m-now" cx="366" cy="440" r="6"/><text class="m-label" x="314" y="462">Corcoran</text>
+          <rect class="m-home" x="324" y="393" width="13" height="13" transform="rotate(45 331 400)"/><text class="m-label" x="280" y="418">Lemoore</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="work" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Our work</p>
+        <h2>Boards on the road right now</h2>
+        <p class="lede">Real billboards for real local businesses: vets, roofers, restaurants, eye doctors, senior living and car dealers.</p>
+      </div>
+      <div class="gallery">
+        <figure class="wide tall"><img src="img/kk-vet-dusk.jpg" alt="Lit trailer billboard for Karing for Kreatures Veterinary Hospital at dusk" loading="lazy"><figcaption>Karing for Kreatures Veterinary Hospital, lit after dark</figcaption></figure>
+        <figure><img src="img/pristine-roofing.jpg" alt="Pristine Roofing billboard beside the highway" loading="lazy"><figcaption>Pristine Roofing</figcaption></figure>
+        <figure><img src="img/twisted.jpg" alt="Twisted Indian Street Food billboard in Lemoore" loading="lazy"><figcaption>Twisted Indian Street Food, Lemoore</figcaption></figure>
+        <figure class="wide"><img src="img/night-lit.jpg" alt="Lit Valley Christian Home billboard at night" loading="lazy"><figcaption>Valley Christian Home, readable at night</figcaption></figure>
+        <figure class="wide"><img src="img/tree-service.jpg" alt="JR's Tree Service billboard on a mobile trailer" loading="lazy"><figcaption>JR's Tree Service</figcaption></figure>
+        <figure><img src="img/sager.jpg" alt="Sager dealership billboard along a rural highway" loading="lazy"><figcaption>Sager, Hanford</figcaption></figure>
+        <figure><img src="img/corridor-aerial.jpg" alt="Aerial view of a LookatMe billboard at a highway on-ramp" loading="lazy"><figcaption>On-ramp placement</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>From phone call to roadside</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Call us</h3><p>Tell us who you want to reach and where. The owner will walk you through what's open.</p></li>
+        <li><h3>Pick your spot</h3><p>Choose a mobile, trailer or highway board. We'll scout new spots in your area if needed.</p></li>
+        <li><h3>We make the sign</h3><p>We produce the sign and handle permits. Keep it bold: your name, one message, your number.</p></li>
+        <li><h3>You're on the road</h3><p>We install it and keep the location up. Mobile boards move when you're ready.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="eyebrow">Advertise here</p>
+        <h2 style="margin-top:14px">Get your business on the road</h2>
+        <div class="contact-lines">
+          <a class="big" href="tel:+15598808818">(559) 880-8818</a>
+          <a href="mailto:lookatmeincadvertising@gmail.com">lookatmeincadvertising@gmail.com</a>
+          <p>LookatMe, Inc.<br>19971 Fremont Ave<br>Lemoore, CA 93245</p>
+          <p class="note" style="margin-top:0">Serving Kings, Tulare and Fresno counties. Call or text any time.</p>
+        </div>
+      </div>
+      <form id="leadForm" novalidate>
+        <h3>Ask about a spot</h3>
+        <div class="row2">
+          <div class="field"><label for="fName">Your name</label><input id="fName" required autocomplete="name"></div>
+          <div class="field"><label for="fBiz">Business</label><input id="fBiz" autocomplete="organization"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="fPhone">Phone</label><input id="fPhone" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="fEmail">Email</label><input id="fEmail" type="email" autocomplete="email"></div>
+        </div>
+        <div class="field"><label for="fType">Interested in</label>
+          <select id="fType"><option>Mobile billboard trailer</option><option>Cotton trailer billboard</option><option>Highway sign waitlist</option><option>Event or short run</option><option>Not sure yet</option></select>
+        </div>
+        <div class="field"><label for="fArea">Town or road you want to reach</label><input id="fArea" placeholder="Example: Hwy 198 near Hanford"></div>
+        <div class="field"><label for="fMsg">Anything else</label><textarea id="fMsg" placeholder="When you'd like to start, events coming up, questions"></textarea></div>
+        <p id="formErr" class="warn" hidden>Add your name and a phone number or email so we can get back to you.</p>
+        <button class="btn btn-blue" type="submit">Send request</button>
+        <div id="formOut" hidden>
+          <p><b>Your request is ready.</b> Send it by email, or copy it into a text to (559) 880-8818.</p>
+          <pre id="formText"></pre>
+          <div class="out-actions">
+            <a class="btn btn-blue btn-sm" id="mailLink" href="mailto:lookatmeincadvertising@gmail.com">Email it</a>
+            <button class="btn btn-sm" type="button" id="copyBtn">Copy text</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="logo" style="font-size:1.3rem">LookatMe<small>Inc.</small></span>
+    <span>Billboard advertising · Lemoore, CA · <a href="tel:+15598808818">(559) 880-8818</a> · <a href="mailto:lookatmeincadvertising@gmail.com">lookatmeincadvertising@gmail.com</a></span>
+    <span>© 2026 LookatMe, Inc., a California corporation</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Eyes follow the pointer
+  var pupils=[].slice.call(document.querySelectorAll('.pupil'));
+  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!still){
+    window.addEventListener('pointermove',function(e){
+      pupils.forEach(function(p){
+        var r=p.ownerSVGElement.getBoundingClientRect();
+        var cx=r.left+r.width/2, cy=r.top+r.height*0.58;
+        var a=Math.atan2(e.clientY-cy,e.clientX-cx);
+        p.style.transform='translate('+(Math.cos(a)*3.6).toFixed(2)+'px,'+(Math.sin(a)*3.6).toFixed(2)+'px)';
+      });
+    },{passive:true});
+  }
+
+  // Readability tester
+  var input=document.getElementById('headline'), msg=document.getElementById('msg');
+  function score(){
+    var t=input.value.trim();
+    msg.textContent=t||'Your headline here';
+    var w=t?t.split(/\s+/).filter(Boolean).length:0;
+    var secs=w/3; // about 3 words per second at a glance
+    var feet=Math.round(secs*80.7);
+    document.getElementById('vWords').textContent=w;
+    document.getElementById('vSecs').textContent=secs.toFixed(1);
+    document.getElementById('vFeet').textContent=feet;
+    var v=document.getElementById('verdictText');
+    if(w===0){v.textContent='Type a headline to test it.';v.className='';}
+    else if(w<=7){v.textContent='Reads in a glance. That\'s a billboard.';v.className='ok';}
+    else if(w<=10){v.textContent='Close. Cut a word or two so drivers catch it all.';v.className='warn';}
+    else{v.textContent='Too long for the road. Drivers will miss the end. Aim for 7 words.';v.className='warn';}
+  }
+  input.addEventListener('input',score); score();
+
+  // Lead form: composes a message (live site will post to a form service)
+  var form=document.getElementById('leadForm');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var g=function(id){return document.getElementById(id).value.trim();};
+    var err=document.getElementById('formErr');
+    if(!g('fName')||(!g('fPhone')&&!g('fEmail'))){err.hidden=false;return;}
+    err.hidden=true;
+    var text='Billboard request\n\nName: '+g('fName')+'\nBusiness: '+(g('fBiz')||'-')+'\nPhone: '+(g('fPhone')||'-')+'\nEmail: '+(g('fEmail')||'-')+'\nInterested in: '+g('fType')+'\nArea: '+(g('fArea')||'-')+'\nNotes: '+(g('fMsg')||'-');
+    document.getElementById('formText').textContent=text;
+    document.getElementById('mailLink').href='mailto:lookatmeincadvertising@gmail.com?subject='+encodeURIComponent('Billboard request from '+g('fName'))+'&body='+encodeURIComponent(text);
+    document.getElementById('formOut').hidden=false;
+  });
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var pre=document.getElementById('formText'), b=this;
+    function sel(){var r=document.createRange();r.selectNodeContents(pre);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected. Press Ctrl+C';}
+    if(navigator.clipboard){navigator.clipboard.writeText(pre.textContent).then(function(){b.textContent='Copied';},sel);}else sel();
+  });
+})();
+</script>
+
+</body>
+</html>
