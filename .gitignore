@@ -50,3 +50,7 @@ Claude outputs/
 # Google Drive sync scratch folder. Drive creates and removes these on its own;
 # they are not part of the website.
 .tmp.driveupload/
+
+# Monthly website reports (GA4 + Search Console numbers and the HTML report).
+# Private working files: GitHub Pages publishes the whole branch.
+Reports/
