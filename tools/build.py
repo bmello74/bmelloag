@@ -129,6 +129,7 @@ NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Trucks"),
        ("/hay", "Hay"), ("/reports", "Reports"), ("/field-tools", "Tools"),
        ("/trusted", "Trusted"), ("/partners", "Partners"),
+       ("/web-and-marketing", "Websites"),
        ("/about", "About"), ("/contact", "Contact")]
 
 
@@ -1478,6 +1479,7 @@ def page_home(items):
         <span class="more">See hay services &rarr;</span>
       </a>
     </div>
+    <p class="svcnote">New: we also build websites, Google profiles, social media and sales materials for local businesses. <a href="/web-and-marketing">See websites &amp; marketing &rarr;</a></p>
   </div>
 </section>
 
@@ -2906,6 +2908,180 @@ def page_tools():
                        seo_title="Field Tools \u2014 Acreage, Load, Rate & Solution Calculators")
 
 
+def page_digital():
+    # Added 2026-10-18. Website, search, social, email and proposal work for other
+    # businesses, modelled on the LookatMe proposal. Prices are deliberately not on
+    # the page: every job is quoted. Client drafts under /preview/ are noindex and
+    # are NOT linked from here until that client says yes.
+    body = f"""    <p>We built this website ourselves. We also built <a href="https://melloacres.com/"
+       rel="noopener" target="_blank">melloacres.com</a>, we publish a set of email reports every
+       month to Central Valley readers, and we turn vendor proposals into recommendations a board
+       can approve. Now we do the same work for other businesses.</p>
+    <p>You do not have to be in agriculture. If you run a local business and want more people to
+       find you, see your work and pick up the phone, we can help.</p>
+
+    <h2>See your website before you decide</h2>
+    <p>Most web designers ask you to sign first and picture it later. We do it the other way
+       around. We build a working draft of your site, with your own photos, your logo and your
+       words, and send you a private link. You open it on your phone, tap through it the way a
+       customer would, and tell us what to change. You decide after you have seen it work.</p>
+    <p>Draft links are private and kept out of Google until you approve them.</p>
+
+    <h2>What we offer</h2>
+    <div class="svc dsvc">
+      <div><h3>Websites</h3>
+        <p>Fast, phone-friendly sites built from your real photos and your real work. Your number
+           and email are one tap away on every page, and a request form sends leads straight to
+           you.</p></div>
+      <div><h3>Google and search</h3>
+        <p>Your Google Business Profile set up and verified so you show up on Maps, and pages
+           written the way people search: your service plus your town.</p></div>
+      <div><h3>Social media</h3>
+        <p>Facebook and Instagram pages set up to match your site. Post templates so you can run it
+           yourself, or we post for you and run targeted local ads.</p></div>
+      <div><h3>Email newsletters</h3>
+        <p>Mailchimp set up with a branded template, signup forms and QR codes, and a regular issue
+           written for you if you want one. It is how we stay in front of our own customers.</p></div>
+      <div><h3>Proposals and business plans</h3>
+        <p>Vendor quote reviews, board summaries and sales proposals: clear numbers, a clear
+           recommendation and a plan a decision-maker can sign off on.</p></div>
+      <div><h3>Sales and print materials</h3>
+        <p>Rate sheets, flyers, signup cards with QR codes, and promo graphics sized for every
+           platform, all matched to your brand.</p></div>
+      <div><h3>Tools that keep people on the page</h3>
+        <p>Calculators, quote estimators and preview tools built into your site, like our own
+           <a href="/field-tools">field calculators</a>. A visitor who uses one stays longer and
+           calls more often.</p></div>
+      <div><h3>Maps</h3>
+        <p>Service-area maps for your website that show where you work without giving away what
+           you want kept private, and delivery maps with drop pins and QR codes for your
+           crews.</p></div>
+      <div><h3>Growth planning</h3>
+        <p>Which towns and counties to go after next, in what order, and what has to be true
+           before each move. Each step pays for itself before the next one starts.</p></div>
+    </div>
+
+    <h2>How it works</h2>
+    <ol class="program">
+      <li><div class="body"><h3>We build a draft</h3>
+        <p>A working version of your site from your photos and your words, at a private link,
+           ready to tap through on your phone.</p></div></li>
+      <li><div class="body"><h3>We launch it in your name</h3>
+        <p>Your domain, hosting and business email are opened in your name, so you own them
+           outright. We do the setup and forward your old email so nothing gets missed.</p></div></li>
+      <li><div class="body"><h3>We keep it working</h3>
+        <p>A monthly plan for updates and Google work, with a short report in plain numbers:
+           visits, calls, requests and where you rank.</p></div></li>
+    </ol>
+
+    <h2>Our work</h2>
+    <div class="work">
+      <div class="wcard">
+        <div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span>bmelloag.com</span></div>
+        <div class="wbody"><h3>B. Mello Ag Services</h3>
+          <p>This site: service pages, a public archive of every report we publish, field
+             calculators, a subscribe page with a QR code, and the search setup behind it.</p>
+          <a class="wgo" href="/">You are on it</a></div>
+      </div>
+      <div class="wcard">
+        <div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span>melloacres.com</span></div>
+        <div class="wbody"><h3>Mello Acres</h3>
+          <p>A family farm in Hanford selling dahlias, geese and hatching eggs. Built to show the
+             flowers and the flock, and to start a conversation. Mello Acres is my wife Michelle's
+             farm.</p>
+          <a class="wgo" href="https://melloacres.com/" rel="noopener" target="_blank">Visit
+             melloacres.com</a></div>
+      </div>
+      <div class="wcard">
+        <div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span>Mailchimp</span></div>
+        <div class="wbody"><h3>Monthly email reports</h3>
+          <p>The Field Report, Ag Crime Report, Economic Update, Ag Labor Report and our weekly
+             fuel and fishing reports, built in Mailchimp and published to this site.</p>
+          <a class="wgo" href="/reports">Read the reports</a></div>
+      </div>
+      <div class="wcard">
+        <div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span>Board summary</span></div>
+        <div class="wbody"><h3>A billboard campaign recommendation</h3>
+          <p>For a soil supplement company's board: a vendor's seven placement options turned into
+             corridor traffic tiers, cost per thousand views and a phased plan. Client work stays
+             private, so we walk you through it in person.</p>
+          <a class="wgo" href="/contact">Ask to see it</a></div>
+      </div>
+    </div>
+
+    <h2>Plain English, and you own it</h2>
+    <ul>
+      <li><strong>Your accounts, your name.</strong> The domain, the website and the email are
+          yours. If you ever leave, they go with you.</li>
+      <li><strong>You talk to the owner.</strong> No agency, no call center, no account manager
+          three states away. You call Bryan.</li>
+      <li><strong>No jargon.</strong> We handle the technical side and report back in numbers that
+          mean something: calls, requests and Google rankings.</li>
+      <li><strong>We use it ourselves.</strong> Everything we would build for you, we already run
+          for our own business.</li>
+    </ul>
+
+    <h2>Pricing</h2>
+    <p>One flat price to build the site, then a monthly plan you can change as you grow, from basic
+       care and updates up to full Google, social media and expansion work. Social media and print
+       pieces can be added on their own. Every business is different, so we quote once we know
+       what you need.</p>
+
+    <h2>Questions we get</h2>
+
+    <h3>Do I have to be in agriculture?</h3>
+    <p>No. Farming is our background, not a requirement. If you serve local customers, the work is
+       the same.</p>
+
+    <h3>I already have a website. Can you help?</h3>
+    <p>Yes. We can rebuild it, move it, or tune the one you have so Google finds it. We moved our
+       own site off a website builder in 2026, so we know what that takes.</p>
+
+    <h3>Can I make changes myself?</h3>
+    <p>You can, but most people would rather text us. Small updates are included in every monthly
+       plan: send what you want changed and we take care of it.</p>
+
+    <h3>How do I get started?</h3>
+    <p>Call <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> or email
+       <a href="mailto:{EMAIL}">{EMAIL}</a> and tell us about your business. We will build a draft
+       and send you the link.</p>
+
+    <div class="dcta">
+      <a class="btn btn-gold" href="tel:{PHONE_TEL}">Call {PHONE_TXT}</a>
+      <a class="btn btn-quiet" href="mailto:{EMAIL}?subject=Website%20and%20marketing">Email us</a>
+    </div>"""
+    return simple_page("/web-and-marketing", "Websites & Marketing",
+                       "Websites, Google, social media and sales materials for local businesses, "
+                       "from a Hanford company that builds and runs its own.",
+                       body,
+                       "Website design, Google Business Profile, social media, email newsletters "
+                       "and proposals for local businesses, built in Hanford by a company that "
+                       "runs its own.",
+                       seo_title="Website Design & Social Media, Hanford CA · B. Mello Ag Services",
+                       extra_ld=[{
+                           "@context": "https://schema.org", "@type": "Service",
+                           "name": "Website design and marketing",
+                           "serviceType": "Website design, local search and social media "
+                                          "marketing",
+                           "provider": {"@id": ORG_ID},
+                           "url": SITE + "/web-and-marketing",
+                           "areaServed": {"@type": "Place", "name": "Central Valley, California"},
+                           "hasOfferCatalog": {
+                               "@type": "OfferCatalog", "name": "Websites and marketing",
+                               "itemListElement": [
+                                   {"@type": "Offer", "itemOffered": {"@type": "Service",
+                                                                      "name": n}}
+                                   for n in ("Website design", "Google Business Profile setup",
+                                             "Local search optimization",
+                                             "Social media management",
+                                             "Email newsletters",
+                                             "Proposals and board summaries",
+                                             "Sales and print materials",
+                                             "Interactive website tools", "Maps",
+                                             "Growth and expansion planning")]},
+                       }])
+
+
 def page_about():
     body = f"""    <h2>How we got here</h2>
     <p>The company was established on January 1, 2005 near Hanford, in California's Central Valley, on
@@ -4004,6 +4180,7 @@ def build_site():
     write("spreader-trucks.html", page_trucks())
     write("about.html", page_about())
     write("contact.html", page_contact())
+    write("web-and-marketing.html", page_digital())
     write("trusted.html", page_trusted())
     for t in TRUSTED:
         write(f"trusted/{t['slug']}.html", page_trusted_entry(t))

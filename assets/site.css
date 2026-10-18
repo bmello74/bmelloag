@@ -705,3 +705,26 @@ section.signup { padding:0; }
   .shopshow img{animation:none !important;opacity:0}
   .shopshow img:first-of-type{opacity:1}
 }
+
+/* websites & marketing (/web-and-marketing) */
+.svcnote{margin:16px 0 0;font-size:15.5px;color:var(--ink-soft)}
+.dsvc{margin:20px 0 0;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.dsvc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.dsvc{grid-template-columns:minmax(0,1fr)}}
+.svc > div{background:var(--surface);padding:22px 22px 24px}
+.prose .dsvc h3{margin:0;font-size:18px}
+.prose .dsvc p{margin:8px 0 0;font-size:15.5px}
+.work{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:20px 0 0}
+.wcard{display:flex;flex-direction:column;border:1px solid var(--hairline);border-radius:4px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.wbar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--gold-wash);border-bottom:1px solid var(--hairline);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;color:var(--ink-soft)}
+.wbar i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--hairline)}
+.wbar i:first-child{background:var(--gold-lit)}
+.wbar span{margin-left:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wbody{display:flex;flex-direction:column;flex:1;padding:16px 18px 18px}
+.prose .wbody h3{margin:0;font-size:18px}
+.prose .wbody p{margin:8px 0 0;font-size:15.5px;line-height:1.58;color:var(--ink-soft)}
+.wgo{align-self:flex-start;margin-top:auto;padding-top:12px;font-family:Archivo,sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.dcta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+@media (max-width:640px){.work{grid-template-columns:minmax(0,1fr)}}
+/* twelve nav items since Websites was added: 16px gaps keep one row at desktop width */
+.navbar .wrap{gap:16px}
