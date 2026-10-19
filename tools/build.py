@@ -983,6 +983,8 @@ def ld_org():
             "tomato bed fertilizer spreading",
             "woodchip spreading", "pre-plant fertilizer application",
             "hay sales", "hay hauling and stacking",
+            "website design", "Google Business Profile setup", "social media marketing",
+            "email newsletters",
         ],
         "makesOffer": [
             {"@type": "Offer", "itemOffered": {
@@ -1000,6 +1002,11 @@ def ld_org():
                                "spreading from Bakersfield to Madera."}},
             {"@type": "Offer", "name": "Custom dry fertilizer blends",
              "description": "Blends mixed to the soil sample rather than to a catalog."},
+            {"@type": "Offer", "itemOffered": {
+                "@type": "Service", "name": "Website design and marketing",
+                "url": SITE + "/web-and-marketing/",
+                "description": "Websites, Google Business Profile, social media, email "
+                               "newsletters and sales materials for small businesses."}},
             {"@type": "Offer", "name": "Dry soil amendments and solution grade products",
              "description": "Gypsum, agricultural limestone, elemental sulfur, compost, "
                             "humic and biological products, and solution grade fertilizer."},
@@ -1479,7 +1486,7 @@ def page_home(items):
         <span class="more">See hay services &rarr;</span>
       </a>
     </div>
-    <p class="svcnote">New: we also build websites, Google profiles, social media and sales materials for local businesses. <a href="/web-and-marketing">See websites &amp; marketing &rarr;</a></p>
+    <p class="svcnote">New: we also build websites, Google profiles, social media and sales materials for local businesses. <a href="/web-and-marketing">See our website design services &rarr;</a></p>
   </div>
 </section>
 
@@ -2908,12 +2915,48 @@ def page_tools():
                        seo_title="Field Tools \u2014 Acreage, Load, Rate & Solution Calculators")
 
 
+DIGITAL_TOWNS = ["Hanford", "Lemoore", "Corcoran", "Armona", "Avenal",       # Kings
+                 "Visalia", "Tulare", "Porterville",                           # Tulare
+                 "Fresno", "Clovis", "Selma", "Kingsburg",                     # Fresno
+                 "Bakersfield", "Delano"]                                      # Kern
+
+DIGITAL_FAQ = [
+    ("Do I have to be in agriculture?",
+     "No. Farming is our background, not a requirement. Restaurants, shops, contractors, "
+     "trucking outfits, farms and service businesses all need the same thing: to be found, "
+     "to look trustworthy, and to make it easy to call."),
+    ("How much does a website cost?",
+     "Each site is quoted as one flat build price, then a monthly plan you can change as you "
+     "grow. The price depends on how many pages you need, whether you want a request form, "
+     "online tools or a newsletter, and how much Google and social media work you want each "
+     "month. Call and we will give you a straight number."),
+    ("I already have a website. Can you help?",
+     "Yes. We can rebuild it, move it off a website builder, or tune the one you have so "
+     "Google finds it. We moved our own site off a website builder in 2026, so we know what "
+     "that takes."),
+    ("Will my business show up on Google Maps?",
+     "That is what the Google Business Profile is for. We set it up or clean it up, get it "
+     "verified, fill in your services and hours, and keep it posted to, because an active "
+     "profile is what puts a local business in the map results."),
+    ("Can I make changes myself?",
+     "You can, but most people would rather text us. Small updates are included in every "
+     "monthly plan: send what you want changed and we take care of it."),
+    ("Do you only work in Hanford?",
+     "No. We are based in Hanford and work with businesses throughout Kings County, including "
+     "Lemoore, and across Tulare, Fresno and Kern counties. We are happy to meet in person "
+     "anywhere in that area, and we take clients outside the Valley by phone and email."),
+]
+
+
 def page_digital():
     # Added 2026-10-18. Website, search, social, email and proposal work for other
     # businesses, modelled on the LookatMe proposal. Prices are deliberately not on
     # the page: every job is quoted. Client drafts under /preview/ are noindex and
     # are NOT linked from here until that client says yes.
-    body = f"""    <p>We built this website ourselves. We also built <a href="https://melloacres.com/"
+    towns = ", ".join(DIGITAL_TOWNS[:-1]) + " and " + DIGITAL_TOWNS[-1]
+    faq_html = "\n".join(f"    <h3>{e(q)}</h3>\n    <p>{e(a)}</p>" for q, a in DIGITAL_FAQ)
+    body = f"""    <p>We design websites for small businesses in Hanford and across the Central Valley.
+       We built this website ourselves. We also built <a href="https://melloacres.com/"
        rel="noopener" target="_blank">melloacres.com</a>, we publish a set of email reports every
        month to Central Valley readers, and we turn vendor proposals into recommendations a board
        can approve. Now we do the same work for other businesses.</p>
@@ -2927,16 +2970,16 @@ def page_digital():
        customer would, and tell us what to change. You decide after you have seen it work.</p>
     <p>Draft links are private and kept out of Google until you approve them.</p>
 
-    <h2>What we offer</h2>
+    <h2>Website design, Google and social media services</h2>
     <div class="svc dsvc">
-      <div><h3>Websites</h3>
+      <div><h3>Website design</h3>
         <p>Fast, phone-friendly sites built from your real photos and your real work. Your number
            and email are one tap away on every page, and a request form sends leads straight to
            you.</p></div>
-      <div><h3>Google and search</h3>
+      <div><h3>Google Business Profile and search</h3>
         <p>Your Google Business Profile set up and verified so you show up on Maps, and pages
            written the way people search: your service plus your town.</p></div>
-      <div><h3>Social media</h3>
+      <div><h3>Social media management</h3>
         <p>Facebook and Instagram pages set up to match your site. Post templates so you can run it
            yourself, or we post for you and run targeted local ads.</p></div>
       <div><h3>Email newsletters</h3>
@@ -2974,7 +3017,7 @@ def page_digital():
            visits, calls, requests and where you rank.</p></div></li>
     </ol>
 
-    <h2>Our work</h2>
+    <h2>Websites we have built</h2>
     <div class="work">
       <div class="wcard">
         <div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span>bmelloag.com</span></div>
@@ -3027,19 +3070,17 @@ def page_digital():
        pieces can be added on their own. Every business is different, so we quote once we know
        what you need.</p>
 
+    <h2>Where we work</h2>
+    <p>We are based in Hanford and build websites for businesses all over
+       <strong>Kings County</strong>: Hanford, Lemoore, Corcoran, Armona and Avenal.</p>
+    <p>We serve <strong>Tulare, Fresno and Kern counties</strong> just as easily, from Visalia,
+       Tulare and Porterville to Fresno, Clovis, Selma and Kingsburg, and south to Bakersfield
+       and Delano. We are close enough to sit down with you in person.</p>
+    <p>A website works anywhere, so we take clients outside the Valley too, by phone and
+       email.</p>
+
     <h2>Questions we get</h2>
-
-    <h3>Do I have to be in agriculture?</h3>
-    <p>No. Farming is our background, not a requirement. If you serve local customers, the work is
-       the same.</p>
-
-    <h3>I already have a website. Can you help?</h3>
-    <p>Yes. We can rebuild it, move it, or tune the one you have so Google finds it. We moved our
-       own site off a website builder in 2026, so we know what that takes.</p>
-
-    <h3>Can I make changes myself?</h3>
-    <p>You can, but most people would rather text us. Small updates are included in every monthly
-       plan: send what you want changed and we take care of it.</p>
+{faq_html}
 
     <h3>How do I get started?</h3>
     <p>Call <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> or email
@@ -3050,14 +3091,19 @@ def page_digital():
       <a class="btn btn-gold" href="tel:{PHONE_TEL}">Call {PHONE_TXT}</a>
       <a class="btn btn-quiet" href="mailto:{EMAIL}?subject=Website%20and%20marketing">Email us</a>
     </div>"""
-    return simple_page("/web-and-marketing", "Websites & Marketing",
-                       "Websites, Google, social media and sales materials for local businesses, "
-                       "from a Hanford company that builds and runs its own.",
+    return simple_page("/web-and-marketing", "Website Design & Marketing",
+                       "Websites, Google, social media and sales materials for small businesses "
+                       "in Hanford, Lemoore and all of Kings County, plus Tulare, Fresno and "
+                       "Kern counties.",
                        body,
-                       "Website design, Google Business Profile, social media, email newsletters "
-                       "and proposals for local businesses, built in Hanford by a company that "
-                       "runs its own.",
-                       seo_title="Website Design & Social Media, Hanford CA · B. Mello Ag Services",
+                       "Website design, Google Business Profile and social media for small "
+                       "businesses in Hanford, Lemoore and Kings County, plus Tulare, Fresno "
+                       "and Kern counties.",
+                       seo_title="Hanford Web Design & Social Media · B. Mello Ag Services",
+                       image=SITE + "/assets/img/web-design-card.jpg",
+                       image_size=(1200, 630),
+                       image_alt="Website design and marketing by B. Mello Ag Services, Hanford, "
+                                 "California",
                        extra_ld=[{
                            "@context": "https://schema.org", "@type": "Service",
                            "name": "Website design and marketing",
@@ -3065,7 +3111,17 @@ def page_digital():
                                           "marketing",
                            "provider": {"@id": ORG_ID},
                            "url": SITE + "/web-and-marketing",
-                           "areaServed": {"@type": "Place", "name": "Central Valley, California"},
+                           "areaServed": ([{"@type": "City", "name": t + ", California"}
+                                           for t in DIGITAL_TOWNS] +
+                                          [{"@type": "AdministrativeArea", "name": c}
+                                           for c in ("Kings County, California",
+                                                     "Tulare County, California",
+                                                     "Fresno County, California",
+                                                     "Kern County, California")] +
+                                          [{"@type": "Place",
+                                            "name": "Central Valley, California"}]),
+                           "audience": {"@type": "BusinessAudience",
+                                        "name": "Small and local businesses"},
                            "hasOfferCatalog": {
                                "@type": "OfferCatalog", "name": "Websites and marketing",
                                "itemListElement": [
@@ -3079,6 +3135,11 @@ def page_digital():
                                              "Sales and print materials",
                                              "Interactive website tools", "Maps",
                                              "Growth and expansion planning")]},
+                       }, {
+                           "@context": "https://schema.org", "@type": "FAQPage",
+                           "mainEntity": [{"@type": "Question", "name": q,
+                                           "acceptedAnswer": {"@type": "Answer", "text": a}}
+                                          for q, a in DIGITAL_FAQ],
                        }])
 
 
@@ -3109,6 +3170,8 @@ def page_about():
        by email, and every issue is <a href="/reports">on this site</a>. They exist because the same
        information we use to advise a nutrition program is worth having whether or not you buy a ton
        from us.</p>
+    <p>We also build websites, Google profiles and social media for other businesses, the same
+       way we built our own. See <a href="/web-and-marketing">website design and marketing</a>.</p>
     <p>Over twenty years in ag sales and service. Our crews do the job to your specifications, in a
        clean and timely manner &mdash; <a href="/contact">call us for a quote</a>.</p>
 
