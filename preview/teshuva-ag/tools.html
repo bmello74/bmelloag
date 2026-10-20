@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Preview copy: remove the next line at launch so Google can index the site -->
+<meta name="robots" content="noindex, nofollow">
+<title>Product calculators | Teshuva Ag</title>
+<meta name="description" content="Plan an FPE+ spray program, a biochar application or an RSTC 17 nitrogen trim for your acres, then send the numbers to Teshuva Ag for a quote.">
+<link rel="canonical" href="https://teshag.com/tools.html">
+<meta property="og:title" content="Product calculators | Teshuva Ag">
+<meta property="og:description" content="Plan an FPE+ spray program, a biochar application or an RSTC 17 nitrogen trim for your acres, then send the numbers to Teshuva Ag for a quote.">
+<meta property="og:image" content="https://teshag.com/img/logo.png">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="img/logo.png" alt="Teshuva Ag" width="150" height="92"></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="index.html">Home</a><a href="products.html">Products</a><a href="tools.html" aria-current="page">Tools</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+      <a class="nav-phone" href="tel:+15599047689">(559) 904-7689</a>
+      <a class="btn small" href="quote.html">Request a quote</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<section class="page-head">
+  <div class="wrap">
+    <h1>Product calculators</h1>
+    <p>Enter your acres and rates to see what a program takes. When the numbers look right, send them to Eddie as a quote request.</p>
+    <div class="page-nav"><a href="#fpe-calc">FPE+ program planner</a><a href="#biochar-calc">Biochar rate planner</a><a href="#rstc-calc">RSTC 17 nitrogen trim</a></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <article class="tool" id="fpe-calc">
+      <div class="tool-head">
+        <h2>FPE+ program planner</h2>
+        <p>Label rate is 1 qt to 1 gal per acre, by foliar spray or through drip, injection or drench.</p>
+      </div>
+      <div class="tool-body">
+        <form class="tool-inputs" data-calc="fpe" novalidate>
+          <div><label for="fpe-acres">Acres</label><input type="number" id="fpe-acres" min="0" step="any" value="40" inputmode="decimal"></div>
+          <div><label for="fpe-rate">Rate per acre</label>
+            <select id="fpe-rate">
+              <option value="0.25">1 quart</option>
+              <option value="0.5" selected>2 quarts (half gallon)</option>
+              <option value="0.75">3 quarts</option>
+              <option value="1">1 gallon</option>
+            </select></div>
+          <div><label for="fpe-apps">Applications this season</label><input type="number" id="fpe-apps" min="1" step="1" value="4" inputmode="numeric"></div>
+          <div><label for="fpe-method">Method</label>
+            <select id="fpe-method"><option>Foliar spray</option><option>Drip or injection</option><option>Soil drench</option><option>Bloom spray</option></select></div>
+          <fieldset class="full">
+            <legend>Which FPE+ products</legend>
+            <div class="checks">
+              <label><input type="checkbox" name="fpe" value="Alfalfa"> Alfalfa</label>
+              <label><input type="checkbox" name="fpe" value="Nettle"> Nettle</label>
+              <label><input type="checkbox" name="fpe" value="Plantain"> Plantain</label>
+              <label><input type="checkbox" name="fpe" value="Bamboo"> Bamboo</label>
+              <label><input type="checkbox" name="fpe" value="Lambsquarter"> Lambsquarter</label>
+              <label><input type="checkbox" name="fpe" value="Pomegranate"> Pomegranate</label>
+              <label><input type="checkbox" name="fpe" value="Fermented Sea Water"> Fermented Sea Water</label>
+              <label><input type="checkbox" name="fpe" value="Not sure"> Help me choose</label>
+            </div>
+          </fieldset>
+        </form>
+        <div class="tool-out" aria-live="polite">
+          <div class="out-main"><span class="out-num" data-out="fpe-total">0</span><span class="out-unit">gallons for the season</span></div>
+          <dl class="out-list">
+            <div><dt>Per application</dt><dd data-out="fpe-per">0 gal</dd></div>
+            <div><dt>In 5 gal buckets</dt><dd data-out="fpe-buckets">0</dd></div>
+            <div><dt>In 2.5 gal jugs</dt><dd data-out="fpe-jugs">0</dd></div>
+          </dl>
+          <p class="out-note" data-out="fpe-note"></p>
+          <a class="btn" data-quote="fpe" href="quote.html">Send these numbers for a quote</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="tool" id="biochar-calc">
+      <div class="tool-head">
+        <h2>Biochar rate planner</h2>
+        <p>Most programs run 6 to 12 cubic yards per acre, about 1 to 2 tons. Delivered weight is about 330 lb per cubic yard.</p>
+      </div>
+      <div class="tool-body">
+        <form class="tool-inputs" data-calc="biochar" novalidate>
+          <div><label for="bc-acres">Acres</label><input type="number" id="bc-acres" min="0" step="any" value="20" inputmode="decimal"></div>
+          <div><label for="bc-rate">Cubic yards per acre</label>
+            <select id="bc-rate">
+              <option value="6" selected>6 yd (about 1 ton)</option>
+              <option value="9">9 yd (about 1.5 tons)</option>
+              <option value="12">12 yd (about 2 tons)</option>
+            </select></div>
+          <div><label for="bc-years">Years in a row</label>
+            <select id="bc-years"><option value="1">1 year</option><option value="2">2 years</option><option value="3" selected>3 years</option></select></div>
+          <div><label for="bc-soil">Soil texture</label>
+            <select id="bc-soil">
+              <option value="coarse">Sandy or coarse</option>
+              <option value="medium" selected>Loam or medium</option>
+              <option value="fine">Clay or fine</option>
+            </select></div>
+          <div class="full"><label for="bc-mode">How you want it applied</label>
+            <select id="bc-mode">
+              <option>Biochar alone</option>
+              <option>Charged with FPE+ biology before spreading</option>
+              <option>Blended with my compost or manure</option>
+            </select></div>
+        </form>
+        <div class="tool-out" aria-live="polite">
+          <div class="out-main"><span class="out-num" data-out="bc-yards">0</span><span class="out-unit">cubic yards per application</span></div>
+          <dl class="out-list">
+            <div><dt>Approximate tons per application</dt><dd data-out="bc-tons">0</dd></div>
+            <div><dt>Total over the program</dt><dd data-out="bc-total">0</dd></div>
+            <div><dt>Built up in your soil</dt><dd data-out="bc-build">0</dd></div>
+          </dl>
+          <p class="out-note" data-out="bc-note"></p>
+          <a class="btn" data-quote="biochar" href="quote.html">Send these numbers for a quote</a>
+        </div>
+      </div>
+      <p class="note">Cost share may be available through NRCS EQIP (Practice 336, Soil Carbon Amendment) and the CDFA Healthy Soils Program. Funding is competitive and not guaranteed; Teshuva Ag can help with the planning and paperwork.</p>
+    </article>
+
+    <article class="tool" id="rstc-calc">
+      <div class="tool-head">
+        <h2>RSTC 17 nitrogen trim</h2>
+        <p>RSTC 17 goes in at 1 oz per gallon of UAN-32. In a 2024 Newman almond trial, 75% N plus RSTC 17 yielded the same as 100% N.</p>
+      </div>
+      <div class="tool-body">
+        <form class="tool-inputs" data-calc="rstc" novalidate>
+          <div><label for="rs-acres">Acres</label><input type="number" id="rs-acres" min="0" step="any" value="80" inputmode="decimal"></div>
+          <div><label for="rs-uan">UAN-32 per acre per season (gal)</label><input type="number" id="rs-uan" min="0" step="any" value="50" inputmode="decimal"></div>
+          <div><label for="rs-price">Your UAN-32 price ($ per ton)</label><input type="number" id="rs-price" min="0" step="any" value="600" inputmode="decimal"></div>
+          <div><label for="rs-plan">Plan</label>
+            <select id="rs-plan">
+              <option value="trim" selected>Trim UAN-32 by 25% and add RSTC 17</option>
+              <option value="full">Keep full UAN-32 and add RSTC 17</option>
+            </select></div>
+          <div class="full"><label for="rs-crop">Crop</label><input type="text" id="rs-crop" value="Almonds"></div>
+        </form>
+        <div class="tool-out" aria-live="polite">
+          <div class="out-main"><span class="out-num" data-out="rs-gal">0</span><span class="out-unit">gallons of RSTC 17</span></div>
+          <dl class="out-list">
+            <div><dt>UAN-32 you apply</dt><dd data-out="rs-applied">0</dd></div>
+            <div><dt>UAN-32 you do not buy</dt><dd data-out="rs-saved">0</dd></div>
+            <div><dt>Fertilizer dollars freed up</dt><dd data-out="rs-dollars">$0</dd></div>
+          </dl>
+          <p class="out-note" data-out="rs-note"></p>
+          <a class="btn" data-quote="rstc" href="quote.html">Send these numbers for a quote</a>
+        </div>
+      </div>
+      <p class="note">UAN-32 figured at 11.06 lb per gallon and 32% N. One orchard, one season of trial data; your results will vary with soil, water, variety and management.</p>
+    </article>
+
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Tell us your crop and acres. We will build the quote.</h2>
+      <p>Call or text Eddie at <a href="tel:+15599047689">(559) 904-7689</a> or email <a href="mailto:info@teshag.com">info@teshag.com</a>.</p>
+    </div>
+    <a class="btn" href="quote.html">Request a quote</a>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <img src="img/logo-white.png" alt="Teshuva Ag" width="170" height="108">
+      <p>Nurturing nature with faith and physics. Biological inputs made on the farm in Hanford, California.</p>
+    </div>
+    <div>
+      <h4>Contact Eddie</h4>
+      <ul>
+        <li><a href="tel:+15599047689">(559) 904-7689</a></li>
+        <li><a href="mailto:info@teshag.com">info@teshag.com</a></li>
+        <li><a href="https://teshag.com">teshag.com</a></li>
+        <li>Hanford, CA</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <ul>
+        <li><a href="products.html#fpe-plus">FPE+ fermented plant extracts</a></li>
+        <li><a href="products.html#biochar">Biochar</a></li>
+        <li><a href="products.html#rstc17">RSTC 17 nitrogen stabilizer</a></li>
+        <li><a href="products.html#physagro">PhysaGro line</a></li>
+        <li><a href="tools.html">Product calculators</a></li>
+        <li><a href="contact.html">Stay in touch</a></li>
+      </ul>
+    </div>
+    <p class="legal">&copy; <span id="yr">2026</span> Teshuva Ag. Results vary with soil, water, crop and management. Always read and follow product labels. Sister farm: <a href="https://esajianfamilyfarms.com">Esajian Family Farms</a>.<span class="credit">Website by <a href="https://bmelloag.com/web-and-marketing/?utm_source=teshuva-ag&amp;utm_medium=referral&amp;utm_campaign=site-credit" target="_blank" rel="noopener">B. Mello Ag Services</a></span></p>
+  </div>
+</footer>
+<script src="site.js"></script>
+<script src="tools.js"></script>
+</body>
+</html>
