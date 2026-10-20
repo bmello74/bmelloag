@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Preview copy: remove the next line at launch so Google can index the site -->
+<meta name="robots" content="noindex, nofollow">
+<title>Esajian Family Farms | Regenerative walnuts from Hanford, CA</title>
+<meta name="description" content="The Esajian family grows walnuts, sweet corn, ancient grains, and herbs and spices in Hanford, California, without poisons or chemicals. Farming the Central Valley since 1920.">
+<link rel="canonical" href="https://www.esajianfamilyfarms.com/">
+<meta property="og:title" content="Esajian Family Farms | Regenerative walnuts from Hanford, CA">
+<meta property="og:description" content="Walnuts, sweet corn, ancient grains, and herbs and spices from a fourth-generation family farm in Hanford, California.">
+<meta property="og:image" content="https://bmelloag.com/preview/esajian-family-farms/img/share-card.jpg">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Karla:wght@400;500;700&family=Oswald:wght@500&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: one family farm, read like a walk from the orchard to the kitchen. Wide photo hero, cream pages, walnut-brown bands, logo green for action. */
+:root{
+  --cream:#F7F2E8;      /* page */
+  --card:#FFFCF6;       /* raised surfaces */
+  --ink:#33241A;        /* walnut brown text */
+  --soft:#76624F;       /* secondary text */
+  --line:#E3D8C5;       /* rules and borders */
+  --wheat:#C49A5A;      /* wheat gold from the wreath */
+  --green:#2F6342;      /* the logo ring green, used for action */
+  --green-ink:#FFFFFF;
+  --band:#2E1F16;       /* dark walnut band */
+  --band-ink:#F5EEE2;
+  --band-soft:#CDBBA5;
+  --note:#FBF0D6;       /* draft-note highlight */
+  --note-ink:#6B4D12;
+  --f-display:"Fraunces", Georgia, "Times New Roman", serif;
+  --f-body:"Karla", "Segoe UI", Helvetica, Arial, sans-serif;
+  --f-label:"Oswald", "Arial Narrow", "Roboto Condensed", sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --cream:#1E1611;--card:#281E17;--ink:#F1E7D8;--soft:#BFAE98;--line:#43352A;--wheat:#D7B077;--green:#6FAE82;--green-ink:#10200F;--band:#120C08;--band-ink:#F1E7D8;--band-soft:#B7A58F;--note:#3A2E14;--note-ink:#F0D9A0;color-scheme:dark}}
+:root[data-theme="dark"]{--cream:#1E1611;--card:#281E17;--ink:#F1E7D8;--soft:#BFAE98;--line:#43352A;--wheat:#D7B077;--green:#6FAE82;--green-ink:#10200F;--band:#120C08;--band-ink:#F1E7D8;--band-soft:#B7A58F;--note:#3A2E14;--note-ink:#F0D9A0;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--cream);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
+a{color:var(--green)}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4.1rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+h3{font-size:1.35rem}
+p{margin:0}
+.label{font-family:var(--f-label);font-weight:500;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;color:var(--wheat)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.narrow{max-width:68ch}
+.lede{font-size:1.15rem;color:var(--soft)}
+:focus-visible{outline:3px solid var(--wheat);outline-offset:2px}
+
+/* draft ribbon */
+.draft{background:var(--band);color:var(--band-soft);font-size:.85rem}
+.draft .wrap{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;padding-block:7px}
+.draft b{color:var(--band-ink);font-weight:500}
+
+/* header */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;gap:20px;padding-block:10px}
+.brand img{display:block;height:58px;width:auto}
+nav.main{display:flex;gap:4px 18px;flex-wrap:wrap;margin-left:auto;align-items:center}
+nav.main a{font-family:var(--f-label);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;color:var(--ink);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent}
+nav.main a[aria-current="page"]{border-color:var(--wheat)}
+nav.main a:hover{color:var(--green)}
+.call{font-weight:700;white-space:nowrap;text-decoration:none;color:var(--green)}
+@media (max-width:1240px){.call.top{display:none}}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer}
+@media (max-width:900px){
+  .menu-btn{display:block}
+  nav.main{display:none;width:100%;margin:0;padding-bottom:10px;flex-direction:column;align-items:flex-start;gap:2px}
+  nav.main.open{display:flex}
+  header.site .wrap{flex-wrap:wrap}
+  .call.top{display:none}
+  .brand img{height:46px}
+}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--f-body);font-weight:700;font-size:1rem;padding:13px 22px;border-radius:999px;text-decoration:none;cursor:pointer;border:2px solid var(--green);background:var(--green);color:var(--green-ink)}
+.btn.ghost{background:transparent;color:var(--green)}
+.btn.light{background:var(--band-ink);border-color:var(--band-ink);color:var(--band)}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+
+section.block{padding-block:72px}
+section.tight{padding-block:48px}
+.stack{display:flex;flex-direction:column;gap:18px}
+.head{display:flex;flex-direction:column;gap:10px;margin-bottom:34px}
+
+/* hero */
+.hero{position:relative;background:var(--band);color:var(--band-ink);overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 70%;opacity:.62}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,17,11,.85) 0%,rgba(26,17,11,.45) 55%,rgba(26,17,11,.1) 100%)}
+.hero .wrap{position:relative;z-index:1;padding-block:110px 96px}
+.hero .copy{max-width:600px;display:flex;flex-direction:column;gap:20px}
+.hero .label{color:#E2C48F}
+.hero p{font-size:1.18rem;color:#EFE6D8}
+.hero .btn.ghost{color:#F5EEE2;border-color:#F5EEE2}
+.since{font-family:var(--f-display);font-style:italic;color:#E2C48F;font-size:1.05rem}
+
+/* trust strip */
+.strip{background:var(--card);border-bottom:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;padding-block:22px}
+.strip div{display:flex;flex-direction:column;gap:2px;font-size:.95rem;color:var(--soft)}
+.strip strong{color:var(--ink);font-size:1rem}
+@media (max-width:820px){.strip .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* crop cards */
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:center}
+@media (max-width:960px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:1fr}}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+@media (max-width:520px){.grid4{grid-template-columns:1fr}}
+.crop{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.crop svg{width:44px;height:44px;color:var(--wheat)}
+.crop .when{font-size:.9rem;color:var(--soft);border-top:1px dashed var(--line);padding-top:10px;margin-top:auto}
+.crop a{font-weight:700;text-decoration:none}
+
+/* steps */
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+@media (max-width:820px){.steps{grid-template-columns:1fr}}
+.steps li{list-style:none;display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:2px solid var(--wheat)}
+.steps li::before{counter-increment:s;content:"Step " counter(s);font-family:var(--f-label);text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;color:var(--wheat)}
+.steps{padding:0;margin:0}
+
+/* dark band */
+.band{background:var(--band);color:var(--band-ink)}
+.band .lede,.band p{color:var(--band-soft)}
+.band h2,.band h3{color:var(--band-ink)}
+.band .label{color:#E2C48F}
+.principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px}
+@media (max-width:900px){.principles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.principles{grid-template-columns:1fr}}
+.principles div{display:flex;flex-direction:column;gap:6px}
+.principles .ref{font-family:var(--f-display);font-style:italic;color:#E2C48F}
+
+/* photo */
+.photo{border-radius:14px;overflow:hidden;max-width:100%}
+.photo img{display:block;width:100%;height:auto}
+.cap{font-size:.88rem;color:var(--soft);margin-top:8px}
+.ph{aspect-ratio:4/3;border:2px dashed var(--line);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--soft);text-align:center;padding:18px;max-width:100%}
+.ph img{width:64px;opacity:.8}
+
+/* recipes teaser */
+.rcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:.75rem;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:999px;background:var(--cream);border:1px solid var(--line);color:var(--soft)}
+
+/* newsletter */
+.keep .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+@media (max-width:820px){.keep .wrap{grid-template-columns:1fr}}
+form .row{display:flex;gap:10px;flex-wrap:wrap}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;width:100%;min-width:0}
+.band input{background:#FFFCF6;color:#33241A;border-color:transparent}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.95rem;min-width:0}
+label.f span.hint{font-weight:400;color:var(--soft);font-size:.85rem}
+.row > *{flex:1 1 200px}
+.ok{background:var(--card);border:1px solid var(--green);border-radius:12px;padding:16px 18px;color:var(--ink)}
+.band .ok{background:transparent;color:var(--band-ink)}
+
+/* draft notes */
+.note{background:var(--note);color:var(--note-ink);border-radius:10px;padding:12px 16px;font-size:.92rem}
+.note b{font-family:var(--f-label);font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem;margin-right:6px}
+
+/* reasons */
+.reasons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+@media (max-width:820px){.reasons{grid-template-columns:1fr}}
+.reasons div{padding:22px 20px 22px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0}
+.reasons h3{font-size:1.2rem}
+
+/* timeline */
+.timeline{display:flex;flex-direction:column;gap:0;border-left:2px solid var(--wheat);margin-left:6px}
+.timeline div{position:relative;padding:0 0 26px 26px;display:flex;flex-direction:column;gap:4px}
+.timeline div::before{content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--cream);border:3px solid var(--wheat)}
+.timeline .yr{font-family:var(--f-display);font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.gens{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.gens{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gens div{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--card)}
+.gens .n{font-family:var(--f-label);text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;color:var(--wheat)}
+
+/* products */
+.prod{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.price{font-family:var(--f-display);font-size:1.8rem;font-weight:700;font-variant-numeric:tabular-nums}
+.price small{font-family:var(--f-body);font-size:.95rem;font-weight:400;color:var(--soft)}
+.facts{display:flex;flex-wrap:wrap;gap:6px}
+.order{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:18px}
+.qty{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.qty{grid-template-columns:1fr}}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:14px;font-variant-numeric:tabular-nums}
+.total strong{font-family:var(--f-display);font-size:1.5rem}
+
+/* recipes page */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.filters button{font:inherit;font-weight:700;font-size:.92rem;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--green-ink)}
+details.recipe{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 22px}
+details.recipe+details.recipe{margin-top:12px}
+details.recipe summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 0}
+details.recipe summary::-webkit-details-marker{display:none}
+details.recipe summary h3{font-size:1.25rem}
+details.recipe summary::after{content:"+";font-family:var(--f-display);font-size:1.6rem;color:var(--wheat);flex:none}
+details.recipe[open] summary::after{content:"\2212"}
+.rbody{display:grid;grid-template-columns:1fr 1.4fr;gap:28px;padding-bottom:22px}
+@media (max-width:720px){.rbody{grid-template-columns:1fr}}
+.rbody ul,.rbody ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.rbody h4{font-family:var(--f-label);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;color:var(--wheat);margin:0 0 8px}
+
+/* contact */
+.dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
+.dl dt{font-family:var(--f-label);text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;color:var(--wheat);padding-top:3px}
+.dl dd{margin:0}
+.hours{font-variant-numeric:tabular-nums}
+
+/* teshuva */
+.grower{border:1px solid var(--line);border-radius:16px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;background:var(--card)}
+@media (max-width:720px){.grower{grid-template-columns:1fr}}
+
+/* footer */
+footer{background:var(--band);color:var(--band-soft);font-size:.95rem}
+footer .cols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:28px;padding-block:52px 30px}
+@media (max-width:820px){footer .cols{grid-template-columns:1fr}}
+footer h4{font-family:var(--f-label);font-weight:500;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;color:#E2C48F;margin:0 0 10px}
+footer a{color:var(--band-ink)}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+footer .legal{border-top:1px solid rgba(245,238,226,.15);padding-block:18px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;font-size:.85rem}
+footer .emb{width:86px;border-radius:50%;background:#F7F2E8;padding:4px;margin-bottom:12px}
+
+.view[hidden]{display:none!important}
+.pagehead{padding-block:64px 32px;border-bottom:1px solid var(--line);background:var(--card)}
+.pagehead .stack > *{max-width:70ch}
+@media (prefers-reduced-motion:no-preference){.view{animation:in .35s ease-out}@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+<div class="draft"><div class="wrap"><span><b>Website draft</b> for Esajian Family Farms, prepared by B. Mello Ag Services</span><span>Gold boxes mark details for the family to confirm</span></div></div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#home" data-go="home" aria-label="Esajian Family Farms home"><img src="img/logo.webp" alt="Esajian Family Farms, Hanford, CA"></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mainNav">Menu</button>
+    <nav class="main" id="mainNav" aria-label="Main">
+      <a href="#home" data-go="home">Home</a>
+      <a href="#farm" data-go="farm">Our Farm</a>
+      <a href="#family" data-go="family">Our Family</a>
+      <a href="#walnuts" data-go="walnuts">Walnuts &amp; Crops</a>
+      <a href="#find-us" data-go="find-us">Find Us</a>
+      <a href="#recipes" data-go="recipes">Recipes</a>
+      <a href="#contact" data-go="contact">Contact</a>
+      <a class="call top" href="tel:+15598167281">(559) 816-7281</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<div class="view" id="v-home" data-view="home">
+  <section class="hero">
+    <img src="img/orchard.webp" alt="Sarah and Eddie Esajian walking through the family walnut orchard in Hanford">
+    <div class="wrap">
+      <div class="copy">
+        <span class="label">A family farm in Hanford, California</span>
+        <h1>We're nuts about walnuts.</h1>
+        <p>The Esajian family grows walnuts, sweet corn, ancient grains, and herbs and spices in the Central Valley, with clean minerals and good soil instead of poisons and chemicals.</p>
+        <div class="btns"><a class="btn" href="#walnuts" data-go="walnuts">Order walnuts</a><a class="btn ghost" href="#family" data-go="family">Meet the family</a></div>
+        <span class="since">Farming the Central Valley since 1920</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip"><div class="wrap">
+    <div><strong>Never GMO, never sprayed</strong>No pesticides, herbicides or fungicides</div>
+    <div><strong>Regenerative since 2020</strong>Organic certification in progress</div>
+    <div><strong>Free local delivery</strong>Central California orders over $250</div>
+    <div><strong>Call the farm</strong><a href="tel:+15598167281">(559) 816-7281</a></div>
+  </div></div>
+
+  <section class="block"><div class="wrap">
+    <div class="head"><span class="label">What we grow</span><h2>Grown with love in Hanford, California</h2></div>
+    <div class="grid4">
+      <div class="crop">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><ellipse cx="24" cy="25" rx="15" ry="17"/><path d="M24 8v34M15 16c3 3 3 7 0 10m18-10c-3 3-3 7 0 10M15 30c3 2 3 5 1 8m17-8c-3 2-3 5-1 8"/></svg>
+        <h3>Walnuts</h3><p>Our main crop. Shelled halves and pieces by the 25 pound case, for baking, snacking and sharing.</p>
+        <span class="when">Harvest: September and October</span><a href="#walnuts" data-go="walnuts">Order walnuts</a>
+      </div>
+      <div class="crop">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M24 6c6 0 8 8 8 18s-3 18-8 18-8-8-8-18 2-18 8-18z"/><path d="M20 14h8M19 20h10M19 26h10M20 32h8"/><path d="M16 26c-6 2-9 8-9 16 6-2 11-6 14-12M32 26c6 2 9 8 9 16-6-2-11-6-14-12"/></svg>
+        <h3>Sweet Corn</h3><p>Picked at its sweetest and sold fresh from the farm while the season lasts.</p>
+        <span class="when">Season: summer</span><a href="#find-us" data-go="find-us">Where to find it</a>
+      </div>
+      <div class="crop">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M24 44V8"/><path d="M24 12c-4 0-6-3-6-6 4 0 6 3 6 6zm0 0c4 0 6-3 6-6-4 0-6 3-6 6zM24 20c-4 0-6-3-6-6 4 0 6 3 6 6zm0 0c4 0 6-3 6-6-4 0-6 3-6 6zM24 28c-4 0-6-3-6-6 4 0 6 3 6 6zm0 0c4 0 6-3 6-6-4 0-6 3-6 6zM24 36c-4 0-6-3-6-6 4 0 6 3 6 6zm0 0c4 0 6-3 6-6-4 0-6 3-6 6z"/></svg>
+        <h3>Ancient Grains</h3><p>Khorasan wheat, also known as Kamut, sold as whole grain for milling, cooking and baking.</p>
+        <span class="when">Available while supplies last</span><a href="#walnuts" data-go="walnuts">See grains</a>
+      </div>
+      <div class="crop">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M10 40C10 20 22 8 40 8c0 18-12 30-30 32z"/><path d="M10 40L32 16"/></svg>
+        <h3>Herbs &amp; Spices</h3><p>Small batches of culinary herbs and spices grown alongside our other crops.</p>
+        <span class="when">Ask what's ready this week</span><a href="#contact" data-go="contact">Ask the farm</a>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="block" style="padding-top:0"><div class="wrap">
+    <div class="head"><span class="label">How to get it</span><h2>From our orchard to your kitchen</h2></div>
+    <ol class="steps">
+      <li><h3>Tell us what you need</h3><p>Send an order request for walnuts or grains, or give us a call. Every order starts with a conversation.</p></li>
+      <li><h3>We confirm the details</h3><p>We'll check what's in season, confirm your price, and set a pickup time or a delivery day.</p></li>
+      <li><h3>Pick up or we deliver</h3><p>Come by the farm stand, find us at the market, or get free local delivery on Central California orders over $250.</p></li>
+    </ol>
+  </div></section>
+
+  <section class="block band"><div class="wrap">
+    <div class="head"><span class="label">What drives us</span><h2>Our faith in Christ and our passion for clean, wholesome food</h2></div>
+    <div class="principles">
+      <div><h3>Faith</h3><p>It's our foundation.</p><span class="ref">Ephesians 2:8-9</span></div>
+      <div><h3>Integrity</h3><p>We're only as good as our word.</p><span class="ref">Proverbs 10:9</span></div>
+      <div><h3>Work Hard</h3><p>We're farmers. It's what we do.</p><span class="ref">Proverbs 12:11</span></div>
+      <div><h3>Deliver Quality</h3><p>Excellence is our tradition.</p><span class="ref">Colossians 3:23-24</span></div>
+    </div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <div class="head"><span class="label">Esajian family recipes</span><h2>Celebrating our heritage with wholesome Mediterranean flavors</h2></div>
+    <div class="grid3" id="recipeTeaser"></div>
+    <div style="margin-top:24px"><a class="btn ghost" href="#recipes" data-go="recipes">All 12 family recipes</a></div>
+  </div></section>
+
+  <section class="tight"><div class="wrap">
+    <div class="grower">
+      <div class="stack" style="gap:8px"><span class="label">For growers</span><h3>Go Teshuva. The inputs we use on our own ground.</h3><p class="lede" style="font-size:1rem">Teshuva Ag makes the soil and water products behind our regenerative program, right here in Hanford.</p></div>
+      <a class="btn ghost" href="https://teshag.com/" target="_blank" rel="noopener">Visit Teshuva Ag</a>
+    </div>
+  </div></section>
+
+  <section class="block band keep"><div class="wrap">
+    <div class="stack"><span class="label">Keep in touch</span><h2>Be the first to know when the walnuts are ready.</h2><p>Harvest news, sweet corn days, farm stand hours and new family recipes. A few emails a year, never more.</p></div>
+    <form class="stack nl" data-form="newsletter" novalidate>
+      <div class="row"><input id="nl-name" name="name" type="text" placeholder="First name" aria-label="First name" autocomplete="given-name"><input id="nl-email" name="email" type="email" placeholder="Email address" aria-label="Email address" autocomplete="email" required></div>
+      <button class="btn light" type="submit">Join the list</button>
+      <div class="ok" role="status" hidden></div>
+    </form>
+  </div></section>
+</div>
+
+<!-- ============ OUR FARM ============ -->
+<div class="view" id="v-farm" data-view="farm" hidden>
+  <div class="pagehead"><div class="wrap stack"><span class="label">Our farm</span><h1>How we grow</h1><p class="lede">Esajian Family Farms is a regenerative organic farm in Hanford, California, growing walnuts, sweet corn, ancient grains, and herbs and spices.</p></div></div>
+  <section class="block"><div class="wrap grid2">
+    <div class="stack narrow">
+      <h2>Above and beyond organic</h2>
+      <p>We are transitioning to certified organic, but don't be fooled. That is strictly a marketing decision. Our farming practices go above and beyond those requirements, and we've been farming this way since 2020.</p>
+      <p>We never use poisons, chemicals, pesticides, herbicides or fungicides. Instead, we use only the cleanest minerals and organic materials, and we use methods that detox our soil and crops from heavy metals and toxins.</p>
+      <p><strong>Complete transparency.</strong> Come see what we're doing. Call ahead and we'll walk you through the orchard.</p>
+      <div class="note"><b>Confirm</b>Current organic certification status, and whether we can say "certified" yet.</div>
+    </div>
+    <div><div class="photo"><img src="img/orchard.webp" alt="Mature walnut trees in the Esajian orchard"></div><p class="cap">The walnut orchard in Hanford.</p></div>
+  </div></section>
+  <section class="block" style="padding-top:0"><div class="wrap">
+    <div class="head"><span class="label">9 reasons to choose us</span><h2>What you get with every case</h2></div>
+    <div class="reasons">
+      <div><h3>Never GMO</h3><p>Every seed and tree is non-GMO, always.</p></div>
+      <div><h3>Poison free</h3><p>No pesticides, herbicides or fungicides, ever.</p></div>
+      <div><h3>Nutrition dense</h3><p>Mineral-rich soil grows food with more in it.</p></div>
+      <div><h3>Healthy</h3><p>Clean food for your family, grown by ours.</p></div>
+      <div><h3>All natural</h3><p>Nothing added, nothing taken out.</p></div>
+      <div><h3>Regenerative</h3><p>We build the soil every season instead of using it up.</p></div>
+      <div><h3>Organic</h3><p>Certification is in progress, two of three years complete.</p></div>
+      <div><h3>Uncompromised</h3><p>We grow it the right way even when it costs more.</p></div>
+      <div><h3>Complete transparency</h3><p>Come see what we're doing. The gate is open.</p></div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ============ OUR FAMILY ============ -->
+<div class="view" id="v-family" data-view="family" hidden>
+  <div class="pagehead"><div class="wrap stack"><span class="label">Our family</span><h1>Rooted in Hanford for nearly a century</h1><p class="lede">The Esajian family escaped the Armenian Genocide, crossed an ocean, and planted walnut trees in the Central Valley. Four generations later, we're still farming.</p></div></div>
+  <section class="block"><div class="wrap grid2" style="align-items:start">
+    <div class="stack narrow">
+      <h2>Family roots</h2>
+      <p>The Esajian family escaped genocide in Turkey in 1915, arriving in New York and eventually settling in Kingsburg, California in 1917. We've been farming in the Central Valley since 1920.</p>
+      <p>Nshan Esajian brought a centuries-old Armenian farming tradition with him. He settled in Hanford with his wife and newborn child and planted his first walnut grove, the start of the orchard we still farm today.</p>
+      <p>Our faith in Christ and our passion for clean, wholesome food drive everything we do.</p>
+      <div class="note"><b>Confirm</b>Spelling (Nshan or Nishan), arrival year (1915, 1916 or 1922 appear on the old site), and Kingsburg before Hanford.</div>
+    </div>
+    <div><div class="photo"><img src="img/orchard.webp" alt="Sarah and Eddie Esajian in the walnut orchard" style="aspect-ratio:4/5;object-fit:cover;object-position:50% 80%"></div><p class="cap">Sarah and Eddie in the orchard.</p></div>
+  </div></section>
+  <section class="block" style="padding-top:0"><div class="wrap grid2" style="align-items:start">
+    <div class="stack">
+      <span class="label">Our story in years</span>
+      <div class="timeline">
+        <div><span class="yr">1915</span><p>The family escapes genocide in Turkey and arrives in New York.</p></div>
+        <div><span class="yr">1917</span><p>The family settles in Kingsburg, California.</p></div>
+        <div><span class="yr">1920</span><p>The Esajians begin farming in the Central Valley.</p></div>
+        <div><span class="yr">1922</span><p>Nishan plants his first walnut grove in Hanford.</p></div>
+        <div><span class="yr">1923</span><p>Nishan marries in a traditional Armenian ceremony in Fresno.</p></div>
+        <div><span class="yr">2020</span><p>The farm goes fully regenerative. No poisons, no chemicals.</p></div>
+      </div>
+    </div>
+    <div class="stack">
+      <span class="label">Four generations</span>
+      <div class="gens">
+        <div><span class="n">First</span><h3>Edward</h3></div>
+        <div><span class="n">Second</span><h3>Ed II</h3></div>
+        <div><span class="n">Third</span><h3>Eddie III</h3></div>
+        <div><span class="n">Fourth</span><h3>Eddie IV</h3></div>
+      </div>
+      <div class="note"><b>Needed</b>A short bio and a real photo for each generation, plus any family photos from the early years. The old site used AI-generated portraits, which we've left out.</div>
+    </div>
+  </div></section>
+  <section class="block band"><div class="wrap">
+    <div class="head"><span class="label">What drives us</span><h2>Four principles we farm by</h2></div>
+    <div class="principles">
+      <div><h3>Faith</h3><p>It's our foundation.</p><span class="ref">Ephesians 2:8-9</span></div>
+      <div><h3>Integrity</h3><p>We're only as good as our word.</p><span class="ref">Proverbs 10:9</span></div>
+      <div><h3>Work Hard</h3><p>We're farmers. It's what we do.</p><span class="ref">Proverbs 12:11</span></div>
+      <div><h3>Deliver Quality</h3><p>Excellence is our tradition.</p><span class="ref">Colossians 3:23-24</span></div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ============ WALNUTS & CROPS ============ -->
+<div class="view" id="v-walnuts" data-view="walnuts" hidden>
+  <div class="pagehead"><div class="wrap stack"><span class="label">Walnuts &amp; crops</span><h1>Order from the farm</h1><p class="lede">Pick what you'd like and send a request. We'll call or email to confirm availability, your total, and pickup or delivery.</p></div></div>
+  <section class="block"><div class="wrap stack" style="gap:28px">
+    <div class="grid3">
+      <div class="prod">
+        <span class="label">Our main crop</span><h3>Walnuts, Shelled Halves &amp; Pieces</h3>
+        <span class="price">$185 <small>per 25 lb case</small></span>
+        <p>Light, buttery and fresh from this season's harvest. Buy in bulk for baking, or split a case with friends. In-shell walnuts available on request.</p>
+        <div class="facts"><span class="tag">High protein</span><span class="tag">Omega-3</span><span class="tag">Fiber</span><span class="tag">No sugar added</span><span class="tag">Dairy free</span></div>
+      </div>
+      <div class="prod">
+        <span class="label">Ancient grain</span><h3>Khorasan Wheat (Kamut), Whole Grain</h3>
+        <span class="price">$175 <small>per order</small></span>
+        <p>An ancient wheat with a rich, nutty flavor. Mill it for bread and pasta or cook it whole like rice.</p>
+        <div class="facts"><span class="tag">Whole grain</span><span class="tag">Non-GMO</span></div>
+      </div>
+      <div class="prod">
+        <span class="label">Seasonal</span><h3>Sweet Corn</h3>
+        <span class="price" style="font-size:1.3rem">In season, summer</span>
+        <p>Picked fresh and sold by the dozen while it lasts. Join the list and we'll tell you the day it's ready.</p>
+        <div class="facts"><span class="tag">Picked to order</span></div>
+      </div>
+    </div>
+    <div class="note"><b>Confirm</b>Current prices and pack sizes (these are from the old store), the Kamut bag size, sweet corn pricing, and whether to take payment online or on pickup.</div>
+
+    <form class="order" data-form="order" novalidate>
+      <h2 style="font-size:1.7rem">Order request</h2>
+      <div class="qty">
+        <label class="f" for="q-walnut">Walnut cases (25 lb) <input id="q-walnut" name="walnut" type="number" min="0" value="1" inputmode="numeric"></label>
+        <label class="f" for="q-kamut">Kamut orders <input id="q-kamut" name="kamut" type="number" min="0" value="0" inputmode="numeric"></label>
+        <label class="f" for="q-corn">Sweet corn <select id="q-corn" name="corn"><option value="">Not this time</option><option>Tell me when it's ready</option></select></label>
+      </div>
+      <div class="row">
+        <label class="f" for="o-name">Your name <input id="o-name" name="name" type="text" autocomplete="name" required></label>
+        <label class="f" for="o-phone">Phone <input id="o-phone" name="phone" type="tel" autocomplete="tel" required></label>
+        <label class="f" for="o-email">Email <input id="o-email" name="email" type="email" autocomplete="email"></label>
+      </div>
+      <div class="row">
+        <label class="f" for="o-how">Pickup or delivery <select id="o-how" name="how"><option>Pick up at the farm stand</option><option>Local delivery (free over $250)</option><option>Ship it to me</option></select></label>
+        <label class="f" for="o-notes">Notes <span class="hint">City, timing, in-shell walnuts, anything else</span><input id="o-notes" name="notes" type="text"></label>
+      </div>
+      <div class="total"><span>Estimated total</span><strong id="estTotal">$185</strong></div>
+      <p id="deliveryHint" style="color:var(--soft);font-size:.92rem">Add $65 more for free local delivery.</p>
+      <button class="btn" type="submit" style="align-self:flex-start">Send order request</button>
+      <div class="ok" role="status" hidden></div>
+    </form>
+  </div></section>
+</div>
+
+<!-- ============ FIND US ============ -->
+<div class="view" id="v-find-us" data-view="find-us" hidden>
+  <div class="pagehead"><div class="wrap stack"><span class="label">Find us</span><h1>Come say hello</h1><p class="lede">As a family farm, we love to meet our customers face to face. Stop by and try some of our walnuts. We'd love to meet you!</p></div></div>
+  <section class="block"><div class="wrap grid3">
+    <div class="prod"><span class="label">On the farm</span><h3>The Yellow Farm Stand</h3><p>Walnuts, sweet corn in season, and whatever else is ready that week.</p><dl class="dl"><dt>Where</dt><dd>Hanford, CA</dd><dt>Hours</dt><dd>Set by season</dd></dl><div class="note"><b>Needed</b>Stand address, days, hours and season.</div></div>
+    <div class="prod"><span class="label">At the market</span><h3>Farmers markets</h3><p>Look for our booth for fresh walnuts and a taste of what's in season.</p><div class="note"><b>Needed</b>Market names, days and locations.</div></div>
+    <div class="prod"><span class="label">To your door</span><h3>Local delivery</h3><p>Free delivery in Central California on orders over $250. Smaller orders can be picked up at the farm stand.</p><a class="btn ghost" href="#walnuts" data-go="walnuts" style="align-self:flex-start">Start an order</a></div>
+  </div></section>
+</div>
+
+<!-- ============ RECIPES ============ -->
+<div class="view" id="v-recipes" data-view="recipes" hidden>
+  <div class="pagehead"><div class="wrap stack"><span class="label">Esajian family recipes</span><h1>From our kitchen to yours</h1><p class="lede">Looking for something new to make? Try some of these old Esajian family recipes, built around what we grow.</p></div></div>
+  <section class="block"><div class="wrap">
+    <div class="filters" role="group" aria-label="Filter recipes">
+      <button type="button" data-f="all" aria-pressed="true">All 12</button>
+      <button type="button" data-f="walnuts" aria-pressed="false">Walnuts</button>
+      <button type="button" data-f="corn" aria-pressed="false">Sweet corn</button>
+      <button type="button" data-f="grains" aria-pressed="false">Grains</button>
+      <button type="button" data-f="sweet" aria-pressed="false">Sweet</button>
+    </div>
+    <div id="recipeList"></div>
+  </div></section>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div class="view" id="v-contact" data-view="contact" hidden>
+  <div class="pagehead"><div class="wrap stack"><span class="label">Contact</span><h1>Talk to the farm</h1><p class="lede">Questions about an order, a farm visit, or what's in season? We answer our own phone.</p></div></div>
+  <section class="block"><div class="wrap grid2" style="align-items:start">
+    <div class="stack">
+      <dl class="dl">
+        <dt>Phone</dt><dd><a href="tel:+15598167281">(559) 816-7281</a></dd>
+        <dt>Email</dt><dd><a href="mailto:info@esajianfamilyfarms.com">info@esajianfamilyfarms.com</a></dd>
+        <dt>Mail</dt><dd>PO Box 285<br>Hanford, CA 93232</dd>
+        <dt>Hours</dt><dd class="hours">Monday to Friday, 9am to 5pm<br>Saturday, 9am to 2pm<br>Sunday, closed</dd>
+      </dl>
+      <div class="grower" style="margin-top:12px"><div class="stack" style="gap:6px"><span class="label">Growers</span><p>Looking for soil and water inputs? Teshuva Ag has its own site.</p></div><a class="btn ghost" href="https://teshag.com/" target="_blank" rel="noopener">teshag.com</a></div>
+    </div>
+    <form class="order" data-form="contact" novalidate>
+      <h2 style="font-size:1.6rem">Send us a note</h2>
+      <label class="f" for="c-name">Name <input id="c-name" name="name" type="text" autocomplete="name" required></label>
+      <div class="row">
+        <label class="f" for="c-phone">Phone <input id="c-phone" name="phone" type="tel" autocomplete="tel"></label>
+        <label class="f" for="c-email">Email <input id="c-email" name="email" type="email" autocomplete="email"></label>
+      </div>
+      <label class="f" for="c-msg">How can we help? <textarea id="c-msg" name="msg" rows="4"></textarea></label>
+      <button class="btn" type="submit" style="align-self:flex-start">Send message</button>
+      <div class="ok" role="status" hidden></div>
+    </form>
+  </div></section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div><img class="emb" src="img/emblem.webp" alt=""><p style="font-family:var(--f-display);font-size:1.25rem;color:var(--band-ink)">Esajian Family Farms, Inc.</p><p>Regenerative walnuts, sweet corn, ancient grains, and herbs and spices from Hanford, California. Farming the Central Valley since 1920.</p></div>
+    <div><h4>Visit</h4><ul><li><a href="#walnuts" data-go="walnuts">Order walnuts</a></li><li><a href="#find-us" data-go="find-us">Farm stand &amp; markets</a></li><li><a href="#recipes" data-go="recipes">Family recipes</a></li><li><a href="#family" data-go="family">Our story</a></li><li><a href="https://teshag.com/" target="_blank" rel="noopener">Teshuva Ag</a></li></ul></div>
+    <div><h4>Reach us</h4><ul><li><a href="tel:+15598167281">(559) 816-7281</a></li><li><a href="mailto:info@esajianfamilyfarms.com">info@esajianfamilyfarms.com</a></li><li><a href="https://www.esajianfamilyfarms.com/" target="_blank" rel="noopener">esajianfamilyfarms.com</a></li><li>PO Box 285, Hanford, CA 93232</li></ul></div>
+  </div>
+  <div class="wrap legal"><span>&copy; 2026 Esajian Family Farms, Inc. We're nuts about walnuts!</span><span>Website by <a href="https://bmelloag.com/" target="_blank" rel="noopener">B. Mello Ag Services</a></span></div>
+</footer>
+
+<script>
+const RECIPES = [
+ {t:"Sweet Corn and Walnut Polenta Bites",tags:["corn","walnuts"],blurb:"Creamy polenta with corn and walnuts, cooled, cut and served as bite-sized squares.",
+  ing:["1 cup cornmeal","4 cups water","1 cup sweet corn kernels","1/2 cup shelled walnuts, chopped","1/4 cup Parmesan cheese, grated","2 tablespoons butter","1 teaspoon dried oregano","Salt and pepper to taste","Fresh basil for garnish"],
+  steps:["In a large pot, bring water to a boil. Gradually whisk in cornmeal, reducing heat to low.","Cook, stirring constantly, until the polenta is thick and creamy, about 20 to 25 minutes.","Stir in sweet corn, walnuts, Parmesan cheese, butter, oregano, salt and pepper.","Pour the polenta into a greased baking dish and let cool until firm.","Cut into bite-sized squares or rounds and serve, garnished with fresh basil."]},
+ {t:"Honey Walnut and Ancient Grain Parfait",tags:["walnuts","grains","sweet"],blurb:"Greek yogurt layered with ancient grains, berries, honey and toasted walnuts.",
+  ing:["1/2 cup cooked ancient grains (such as quinoa or farro)","1 cup Greek yogurt","1/4 cup shelled walnuts, chopped and toasted","2 tablespoons honey","1/4 cup fresh berries","1/4 teaspoon ground cinnamon"],
+  steps:["In a bowl, layer Greek yogurt, cooked ancient grains and fresh berries.","Drizzle with honey and sprinkle with toasted walnuts and cinnamon.","Repeat the layers if desired.","Serve immediately."]},
+ {t:"Sweet Corn and Ancient Grain Stuffed Tomatoes",tags:["corn","grains","walnuts"],blurb:"Baked tomatoes filled with farro, corn, walnuts, feta and dill.",
+  ing:["4 large tomatoes","1 cup cooked farro or barley","1 cup sweet corn kernels","1/2 cup shelled walnuts, chopped","1/4 cup feta cheese, crumbled","2 tablespoons fresh dill, chopped","2 tablespoons olive oil","Salt and pepper to taste"],
+  steps:["Preheat the oven to 375°F.","Cut the tops off the tomatoes and scoop out the insides, reserving the pulp.","Mix farro, corn, walnuts, feta, dill, olive oil, salt and pepper with the reserved pulp.","Stuff the tomatoes and place them in a baking dish.","Drizzle with a little more olive oil and bake 25 to 30 minutes, until tender.","Serve hot, garnished with fresh dill."]},
+ {t:"Quinoa Tabbouleh with Mint and Walnuts",tags:["grains","walnuts"],blurb:"A bright, herby tabbouleh with quinoa, cucumber, tomatoes and walnuts.",
+  ing:["1 cup cooked quinoa","1 cup cherry tomatoes, halved","1/2 cup cucumber, diced","1/2 cup shelled walnuts, chopped","1/4 cup fresh mint, chopped","1/4 cup fresh parsley, chopped","1/4 cup red onion, finely chopped","3 tablespoons olive oil","2 tablespoons lemon juice","Salt and pepper to taste"],
+  steps:["Combine quinoa, tomatoes, cucumber, walnuts, mint, parsley and red onion.","Whisk together olive oil, lemon juice, salt and pepper.","Pour the dressing over and toss to combine.","Serve chilled or at room temperature."]},
+ {t:"Sweet Corn and Walnut Fritters",tags:["corn","walnuts"],blurb:"Golden fritters with smoked paprika and cumin, finished with cilantro.",
+  ing:["1 cup sweet corn kernels","1/2 cup shelled walnuts, finely chopped","1/2 cup flour","1/2 teaspoon baking powder","1/2 teaspoon smoked paprika","1/4 teaspoon ground cumin","1/4 cup milk","1 egg, beaten","Salt and pepper to taste","2 tablespoons olive oil","Fresh cilantro for garnish"],
+  steps:["Mix flour, baking powder, smoked paprika, cumin, salt and pepper.","Add the corn, walnuts, milk and egg, stirring until combined.","Heat olive oil in a skillet over medium heat.","Drop spoonfuls of batter into the skillet, flattening slightly.","Cook until golden brown, about 3 to 4 minutes per side.","Drain on paper towels and serve warm with fresh cilantro."]},
+ {t:"Walnut and Fig Couscous Salad",tags:["walnuts","grains"],blurb:"Fluffy couscous with dried figs, toasted walnuts, mint and parsley.",
+  ing:["1 cup couscous","1 cup boiling water","1/2 cup dried figs, chopped","1/2 cup shelled walnuts, toasted and chopped","1/4 cup fresh mint, chopped","1/4 cup fresh parsley, chopped","2 tablespoons olive oil","1 tablespoon lemon juice","Salt and pepper to taste"],
+  steps:["Pour boiling water over the couscous, cover and let sit 5 minutes.","Fluff with a fork and add figs, walnuts, mint and parsley.","Drizzle with olive oil and lemon juice, and season with salt and pepper.","Toss and serve chilled or at room temperature."]},
+ {t:"Walnut and Feta Stuffed Bell Peppers",tags:["walnuts","grains"],blurb:"Pepper halves baked with quinoa, walnuts, feta, sun-dried tomatoes and basil.",
+  ing:["4 bell peppers, halved and seeded","1 cup cooked quinoa","1 cup shelled walnuts, chopped","1/2 cup crumbled feta","1/4 cup sun-dried tomatoes, chopped","1/4 cup fresh basil, chopped","2 tablespoons olive oil","Salt and pepper to taste"],
+  steps:["Preheat the oven to 375°F.","Mix quinoa, walnuts, feta, sun-dried tomatoes, basil, olive oil, salt and pepper.","Stuff the pepper halves and place in a baking dish.","Bake 25 to 30 minutes, until peppers are tender.","Serve hot."]},
+ {t:"Chicken Salad with Walnuts and Grapes",tags:["walnuts"],blurb:"A lighter chicken salad with Greek yogurt, grapes and crunchy walnuts.",
+  ing:["2 cups cooked chicken, shredded","1 cup seedless grapes, halved","1/2 cup shelled walnuts, chopped","1/4 cup Greek yogurt","2 tablespoons mayonnaise","1 tablespoon lemon juice","Salt and pepper to taste","Fresh parsley for garnish"],
+  steps:["Combine chicken, grapes and walnuts.","Mix Greek yogurt, mayonnaise, lemon juice, salt and pepper.","Pour the dressing over and toss to coat.","Garnish with parsley and serve chilled."]},
+ {t:"Walnut and Olive Tapenade",tags:["walnuts"],blurb:"A coarse spread of walnuts, olives, capers and thyme for bread or crackers.",
+  ing:["1 cup shelled walnuts","1 cup mixed olives, pitted","1 clove garlic","2 tablespoons capers","2 tablespoons olive oil","Juice of 1 lemon","Fresh thyme leaves"],
+  steps:["In a food processor, combine walnuts, olives, garlic, capers and thyme.","Pulse until roughly chopped.","Drizzle in olive oil and lemon juice, pulsing until a coarse paste forms.","Serve with crusty bread or crackers."]},
+ {t:"Walnut Baklava",tags:["walnuts","sweet"],blurb:"Layers of buttered phyllo and cinnamon walnuts under a honey syrup.",
+  ing:["1 package phyllo dough","2 cups shelled walnuts, finely chopped","1 cup butter, melted","1 cup sugar","1 cup water","1/2 cup honey","1 teaspoon cinnamon","1 teaspoon vanilla extract"],
+  steps:["Preheat the oven to 350°F.","Layer half the phyllo sheets in a greased baking dish, brushing each with butter.","Spread the walnuts and sprinkle with cinnamon.","Layer the remaining phyllo on top, brushing each sheet with butter.","Cut into diamonds and bake 45 to 50 minutes, until golden brown.","Simmer sugar, water, honey and vanilla for 10 minutes.","Pour the syrup over the hot baklava and let cool before serving."]},
+ {t:"Walnut and Red Pepper Spread",tags:["walnuts"],blurb:"Roasted red peppers and walnuts blended smooth for pita or sandwiches.",
+  ing:["2 red bell peppers, roasted and peeled","1 cup shelled walnuts","1 clove garlic","2 tablespoons olive oil","1 tablespoon lemon juice","Salt and pepper to taste"],
+  steps:["In a food processor, combine peppers, walnuts, garlic, olive oil and lemon juice.","Blend until smooth and creamy.","Season with salt and pepper.","Serve with pita or as a sandwich spread."]},
+ {t:"Walnut and Herb Crusted Lamb Chops",tags:["walnuts"],blurb:"Lamb chops pressed in walnuts, parsley, mint, garlic and lemon zest.",
+  ing:["4 lamb chops","1 cup shelled walnuts, finely chopped","1/4 cup fresh parsley, chopped","1/4 cup fresh mint, chopped","2 garlic cloves, minced","Zest of 1 lemon","2 tablespoons olive oil","Salt and pepper to taste"],
+  steps:["Preheat the oven to 375°F.","Mix walnuts, parsley, mint, garlic, lemon zest, salt and pepper.","Brush the chops with olive oil and press the walnut mixture onto both sides.","Bake 15 to 20 minutes, to desired doneness.","Serve hot with roasted vegetables."]}
+];
+const TAGNAME={walnuts:"Walnuts",corn:"Sweet corn",grains:"Grains",sweet:"Sweet"};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tagHTML=r=>'<div class="tags">'+r.tags.map(t=>'<span class="tag">'+TAGNAME[t]+'</span>').join("")+'</div>';
+
+document.getElementById("recipeTeaser").innerHTML=[9,4,1].map(i=>{const r=RECIPES[i];return '<a class="rcard" href="#recipes" data-go="recipes" data-open="'+i+'" style="text-decoration:none;color:inherit">'+tagHTML(r)+'<h3>'+esc(r.t)+'</h3><p style="color:var(--soft)">'+esc(r.blurb)+'</p><span style="color:var(--green);font-weight:700;margin-top:auto">Get the recipe</span></a>'}).join("");
+document.getElementById("recipeList").innerHTML=RECIPES.map((r,i)=>'<details class="recipe" id="r'+i+'" data-tags="'+r.tags.join(" ")+'"><summary><div class="stack" style="gap:6px"><h3>'+esc(r.t)+'</h3>'+tagHTML(r)+'</div></summary><div class="rbody"><div><h4>Ingredients</h4><ul>'+r.ing.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul></div><div><h4>Instructions</h4><ol>'+r.steps.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ol></div></div></details>').join("");
+
+document.querySelectorAll(".filters button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".filters button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  const f=b.dataset.f;document.querySelectorAll("details.recipe").forEach(d=>{d.hidden=!(f==="all"||d.dataset.tags.split(" ").includes(f))});
+}));
+
+/* views */
+const VIEWS=["home","farm","family","walnuts","find-us","recipes","contact"];
+function show(v,openIdx){
+  if(!VIEWS.includes(v))v="home";
+  document.querySelectorAll(".view").forEach(el=>el.hidden=el.dataset.view!==v);
+  document.querySelectorAll("nav.main a[data-go]").forEach(a=>a.toggleAttribute("aria-current",a.dataset.go===v)||null);
+  document.querySelectorAll("nav.main a[data-go]").forEach(a=>{if(a.dataset.go===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  nav.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");
+  if(openIdx!=null){const d=document.getElementById("r"+openIdx);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:"start"}),30);return}}
+  window.scrollTo(0,0);
+}
+const nav=document.getElementById("mainNav"),menuBtn=document.getElementById("menuBtn");
+menuBtn.addEventListener("click",()=>{const o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)});
+document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();try{history.replaceState(null,"","#"+a.dataset.go)}catch(_){}show(a.dataset.go,a.dataset.open)});
+show((location.hash||"#home").slice(1));
+
+/* order estimate */
+const qW=document.getElementById("q-walnut"),qK=document.getElementById("q-kamut");
+function est(){const t=Math.max(0,+qW.value||0)*185+Math.max(0,+qK.value||0)*175;document.getElementById("estTotal").textContent="$"+t.toLocaleString();
+  document.getElementById("deliveryHint").textContent=t>=250?"This order qualifies for free local delivery in Central California.":(t>0?"Add $"+(250-t)+" more for free local delivery.":"Free local delivery on orders over $250.");}
+qW.addEventListener("input",est);qK.addEventListener("input",est);est();
+
+/* forms (draft: no live delivery yet) */
+document.querySelectorAll("form[data-form]").forEach(f=>f.addEventListener("submit",e=>{
+  e.preventDefault();const ok=f.querySelector(".ok"),kind=f.dataset.form,d=Object.fromEntries(new FormData(f));
+  if(kind==="newsletter"&&!/\S+@\S+\.\S+/.test(d.email||"")){ok.hidden=false;ok.textContent="Please enter your email address so we can reach you.";return}
+  if(kind!=="newsletter"&&!(d.name||"").trim()){ok.hidden=false;ok.textContent="Please add your name so we know who to call back.";return}
+  if(kind==="order"&&!(d.phone||"").trim()){ok.hidden=false;ok.textContent="Please add a phone number so we can confirm your order.";return}
+  const who=(d.name||"").trim().split(" ")[0];
+  ok.hidden=false;
+  ok.textContent=kind==="newsletter"?"You're on the list"+(who?", "+who:"")+". (Draft preview: on the live site this adds you to the farm's email list.)"
+    :kind==="order"?"Thanks, "+who+". We'll call to confirm your order of "+document.getElementById("estTotal").textContent+". (Draft preview: on the live site this request goes straight to info@esajianfamilyfarms.com.)"
+    :"Thanks, "+who+". We'll get back to you soon. (Draft preview: on the live site this goes to info@esajianfamilyfarms.com.)";
+}));
+</script>
+</body>
+</html>
