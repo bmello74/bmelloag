@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Preview copy: remove the next line at launch so Google can index the site -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="copyright" content="2026 B. Mello Ag Services">
+<title>Calculators and tools | Superior Soil Supplements</title>
+<meta name="description" content="Free calculators from Superior Soil Supplements: gypsum value comparison, tons and truckloads by acre, water-run gypsum rates, landscape coverage and a soil problem finder.">
+<link rel="canonical" href="https://www.superiorsoil.com/tools.html">
+<meta property="og:title" content="Calculators and tools | Superior Soil Supplements">
+<meta property="og:description" content="Free calculators from Superior Soil Supplements: gypsum value comparison, tons and truckloads by acre, water-run gypsum rates, landscape coverage and a soil problem finder.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="preview-ribbon" role="note"><div class="wrap">Confidential design preview prepared for Superior Soil Supplements LLC by <a href="https://bmelloag.com">B. Mello Ag Services</a>. Shared under a nondisclosure agreement. &copy; 2026 B. Mello Ag Services. Do not copy, reproduce or distribute.</div></div>
+<div class="topbar"><div class="wrap"><span class="tb-tag">Serving growers and landscapers across California&rsquo;s Central Valley</span><span class="tb-links"><a href="tel:+15595847695">Office (559) 584-7695</a><a class="tb-addr" href="https://www.google.com/maps/search/?api=1&query=10367+Houston+Ave+Hanford+CA+93230" target="_blank" rel="noopener">10367 Houston Ave, Hanford, CA 93230</a></span></div></div>
+<header class="site-header"><div class="wrap">
+<a class="brand" href="index.html" aria-label="Superior Soil Supplements home"><img class="logo-mark" src="assets/img/superior-soil-logo.jpg" width="273" height="220" alt="Superior Soil Supplements LLC"></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="gypsum.html">Gypsum</a><a href="amendments.html">Amendments</a><a href="solution.html">Solution</a><a href="landscape.html">Landscape</a><a href="agronomy.html">Agronomy</a><a href="tools.html" aria-current="page">Tools</a><a href="about.html">About</a>
+<span class="nav-cta"><a class="btn btn-ghost" href="sample-submission.html">Send samples</a><a class="btn btn-primary" href="quote.html">Request a quote <span class="quote-count" data-n="0">0</span></a></span></nav>
+</div></header>
+<main id="main">
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Tools</div>
+    <h1>Calculators for the field and the jobsite</h1>
+    <p class="lede">Quick numbers for planning an application or a bid. When you are ready, add the result straight to a quote.</p>
+    <p><a href="#gypsum-value">Gypsum value</a> &nbsp; <a href="#planner">Tons and loads</a> &nbsp; <a href="#waterrun">Water-run gypsum</a> &nbsp; <a href="#coverage">Landscape coverage</a> &nbsp; <a href="#finder">Soil problem finder</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="calc" data-calc="gypsum-value" id="gypsum-value">
+      <h2>Gypsum value comparison</h2>
+      <p>Lower-grade gypsum needs more tons to put down the same calcium and sulfur. This compares the cost of each ton of actual gypsum delivered, using each product&rsquo;s guaranteed gypsum content.</p>
+      <div class="calc-grid">
+        <div><label for="t-base">Empire TR-100 delivered, $/ton</label><input id="t-base" name="base_price" type="number" min="0" step="0.5" value="90"></div>
+        <div><label for="t-grade">Compare against</label><select id="t-grade" name="other_grade"><option value="90">90% gypsum</option><option value="70" selected>70% gypsum</option><option value="55">55% gypsum</option><option value="custom">Other grade</option></select></div>
+        <div data-custom hidden><label for="t-cg">Gypsum %</label><input id="t-cg" name="custom_grade" type="number" min="1" max="100" value="80"></div>
+        <div><label for="t-op">Its delivered price, $/ton</label><input id="t-op" name="other_price" type="number" min="0" step="0.5" value="70"></div>
+      </div>
+      <div class="bar-compare">
+        <div class="bar"><span>Empire TR-100</span><span class="track"><span class="fill" data-bar="base" style="display:block"></span></span><strong data-val="base"></strong></div>
+        <div class="bar"><span data-label="other">Other</span><span class="track"><span class="fill" data-bar="other" style="display:block"></span></span><strong data-val="other"></strong></div>
+      </div>
+      <p class="small">Bars show cost per ton of 100% gypsum equivalent delivered.</p>
+      <dl class="calc-out">
+        <div><dt>Tons to match 1 ton TR-100</dt><dd data-out="tons"></dd></div>
+        <div><dt>Break-even delivered price</dt><dd data-out="fair"></dd></div>
+        <div><dt>Loads to match 4 of TR-100</dt><dd data-out="loads"></dd></div>
+      </dl>
+      <p class="calc-note" data-out="verdict" aria-live="polite"></p>
+    </div>
+
+    <div class="calc" data-calc="planner" id="planner">
+      <h2>Tons and truckloads</h2>
+      <p>For gypsum, lime, compost or any bulk product applied by the ton.</p>
+      <div class="calc-grid">
+        <div><label for="p-prod">Product</label><select id="p-prod" data-products="gypsum,lime,sulfur,compost,specialty" data-default="tr100"></select></div>
+        <div><label for="p-ac">Acres</label><input id="p-ac" name="acres" type="number" min="0" value="80"></div>
+        <div><label for="p-rate">Rate, tons per acre</label><input id="p-rate" name="rate" type="number" min="0" step="0.25" value="2"></div>
+        <div><label for="p-load">Tons per truckload</label><input id="p-load" name="load" type="number" min="1" step="0.5" value="25"></div>
+      </div>
+      <dl class="calc-out">
+        <div><dt>Total tons</dt><dd data-out="tons"></dd></div>
+        <div><dt>Truckloads</dt><dd data-out="loads"></dd></div>
+        <div><dt>Acres per load</dt><dd data-out="perload"></dd></div>
+      </dl>
+      <div class="btn-row"><button type="button" class="btn btn-green btn-sm" data-add="@select" data-select="#p-prod" data-qty-from="#planner [data-out=tons]">Add to quote with these tons</button></div>
+      <p class="calc-note">Load size varies by truck and product. 25 tons is a typical bulk load; dispatch will confirm.</p>
+    </div>
+
+    <div class="calc" data-calc="waterrun" id="waterrun">
+      <h2>Water-run gypsum per set</h2>
+      <p>Uses 234 lb of 100% gypsum per acre-foot of water to raise calcium by 1 meq/L.</p>
+      <div class="calc-grid">
+        <div><label for="wr-meq">Calcium to add, meq/L</label><input id="wr-meq" name="meq" type="number" min="0" step="0.25" value="1.5"></div>
+        <div><label for="wr-in">Water per set, inches</label><input id="wr-in" name="inches" type="number" min="0" step="0.25" value="2"></div>
+        <div><label for="wr-ac">Acres in the set</label><input id="wr-ac" name="acres" type="number" min="0" value="40"></div>
+        <div><label for="wr-p">Product</label><select id="wr-p" name="purity"><option value="97">Premium 97 (97%)</option><option value="95">Premium 95 HA / x95 (95%)</option></select></div>
+      </div>
+      <dl class="calc-out">
+        <div><dt>Product per set, lb</dt><dd data-out="lbs"></dd></div>
+        <div><dt>Tons per set</dt><dd data-out="tons"></dd></div>
+        <div><dt>Lb per acre</dt><dd data-out="peracre"></dd></div>
+        <div><dt>Calcium added, ppm</dt><dd data-out="ppm"></dd></div>
+      </dl>
+    </div>
+
+    <div class="calc" data-calc="coverage" id="coverage">
+      <h2>Landscape coverage</h2>
+      <div class="radio-row" role="radiogroup" aria-label="How to enter the area">
+        <label class="opt"><input type="radio" name="mode" value="dims" checked><span>Length and width</span></label>
+        <label class="opt"><input type="radio" name="mode" value="area"><span>Total square feet</span></label>
+      </div>
+      <div class="calc-grid">
+        <div data-mode="dims"><label for="cv-l">Length, ft</label><input id="cv-l" name="len" type="number" min="0" value="100"></div>
+        <div data-mode="dims"><label for="cv-w">Width, ft</label><input id="cv-w" name="wid" type="number" min="0" value="20"></div>
+        <div data-mode="area" hidden><label for="cv-a">Area, sq ft</label><input id="cv-a" name="sqft" type="number" min="0" value="2000"></div>
+        <div><label for="cv-d">Depth, inches</label><input id="cv-d" name="depth" type="number" min="0" step="0.25" value="3"></div>
+        <div><label for="cv-p">Material</label><select id="cv-p" data-products="wood,compost" data-default="deco-m"></select></div>
+      </div>
+      <dl class="calc-out">
+        <div><dt>Area, sq ft</dt><dd data-out="area"></dd></div>
+        <div><dt>Cubic yards</dt><dd data-out="yards"></dd></div>
+        <div><dt>Order with 10% extra</dt><dd data-out="order"></dd></div>
+      </dl>
+      <div class="btn-row"><button type="button" class="btn btn-green btn-sm" data-add="@select" data-select="#cv-p" data-qty-from="#coverage [data-out=order]">Add to quote with this amount</button></div>
+    </div>
+
+    <div class="calc" id="finder" data-finder>
+      <h2>Soil problem finder</h2>
+      <p>Pick what you are seeing in the field.</p>
+      <div class="finder-q" role="radiogroup" aria-label="What are you seeing?">
+        <label class="opt"><input type="radio" name="symptom" value="water"><span>Water sits or runs off</span></label>
+        <label class="opt"><input type="radio" name="symptom" value="salt"><span>Salt or sodium problems</span></label>
+        <label class="opt"><input type="radio" name="symptom" value="acid"><span>Low pH</span></label>
+        <label class="opt"><input type="radio" name="symptom" value="alkaline"><span>High pH, yellow leaves</span></label>
+        <label class="opt"><input type="radio" name="symptom" value="om"><span>Low organic matter</span></label>
+        <label class="opt"><input type="radio" name="symptom" value="sandy"><span>Sandy, will not hold water</span></label>
+        <label class="opt"><input type="radio" name="symptom" value="roots"><span>Weak roots or biology</span></label>
+        <label class="opt"><input type="radio" name="symptom" value="potash"><span>Need K or Mg in season</span></label>
+      </div>
+      <div class="finder-result" aria-live="polite"><p class="small">Your recommendations will show here.</p></div>
+    </div>
+    <p class="small" style="margin-top:24px">All calculators give planning estimates. Rates for your ground should come from a soil and water test.</p>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div><span class="logo-wrap"><img class="logo-mark" src="assets/img/superior-soil-logo.jpg" width="273" height="220" alt="Superior Soil Supplements LLC"></span>
+<p>Gypsum, soil amendments, solution grade products, landscape materials and agronomy for California&rsquo;s Central Valley.</p></div>
+<div><h4>Products</h4><ul class="plain">
+<li><a href="gypsum.html">Gypsum and rail supply</a></li><li><a href="amendments.html">Soil amendments</a></li><li><a href="solution.html">Solution grade and equipment</a></li><li><a href="landscape.html">Landscape and wood products</a></li></ul></div>
+<div><h4>Services</h4><ul class="plain">
+<li><a href="agronomy.html">Agronomy and GPS sampling</a></li><li><a href="sample-submission.html">Send in your samples</a></li><li><a href="tools.html">Calculators</a></li><li><a href="quote.html">Request a quote</a></li></ul></div>
+<div><h4>Contact</h4><ul class="plain">
+<li><a href="tel:+15595847695">(559) 584-7695</a></li>
+<li><a href="https://www.google.com/maps/search/?api=1&query=10367+Houston+Ave+Hanford+CA+93230" target="_blank" rel="noopener">10367 Houston Ave, Hanford, CA 93230</a></li>
+<li><a href="mailto:dispatch@superiorsoil.com">dispatch@superiorsoil.com</a> (haulers)</li>
+<li><a href="https://www.superiorsoil.com">www.superiorsoil.com</a></li>
+<li><a href="contact.html">All contacts and locations</a></li></ul></div>
+</div>
+<div class="legal"><div class="wrap"><span>Preview design, layout, copy and tools &copy; 2026 <a href="https://bmelloag.com">B. Mello Ag Services</a>. Proprietary and confidential. Superior Soil names, logo and product data belong to Superior Soil Supplements LLC.</span><span><a href="about.html#locations">Locations</a> &nbsp; <a href="contact.html#resources">Forms and documents</a></span></div></div>
+</footer>
+<div class="print-sheet" aria-hidden="true"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>

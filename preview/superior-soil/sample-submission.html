@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Preview copy: remove the next line at launch so Google can index the site -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="copyright" content="2026 B. Mello Ag Services">
+<title>Send in your samples | Superior Soil Supplements</title>
+<meta name="description" content="Submit your own soil, saturated paste and irrigation water samples to Superior Soil Supplements for lab analysis, CCA recommendations and a custom blend quote.">
+<link rel="canonical" href="https://www.superiorsoil.com/sample-submission.html">
+<meta property="og:title" content="Send in your samples | Superior Soil Supplements">
+<meta property="og:description" content="Submit your own soil, saturated paste and irrigation water samples to Superior Soil Supplements for lab analysis, CCA recommendations and a custom blend quote.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="preview-ribbon" role="note"><div class="wrap">Confidential design preview prepared for Superior Soil Supplements LLC by <a href="https://bmelloag.com">B. Mello Ag Services</a>. Shared under a nondisclosure agreement. &copy; 2026 B. Mello Ag Services. Do not copy, reproduce or distribute.</div></div>
+<div class="topbar"><div class="wrap"><span class="tb-tag">Serving growers and landscapers across California&rsquo;s Central Valley</span><span class="tb-links"><a href="tel:+15595847695">Office (559) 584-7695</a><a class="tb-addr" href="https://www.google.com/maps/search/?api=1&query=10367+Houston+Ave+Hanford+CA+93230" target="_blank" rel="noopener">10367 Houston Ave, Hanford, CA 93230</a></span></div></div>
+<header class="site-header"><div class="wrap">
+<a class="brand" href="index.html" aria-label="Superior Soil Supplements home"><img class="logo-mark" src="assets/img/superior-soil-logo.jpg" width="273" height="220" alt="Superior Soil Supplements LLC"></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="gypsum.html">Gypsum</a><a href="amendments.html">Amendments</a><a href="solution.html">Solution</a><a href="landscape.html">Landscape</a><a href="agronomy.html" aria-current="page">Agronomy</a><a href="tools.html">Tools</a><a href="about.html">About</a>
+<span class="nav-cta"><a class="btn btn-ghost" href="sample-submission.html">Send samples</a><a class="btn btn-primary" href="quote.html">Request a quote <span class="quote-count" data-n="0">0</span></a></span></nav>
+</div></header>
+<main id="main">
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / <a href="agronomy.html">Agronomy</a> / Send samples</div>
+    <h1>Send in your own soil and water samples</h1>
+    <p class="lede">Pull your samples, fill out the form below, and bring or ship them to our Hanford office. You get lab results, recommendations from our Certified Crop Adviser and, if you want one, a custom blend quote.</p>
+  </div>
+</section>
+
+<section class="section-tight bg-paper">
+  <div class="wrap">
+    <ol class="steps">
+      <li><h4>Fill out the form</h4><p>List each sample and the tests you want.</p></li>
+      <li><h4>Print the sheet</h4><p>The form prints a submission sheet with your sample IDs.</p></li>
+      <li><h4>Label and bag</h4><p>Write the matching ID on every bag and bottle.</p></li>
+      <li><h4>Drop off or ship</h4><p>Bring them to Hanford or ship them cool.</p></li>
+      <li><h4>Get results</h4><p>Results, recommendations and your blend quote.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap cols wide-left">
+    <form class="form-panel" data-form="samples" data-success="Submission sent. Bring or ship your samples with the printed sheet and we will confirm when they arrive." novalidate>
+      <fieldset>
+        <legend>Your information</legend>
+        <div class="form-grid">
+          <div><label for="s-name">Name <span class="req">*</span></label><input id="s-name" name="name" data-label="Name" type="text" required autocomplete="name"></div>
+          <div><label for="s-co">Farm, ranch or company</label><input id="s-co" name="company" data-label="Company" type="text" autocomplete="organization"></div>
+          <div><label for="s-ph">Phone <span class="req">*</span></label><input id="s-ph" name="phone" data-label="Phone" type="tel" required autocomplete="tel"></div>
+          <div><label for="s-em">Email <span class="req">*</span></label><input id="s-em" name="email" data-label="Email" type="email" required autocomplete="email"></div>
+          <div class="full"><label for="s-loc">Ranch location</label><input id="s-loc" name="location" data-label="Location" type="text" placeholder="County, cross streets or GPS"></div>
+          <div><label for="s-date">Date sampled</label><input id="s-date" name="sampled" data-label="Date sampled" type="date"></div>
+          <div><label for="s-org">Certified organic ground?</label><select id="s-org" name="organic" data-label="Organic"><option>No</option><option>Yes</option><option>Transitioning</option></select></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Samples</legend>
+        <p class="small">Give each bag or bottle its own ID. Use the field, block or well name so you can match results to the ground.</p>
+        <table class="sample-table">
+          <thead><tr><th>Sample ID</th><th>Type</th><th>Field / block / well</th><th>Crop</th><th>Depth</th></tr></thead>
+          <tbody id="sample-rows"></tbody>
+        </table>
+        <button type="button" class="btn btn-ghost btn-sm" id="add-sample" style="margin-top:10px">Add another sample</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>What you want back</legend>
+        <label>Tests</label>
+        <div class="check-row" style="margin-bottom:16px">
+          <label class="opt"><input type="checkbox" name="tests" data-label="Tests" value="Standard soil analysis" checked><span>Standard soil analysis</span></label>
+          <label class="opt"><input type="checkbox" name="tests" value="Saturated paste"><span>Saturated paste</span></label>
+          <label class="opt"><input type="checkbox" name="tests" value="Irrigation water analysis"><span>Irrigation water analysis</span></label>
+        </div>
+        <label>Also send me</label>
+        <div class="check-row">
+          <label class="opt"><input type="checkbox" name="wants" data-label="Wants" value="CCA recommendations" checked><span>CCA recommendations</span></label>
+          <label class="opt"><input type="checkbox" name="wants" value="Custom blend quote" checked><span>Custom blend quote</span></label>
+          <label class="opt"><input type="checkbox" name="wants" value="Call to review results"><span>A call to review results</span></label>
+        </div>
+        <div style="margin-top:18px"><label for="s-notes">Crop goals or problems</label><textarea id="s-notes" name="notes" data-label="Notes" placeholder="Yield goal, poor spots, water source, what you applied last season"></textarea></div>
+      </fieldset>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" type="submit">Send submission</button>
+        <button class="btn btn-ghost" type="button" id="print-sheet">Print submission sheet</button>
+      </div>
+      <div class="form-status" role="status"></div>
+    </form>
+
+    <aside>
+      <div class="aside-box">
+        <h3>Where to send them</h3>
+        <p><strong>Superior Soil Supplements</strong><br>Attn: Agronomy<br><a href="https://www.google.com/maps/search/?api=1&query=10367+Houston+Ave+Hanford+CA+93230" target="_blank" rel="noopener">10367 Houston Ave, Hanford, CA 93230</a></p>
+        <p>Drop off during office hours, or call <a href="tel:+15595847695">(559) 584-7695</a> before shipping so we know they are coming.</p>
+      </div>
+      <div class="aside-box loam" style="margin-top:24px">
+        <h3>Sampling instructions</h3>
+        <h4>Soil</h4>
+        <ul>
+          <li>Take 15 to 20 cores from one uniform area for each sample. Split fields with different soils or history.</li>
+          <li>Sample 0 to 12 inches unless your agronomist asks for other depths. In orchards and vines, sample inside the wetted zone.</li>
+          <li>Stay away from fertilizer bands, field edges, roads and wet spots.</li>
+          <li>Mix the cores in a clean plastic bucket and fill a zip bag with about 2 cups. Use about 1 quart if you want a saturated paste test.</li>
+        </ul>
+        <h4>Water</h4>
+        <ul>
+          <li>Run the pump at least 15 minutes before sampling.</li>
+          <li>Rinse a clean plastic bottle three times with the water, then fill it to the top (at least 16 oz) and cap it.</li>
+          <li>Keep it cold and get it to us within 48 hours.</li>
+        </ul>
+        <h4>Shipping</h4>
+        <ul>
+          <li>Label every bag and bottle with the sample ID from your sheet.</li>
+          <li>Pack water bottles with an ice pack and put the printed sheet in the box.</li>
+          <li>Ship early in the week so samples do not sit over a weekend.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div><span class="logo-wrap"><img class="logo-mark" src="assets/img/superior-soil-logo.jpg" width="273" height="220" alt="Superior Soil Supplements LLC"></span>
+<p>Gypsum, soil amendments, solution grade products, landscape materials and agronomy for California&rsquo;s Central Valley.</p></div>
+<div><h4>Products</h4><ul class="plain">
+<li><a href="gypsum.html">Gypsum and rail supply</a></li><li><a href="amendments.html">Soil amendments</a></li><li><a href="solution.html">Solution grade and equipment</a></li><li><a href="landscape.html">Landscape and wood products</a></li></ul></div>
+<div><h4>Services</h4><ul class="plain">
+<li><a href="agronomy.html">Agronomy and GPS sampling</a></li><li><a href="sample-submission.html">Send in your samples</a></li><li><a href="tools.html">Calculators</a></li><li><a href="quote.html">Request a quote</a></li></ul></div>
+<div><h4>Contact</h4><ul class="plain">
+<li><a href="tel:+15595847695">(559) 584-7695</a></li>
+<li><a href="https://www.google.com/maps/search/?api=1&query=10367+Houston+Ave+Hanford+CA+93230" target="_blank" rel="noopener">10367 Houston Ave, Hanford, CA 93230</a></li>
+<li><a href="mailto:dispatch@superiorsoil.com">dispatch@superiorsoil.com</a> (haulers)</li>
+<li><a href="https://www.superiorsoil.com">www.superiorsoil.com</a></li>
+<li><a href="contact.html">All contacts and locations</a></li></ul></div>
+</div>
+<div class="legal"><div class="wrap"><span>Preview design, layout, copy and tools &copy; 2026 <a href="https://bmelloag.com">B. Mello Ag Services</a>. Proprietary and confidential. Superior Soil names, logo and product data belong to Superior Soil Supplements LLC.</span><span><a href="about.html#locations">Locations</a> &nbsp; <a href="contact.html#resources">Forms and documents</a></span></div></div>
+</footer>
+<div class="print-sheet" aria-hidden="true"></div>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
