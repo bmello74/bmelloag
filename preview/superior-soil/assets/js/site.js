@@ -361,4 +361,36 @@ window.SS_CONFIG = {
       }
     });
   });
+
+  /* ---------- Background videos: respect reduced motion, offer pause ---------- */
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  $$("video[data-bg]").forEach(function (v) {
+    if (reduce) { v.removeAttribute("autoplay"); v.pause(); }
+    var btn = v.parentNode.querySelector(".video-toggle");
+    if (btn) {
+      btn.textContent = reduce ? "Play video" : "Pause video";
+      btn.addEventListener("click", function () {
+        if (v.paused) { v.play(); btn.textContent = "Pause video"; } else { v.pause(); btn.textContent = "Play video"; }
+      });
+    }
+  });
+
+  /* ---------- Root zone explorer ---------- */
+  var NUT = window.SS_NUTRIENTS || {};
+  $$("[data-rootzone]").forEach(function (box) {
+    var panel = $(".rz-panel", box), picker = $(".rz-picker", box);
+    var keys = Object.keys(NUT);
+    if (picker) picker.innerHTML = keys.map(function (k) { return '<button type="button" data-n="' + k + '" aria-pressed="false">' + esc(NUT[k].name) + "</button>"; }).join("");
+    function show(k) {
+      var d = NUT[k]; if (!d) return;
+      $$(".rz-node", box).forEach(function (n) { n.classList.toggle("active", n.getAttribute("data-n") === k); });
+      $$(".rz-picker button", box).forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-n") === k); });
+      var prods = d.products.map(function (id) { var p = byId[id]; return p ? '<li><a href="' + CATS[p.cat].page + '">' + esc(p.name) + '</a><button type="button" class="add-btn" data-add="' + p.id + '">Add to quote</button></li>' : ""; }).join("");
+      panel.innerHTML = "<h3>" + esc(d.name) + "</h3><dl><dt>What it does</dt><dd>" + esc(d.does) + "</dd><dt>When it runs short</dt><dd>" + esc(d.short) + "</dd><dt>The test that finds it</dt><dd>" + esc(d.test) + '</dd><dt>How we supply it</dt><dd><ul class="rz-products">' + prods + '</ul></dd></dl><div class="btn-row"><a class="btn btn-green btn-sm" href="agronomy.html#book">Test my ground</a><a class="btn btn-ghost btn-sm" href="sample-submission.html">Send samples</a></div>';
+      markAdded();
+    }
+    box.addEventListener("click", function (e) { var t = e.target.closest("[data-n]"); if (t && !e.target.closest(".add-btn")) show(t.getAttribute("data-n")); });
+    box.addEventListener("keydown", function (e) { var t = e.target.closest(".rz-node"); if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); show(t.getAttribute("data-n")); } });
+    var start = box.getAttribute("data-start"); if (start) show(start);
+  });
 })();

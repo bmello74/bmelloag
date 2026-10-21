@@ -90,3 +90,17 @@ window.SS_PRODUCTS = [
   { id: "or-1", cat: "wood", group: "Orchard", name: "Orchard #1 grind", sub: "3/4 to 1-1/2 inch", analysis: "", forms: [], flags: [], unit: "yards" },
   { id: "or-2", cat: "wood", group: "Orchard", name: "Orchard #2 grind", sub: "1-1/2 to 2-1/2 inch", analysis: "", forms: [], flags: [], unit: "yards" }
 ];
+
+/* Root zone explorer: what each nutrient does and how Superior Soil supplies it */
+window.SS_NUTRIENTS = {
+  N: { name: "Nitrogen", does: "Drives leaf and shoot growth and builds protein. It is the nutrient most crops use the most of.", short: "Pale, yellowing older leaves and slow, thin growth.", products: ["fert", "nitryx", "dairy", "zeolite"], test: "Standard soil test: available nitrate and ammonium, plus estimated nitrogen release." },
+  P: { name: "Phosphorus", does: "Powers root growth, energy transfer, bloom and set.", short: "Dull, dark or purple-tinted leaves, weak roots and poor set.", products: ["megaphos", "duck", "fert"], test: "Mehlich III phosphorus on the standard soil test." },
+  K: { name: "Potassium", does: "Controls water use, moves sugars and sizes nuts and fruit.", short: "Scorched edges on older leaves and undersized fruit or nuts.", products: ["kms", "sop", "fert"], test: "Mehlich III potassium and base saturation." },
+  Ca: { name: "Calcium", does: "Builds strong cell walls and fruit firmness, and flocculates clay so water moves into the soil.", short: "Tip burn, fruit disorders, and sealed or crusted ground.", products: ["p97", "tr100", "bml"], test: "Base saturation on the soil test; calcium and SAR on the water test." },
+  Mg: { name: "Magnesium", does: "Sits at the center of every chlorophyll molecule.", short: "Yellowing between the veins of older leaves.", products: ["kms", "ag90", "bmd"], test: "Mehlich III magnesium and the calcium to magnesium ratio." },
+  S: { name: "Sulfur", does: "Builds proteins and enzymes and works hand in hand with nitrogen.", short: "Even yellowing of the youngest leaves.", products: ["e90", "kms", "sop", "sfines"], test: "Mehlich III sulfur on the soil test; sulfate on the water test." },
+  micro: { name: "Zinc, iron and manganese", does: "Run the enzymes behind growth and chlorophyll. Zinc drives early shoot and leaf expansion.", short: "Little leaf and rosetting (zinc) or yellow young leaves with green veins (iron, manganese), most often on high-pH ground.", products: ["fert", "sfines", "humate"], test: "Mehlich III micronutrients and soil pH." },
+  B: { name: "Boron", does: "Needed for pollination, nut and fruit set, and healthy new growth.", short: "Poor set and tip dieback. Too much is toxic, so the water gets tested too.", products: ["fert"], test: "Soil boron, plus boron on the irrigation water analysis." },
+  bio: { name: "Soil biology", does: "Microbes cycle nutrients, unlock phosphorus, fix nitrogen and protect roots.", short: "Tired ground, low organic matter, slow response to fertilizer, or soil after fumigation.", products: ["zeltec", "armory", "fpe", "allgreen"], test: "Organic matter and estimated nitrogen release on the soil test." },
+  water: { name: "Water and sodium", does: "Nutrients only reach roots that water reaches. Sodium, and very clean low-salt water, both seal the surface.", short: "Water ponds or runs off, salt burn on leaf edges, uneven stands.", products: ["p97", "tr100", "aqua"], test: "Irrigation water analysis and a saturated paste test." }
+};
