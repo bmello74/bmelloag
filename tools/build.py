@@ -130,6 +130,7 @@ NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/hay", "Hay"), ("/reports", "Reports"), ("/field-tools", "Tools"),
        ("/trusted", "Trusted"), ("/partners", "Partners"),
        ("/web-and-marketing", "Websites"),
+       ("https://bmellodigital.com", "Digital"),
        ("/about", "About"), ("/contact", "Contact")]
 
 
@@ -3020,6 +3021,15 @@ def page_digital():
     <h2>Websites we have built</h2>
     <div class="work">
       <div class="wcard">
+        <div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span>bmellodigital.com</span></div>
+        <div class="wbody"><h3>B Mello Digital</h3>
+          <p>Our showcase: every site we have built, the interactive tools we put on them, and the
+             apps we host and license. Clients open their private draft there with the password
+             we send them.</p>
+          <a class="wgo" href="https://bmellodigital.com/" rel="noopener" target="_blank">Visit
+             bmellodigital.com</a></div>
+      </div>
+      <div class="wcard">
         <div class="wbar" aria-hidden="true"><i></i><i></i><i></i><span>bmelloag.com</span></div>
         <div class="wbody"><h3>B. Mello Ag Services</h3>
           <p>This site: service pages, a public archive of every report we publish, field
@@ -4154,6 +4164,8 @@ def sitemap(items):
         rows.append("  <url>" + "".join(bits) + "</url>\n")
 
     for path, _label in NAV:
+        if path.startswith("http"):
+            continue
         if path == "/":
             add("/", newest, "weekly", "1.0")
         elif path == "/reports":
@@ -4289,7 +4301,7 @@ def build_site():
     # /tools holds the build scripts. They must stay in the repo (GitHub Pages
     # serves the whole branch and .assetsignore is a Cloudflare-only file), but
     # they are not part of the website, so keep crawlers out of them.
-    write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /tools/\nSitemap: {SITE}/sitemap.xml\n")
+    write("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /tools/\nDisallow: /preview/\nSitemap: {SITE}/sitemap.xml\n")
     n = refresh_asset_links()   # keep published issue pages on the current CSS url
     print(f"site: {len(items)} issues in catalog, static pages rebuilt")
 

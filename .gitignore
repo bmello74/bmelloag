@@ -54,3 +54,6 @@ Claude outputs/
 # Monthly website reports (GA4 + Search Console numbers and the HTML report).
 # Private working files: GitHub Pages publishes the whole branch.
 Reports/
+
+# Ready-made "preview has moved" pages, applied by APPLY.bat once bmellodigital.com is live
+_moved-notices/

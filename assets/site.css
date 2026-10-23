@@ -726,5 +726,6 @@ section.signup { padding:0; }
 .wgo{align-self:flex-start;margin-top:auto;padding-top:12px;font-family:Archivo,sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .dcta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
 @media (max-width:640px){.work{grid-template-columns:minmax(0,1fr)}}
-/* twelve nav items since Websites was added: 16px gaps keep one row at desktop width */
-.navbar .wrap{gap:16px}
+/* thirteen nav items since Digital was added: 14px gaps and slightly tighter tracking keep one row at desktop width */
+.navbar .wrap{gap:14px}
+.navbar a{letter-spacing:.06em}
