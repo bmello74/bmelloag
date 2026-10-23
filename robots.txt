@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /tools/
+Disallow: /preview/
 Sitemap: https://bmelloag.com/sitemap.xml
