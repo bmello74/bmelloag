@@ -728,3 +728,7 @@ section.signup { padding:0; }
 @media (max-width:640px){.work{grid-template-columns:minmax(0,1fr)}}
 /* twelve nav items since Websites was added: 16px gaps keep one row at desktop width */
 .navbar .wrap{gap:16px}
+
+/* Websites intro page: B Mello Digital logo on a dark tile so its white lettering reads */
+.dlogo{background:#0B0B08;border-radius:6px;padding:22px 26px;margin:0 0 22px;max-width:520px}
+.dlogo img{display:block;width:100%;height:auto}

@@ -129,7 +129,7 @@ NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Trucks"),
        ("/hay", "Hay"), ("/reports", "Reports"), ("/field-tools", "Tools"),
        ("/trusted", "Trusted"), ("/partners", "Partners"),
-       ("https://bmellodigital.com/", "Websites"),   # website work lives on B Mello Digital now
+       ("/websites", "Websites"),   # short intro page that links out to B Mello Digital
        ("/about", "About"), ("/contact", "Contact")]
 
 
@@ -2971,6 +2971,43 @@ DIGITAL_FAQ = [
 ]
 
 
+def page_websites():
+    # Added 2026-10-24. The Websites tab lands here: a short description of B Mello Digital
+    # and a button to go there, rather than sending people off-site the moment they tap the tab.
+    D = "https://bmellodigital.com"
+    body = f"""    <div class="dlogo"><img src="/assets/img/bmello-digital-logo.png" alt="B Mello Digital" width="900" height="306" loading="lazy"></div>
+    <p>We build websites, Google profiles, social media and business apps for other companies, the
+       same way we built this site. That work has its own home now: <strong>B Mello Digital</strong>.</p>
+
+    <div class="svc dsvc">
+      <div><h3>Websites</h3>
+        <p>Fast, phone-friendly sites built from your real photos and your real work. We build a
+           working draft first, so you see it before you decide.</p></div>
+      <div><h3>Google and social media</h3>
+        <p>Your Google Business Profile set up so you show up on Maps, plus Facebook, Instagram and
+           email newsletters that match your site.</p></div>
+      <div><h3>Apps for your crew</h3>
+        <p>Delivery maps and pickup orders your drivers open on their phone: tap the address for
+           directions, tap the number to call, tap the email to confirm. No paper maps.</p></div>
+    </div>
+
+    <p>You talk to the same person either way. Call <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a>
+       or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+
+    <div class="dcta">
+      <a class="btn btn-gold" href="{D}/">Visit B Mello Digital &rarr;</a>
+      <a class="btn btn-quiet" href="{D}/websites/">Open your website preview</a>
+    </div>"""
+    return simple_page("/websites", "Websites, Google and Apps",
+                       "Website design, local search, social media and business apps for "
+                       "Central Valley companies, from the people behind B. Mello Ag Services.",
+                       body,
+                       "Website design, Google Business Profile, social media and business apps "
+                       "for Central Valley companies. See B Mello Digital, the website and apps "
+                       "side of B. Mello Ag Services.",
+                       seo_title="Websites, Google and Apps · B. Mello Ag Services")
+
+
 def page_digital():
     # Added 2026-10-18. Website, search, social, email and proposal work for other
     # businesses, modelled on the LookatMe proposal. Prices are deliberately not on
@@ -4279,6 +4316,7 @@ def build_site():
     write("contact.html", page_contact())
     # Website and marketing work moved to B Mello Digital (2026-10-23). The old URL forwards
     # to the matching page there so links and Google rankings carry over.
+    write("websites.html", page_websites())
     write("web-and-marketing/index.html", external_redirect_page(DIGITAL_SERVICES,
           "Website design and marketing now has its own home at B Mello Digital."))
     write("trusted.html", page_trusted())
