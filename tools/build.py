@@ -129,8 +129,7 @@ NAV = [("/", "Home"), ("/plant-nutrition", "Plant Nutrition"),
        ("/tractor-spreaders", "Tractor Spreaders"), ("/spreader-trucks", "Trucks"),
        ("/hay", "Hay"), ("/reports", "Reports"), ("/field-tools", "Tools"),
        ("/trusted", "Trusted"), ("/partners", "Partners"),
-       ("/web-and-marketing", "Websites"),
-       ("https://bmellodigital.com", "Digital"),
+       ("https://bmellodigital.com/", "Websites"),   # website work lives on B Mello Digital now
        ("/about", "About"), ("/contact", "Contact")]
 
 
@@ -1005,7 +1004,7 @@ def ld_org():
              "description": "Blends mixed to the soil sample rather than to a catalog."},
             {"@type": "Offer", "itemOffered": {
                 "@type": "Service", "name": "Website design and marketing",
-                "url": SITE + "/web-and-marketing/",
+                "url": DIGITAL_SERVICES,
                 "description": "Websites, Google Business Profile, social media, email "
                                "newsletters and sales materials for small businesses."}},
             {"@type": "Offer", "name": "Dry soil amendments and solution grade products",
@@ -1373,6 +1372,29 @@ def write(path, content):
     return p
 
 
+DIGITAL_SERVICES = "https://bmellodigital.com/services/"
+
+
+def external_redirect_page(to, note):
+    """Forward to another site (same idea as redirect_page, absolute target)."""
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moved &mdash; {e(BIZ)}</title>
+<link rel="canonical" href="{to}">
+<meta http-equiv="refresh" content="0; url={to}">
+<style>body{{font-family:system-ui,sans-serif;margin:16vh auto;max-width:34em;padding:0 24px;
+line-height:1.6;color:#16150F;background:#FBF9F3}}a{{color:#A8860A}}</style>
+</head>
+<body>
+<p>{e(note)} Taking you to <a href="{to}">{to}</a>.</p>
+<script>location.replace("{to}" + location.search);</script>
+</body>
+</html>
+"""
+
+
 def redirect_page(to, note):
     """A real page that forwards — _redirects files are Cloudflare-only.
 
@@ -1487,7 +1509,7 @@ def page_home(items):
         <span class="more">See hay services &rarr;</span>
       </a>
     </div>
-    <p class="svcnote">New: we also build websites, Google profiles, social media and sales materials for local businesses. <a href="/web-and-marketing">See our website design services &rarr;</a></p>
+    <p class="svcnote">New: we also build websites, Google profiles, social media and sales materials for local businesses. <a href="https://bmellodigital.com/">See B Mello Digital &rarr;</a></p>
   </div>
 </section>
 
@@ -3181,7 +3203,7 @@ def page_about():
        information we use to advise a nutrition program is worth having whether or not you buy a ton
        from us.</p>
     <p>We also build websites, Google profiles and social media for other businesses, the same
-       way we built our own. See <a href="/web-and-marketing">website design and marketing</a>.</p>
+       way we built our own. See <a href="https://bmellodigital.com/">B Mello Digital</a>.</p>
     <p>Over twenty years in ag sales and service. Our crews do the job to your specifications, in a
        clean and timely manner &mdash; <a href="/contact">call us for a quote</a>.</p>
 
@@ -4255,7 +4277,10 @@ def build_site():
     write("spreader-trucks.html", page_trucks())
     write("about.html", page_about())
     write("contact.html", page_contact())
-    write("web-and-marketing.html", page_digital())
+    # Website and marketing work moved to B Mello Digital (2026-10-23). The old URL forwards
+    # to the matching page there so links and Google rankings carry over.
+    write("web-and-marketing/index.html", external_redirect_page(DIGITAL_SERVICES,
+          "Website design and marketing now has its own home at B Mello Digital."))
     write("trusted.html", page_trusted())
     for t in TRUSTED:
         write(f"trusted/{t['slug']}.html", page_trusted_entry(t))
@@ -4294,7 +4319,9 @@ def build_site():
           "/About_Us.html       /about             301\n"
           "/Hay.html            /hay               301\n"
           "/Home_Page.html      /                  301\n"
-          "/Spreading.html      /tractor-spreaders 301\n")
+          "/Spreading.html      /tractor-spreaders 301\n"
+          f"/web-and-marketing   {DIGITAL_SERVICES} 301\n"
+          f"/web-and-marketing/  {DIGITAL_SERVICES} 301\n")
     # GitHub Pages: skip Jekyll (it drops files beginning with _), and claim the domain.
     write(".nojekyll", "")
     write("CNAME", "bmelloag.com\n")
