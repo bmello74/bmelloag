@@ -1595,6 +1595,10 @@ def page_nutrition():
            <a href="/spreader-trucks">spreader trucks</a> on open ground, at the rate the plan
            calls for.</p></div></li>
     </ol>
+    <p>Keep your field records in Agrian? Our sister company builds
+       <a href="https://bmellodigital.com/agrian/">Agrian ready soil sampling, leaf sampling, application
+       and spreading map apps</a> that save field boundaries and sample points ready to import, so
+       nobody redraws a field twice.</p>
 
     <h2>What we sell</h2>
     <p><strong>Blends are the centerpiece.</strong> Because the program starts with sampling your own
@@ -3399,7 +3403,7 @@ def reports_index(items):
 <div class="controls">
   <div class="wrap">
     <div class="searchrow">
-      <input id="q" type="search" placeholder="Search issues &mdash; try &ldquo;diesel&rdquo;, &ldquo;almond&rdquo;, &ldquo;copper&rdquo;" aria-label="Search reports">
+      <input id="q" type="search" placeholder="Search issues, try &ldquo;diesel&rdquo;, &ldquo;almond&rdquo;, &ldquo;copper&rdquo;" aria-label="Search reports">
       <span class="tally" id="tally"></span>
     </div>
     <div class="chips" role="group" aria-label="Filter by report">
