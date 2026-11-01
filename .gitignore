@@ -57,3 +57,10 @@ Reports/
 
 # Ready-made "preview has moved" pages, applied by APPLY.bat once bmellodigital.com is live
 _moved-notices/
+
+# Monthly website report files. On Windows "Reports/" and the published "reports/"
+# archive are the same folder, and the "Reports/" rule above does not match "reports/"
+# when core.ignorecase is off, so ignore these files explicitly.
+reports/data/
+reports/B Mello Ag Website Report *.html
+reports/B Mello Ag Website Report *.pdf
