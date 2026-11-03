@@ -3340,7 +3340,7 @@ def reports_index(items):
     <p>{e(i["summary"])}</p>
     <div class="imeta">{e(i.get("meta", ""))}</div>
   </div>
-  <a class="iact" href="{url}">Read</a>
+  {issue_actions(i, url)}
 </article>''')
 
     titlecards = []
@@ -4086,7 +4086,7 @@ def series_pages(items):
     <p>{e(i["summary"])}</p>
     <div class="imeta">{e(i.get("meta", ""))}</div>
   </div>
-  <a class="iact" href="{url}">Read</a>
+  {issue_actions(i, url)}
 </article>''')
 
         seo_t, seo_d = SERIES_SEO.get(
@@ -4317,6 +4317,19 @@ def add_listen(doc, series):
             f'<script src="/assets/js/listen.js{asset_ver("assets/js/listen.js")}" defer></script>\n')
     before, sep, tail = doc.rpartition("</body>")
     return before + tags + sep + tail if sep else doc
+
+
+def issue_actions(i, url):
+    """Read and Listen buttons for one row on /reports and the title pages.
+    Listen opens the issue with #listen, which listen.js reads to open the
+    player bar with Play ready. Titles without the player get Read only."""
+    read = f'<a class="iact" href="{url}">Read</a>'
+    if i["series"] not in LISTEN_SERIES:
+        return f'<div class="iacts">{read}</div>'
+    listen = (f'<a class="iact iact-listen" href="{url}#listen" '
+              f'aria-label="Listen to {e(i["headline"])}">'
+              f'<span aria-hidden="true">&#9654;</span>Listen</a>')
+    return f'<div class="iacts">{read}{listen}</div>'
 
 
 def refresh_asset_links():

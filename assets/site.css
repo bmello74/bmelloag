@@ -184,6 +184,12 @@ section.tight { padding:38px 0; }
   letter-spacing:.1em; text-transform:uppercase; color:var(--gold); border:1px solid var(--hairline);
   padding:7px 12px; text-decoration:none; }
 .iact:hover { border-color:var(--gold-lit); background:var(--gold-wash); }
+.iacts { flex:none; align-self:center; display:flex; flex-direction:column; gap:6px; }
+.iacts .iact { align-self:stretch; text-align:center; }
+.iact-listen { display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  background:#1a1a1a; color:#f5c400; border-color:#1a1a1a; }
+.iact-listen span { font-size:9px; }
+.iact-listen:hover { background:#000; border-color:#000; color:#f5c400; }
 .issue.hide, .monthbreak.hide { display:none; }
 .empty { padding:44px 0 60px; text-align:center; color:var(--ink-soft); display:none; }
 .empty.show { display:block; }
@@ -256,6 +262,8 @@ section.tight { padding:38px 0; }
   .issue { flex-wrap:wrap; gap:8px; }
   .ibody { flex:1 1 100%; order:2; }
   .iact { display:none; }
+  .iacts { order:3; flex-direction:row; }
+  .iacts .iact-listen { display:inline-flex; padding:9px 14px; }
   .mast-tag { display:none; }
   .navbar .wrap { gap:14px; }
   .navbar a { font-size:11px; padding:11px 0; }
