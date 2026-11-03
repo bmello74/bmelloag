@@ -79,11 +79,24 @@
     return true;
   }
 
+  // Symbols and emoji get read out by name ("black diamond suit", "pear"), so
+  // they come out before speaking. Up and down arrows carry meaning in the price
+  // tables, so they are spoken as words.
+  var EMOJI;
+  try { EMOJI = new RegExp("[\\p{Extended_Pictographic}\\u{FE0F}\\u{200D}\\u{20E3}\\u{1F3FB}-\\u{1F3FF}]", "gu"); }
+  catch (e) { EMOJI = /[\uD83C-\uDBFF][\uDC00-\uDFFF]|[☀-➿]️?|️|‍/g; }
+
   function clean(t) {
     return t.replace(/\s+/g, " ")
-      .replace(/[·•|]/g, ", ")
+      .replace(/[▲△⬆↑]/g, " up ")
+      .replace(/[▼▽⬇↓]/g, " down ")
+      .replace(/[·•|♦◆◇♢◊●◉○■□▪▫►▶◀◄★☆✓✔✗✘→←➜➤§¶†‡]/g, ", ")
+      .replace(EMOJI, " ")
       .replace(/–/g, " to ")
+      .replace(/\s+/g, " ")
       .replace(/\s+,/g, ",")
+      .replace(/,(\s*,)+/g, ",")
+      .replace(/^[,\s]+|[,\s]+$/g, "")
       .trim();
   }
 
@@ -141,7 +154,7 @@
     if (!synth) return [];
     var vs = synth.getVoices().filter(function (v) { return /^en([-_]|$)/i.test(v.lang); });
     vs.sort(function (a, b) {
-      var ka = /^Karen\b/i.test(a.name) ? 0 : 1, kb = /^Karen\b/i.test(b.name) ? 0 : 1;
+      var ka = /^Daniel\b/i.test(a.name) ? 0 : 1, kb = /^Daniel\b/i.test(b.name) ? 0 : 1;
       if (ka !== kb) return ka - kb;
       var qa = QUALITY.test(a.name) ? 0 : 1, qb = QUALITY.test(b.name) ? 0 : 1;
       if (qa !== qb) return qa - qb;
@@ -225,6 +238,7 @@
     ui.close.addEventListener("click", closeBar);
     ui.voice.addEventListener("change", function () {
       store(STORE_VOICE, ui.voice.value);
+      ui.note.hidden = true;
       if (playing) restart();
     });
     ui.rate.addEventListener("change", function () {
@@ -272,10 +286,10 @@
     });
   }
 
-  // House default: Karen (Apple's Australian voice on iPhone, iPad and Mac).
-  // Devices without Karen get the most natural Australian voice they have,
+  // House default: Daniel (Apple's UK voice on iPhone, iPad and Mac).
+  // Devices without Daniel get the most natural UK voice they have,
   // then the most natural voice of any accent.
-  var DEFAULT_VOICE = [/^Karen\b/i, /en[-_]AU/i];
+  var DEFAULT_VOICE = [/^Daniel\b/i, /en[-_]GB/i];
   function defaultVoiceName() {
     for (var p = 0; p < DEFAULT_VOICE.length; p++) {
       var rule = DEFAULT_VOICE[p];
@@ -310,10 +324,50 @@
     }
   }
 
-  var token = 0;
+  // Desktop browsers have quirks the phones do not:
+  //  - Chrome can throw away an utterance it is still speaking, so its "done"
+  //    signal never arrives and reading stops. Keeping a reference prevents that.
+  //  - Chrome sometimes drops a speak() that comes right after cancel(), and can
+  //    sit paused. So cancel only when needed, wait a beat, and resume first.
+  //  - Chrome's online "Google" voices go quiet after about 15 seconds, or never
+  //    start at all on some computers. A nudge keeps them going, and if a voice
+  //    fails or stays silent the player switches to a voice built into the
+  //    computer and carries on from the same spot.
+  var token = 0, current = null, watchdog = null, keepAlive = null, failed = {};
+
+  function localFallback(bad) {
+    var pick = null;
+    voices.forEach(function (v) {
+      if (pick || v.name === bad || failed[v.name] || v.localService === false) return;
+      if (/en[-_]GB/i.test(v.lang)) pick = v;
+    });
+    if (!pick) voices.forEach(function (v) {
+      if (!pick && v.name !== bad && !failed[v.name] && v.localService !== false) pick = v;
+    });
+    return pick;
+  }
+
+  function voiceFailed(my) {
+    if (my !== token || !playing) return;
+    var v = currentVoice();
+    var name = v ? v.name : "";
+    failed[name] = true;
+    var alt = localFallback(name);
+    if (alt) {
+      ui.voice.value = alt.name;
+      showNote("The " + (v ? niceName(v) : "selected") + " voice did not work on this device, so we switched to " + niceName(alt) + ".");
+      speakFrom(idx);
+    } else {
+      pause();
+      showNote("This browser would not read aloud. Try Edge or Chrome, and check the computer's sound is on.");
+    }
+  }
+
   function speakFrom(i) {
     var my = ++token;
-    synth.cancel();
+    clearTimeout(watchdog);
+    var busy = synth.speaking || synth.pending;
+    if (busy) synth.cancel();
     idx = i;
     if (idx >= chunks.length) { finished(); return; }
     mark();
@@ -321,13 +375,32 @@
     var v = currentVoice();
     if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = "en-US"; }
     u.rate = parseFloat(ui.rate.value) || 1;
+    var started = false;
+    u.onstart = function () { started = true; clearTimeout(watchdog); };
     u.onend = function () { if (my === token && playing) speakFrom(idx + 1); };
     u.onerror = function (e) {
       if (my !== token) return;
       if (e && (e.error === "interrupted" || e.error === "canceled")) return;
-      if (playing) speakFrom(idx + 1);
+      if (!playing) return;
+      if (!started) voiceFailed(my);
+      else speakFrom(idx + 1);
     };
-    synth.speak(u);
+    current = u;
+    setTimeout(function () {
+      if (my !== token) return;
+      try { synth.resume(); } catch (e) {}
+      synth.speak(u);
+      watchdog = setTimeout(function () { if (!started) voiceFailed(my); }, 6000);
+    }, busy ? 80 : 0);
+  }
+
+  function startKeepAlive() {
+    clearInterval(keepAlive);
+    keepAlive = setInterval(function () {
+      var v = currentVoice();
+      if (!playing || !synth.speaking || !v || !/^Google/i.test(v.name)) return;
+      synth.pause(); synth.resume();
+    }, 10000);
   }
 
   function play() {
@@ -338,12 +411,15 @@
     ui.play.innerHTML = "&#10074;&#10074;";
     ui.play.setAttribute("aria-label", "Pause");
     if (idx >= chunks.length) idx = 0;
+    startKeepAlive();
     speakFrom(idx);
   }
 
   function pause() {
     playing = false;
     token++;
+    clearTimeout(watchdog);
+    clearInterval(keepAlive);
     synth.cancel();
     ui.play.innerHTML = "&#9654;";
     ui.play.setAttribute("aria-label", "Play");
