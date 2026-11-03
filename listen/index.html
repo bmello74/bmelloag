@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Listen | B Mello Ag Services</title>
+<!--
+  bmelloag.com/listen/  (save as /listen/index.html in the website repo)
+  The email "Listen" button links here, for example:
+    https://bmelloag.com/listen/?r=field-report&i=2026-11
+  r = the title's folder under /reports/   i = the issue folder (year-month)
+  If the issue is already on the site, the reader goes straight to it with the
+  player open. If it has not been posted yet, they see a short note, the page
+  checks again every 30 seconds, and they can open the latest posted issue.
+-->
+<style>
+  body{margin:0;background:#faf8f3;color:#1a1a1a;font:17px/1.55 Georgia,"Times New Roman",serif;
+    padding:48px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+  .box{max-width:520px;margin:0 auto;background:#fff;border-top:4px solid #f5c400;padding:28px 24px}
+  .k{font:700 12px Arial,Helvetica,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#7a6200;margin:0 0 8px}
+  h1{font-size:26px;line-height:1.2;margin:0 0 12px}
+  a.btn{display:inline-block;margin-top:10px;background:#1a1a1a;color:#f5c400;text-decoration:none;
+    font:700 14px Arial,Helvetica,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:13px 20px;border-radius:999px}
+  .small{font-size:14px;color:#6b6455;margin-top:18px}
+  .small a{color:#1a1a1a}
+</style>
+</head>
+<body>
+<div class="box">
+  <p class="k">B Mello Ag Services</p>
+  <h1 id="msg">Opening the issue for you&hellip;</h1>
+  <p id="sub"></p>
+  <p id="act"></p>
+  <p class="small">Questions? Call <a href="tel:+15598163889">(559) 816-3889</a>, email <a href="mailto:bryan@bmelloag.com">bryan@bmelloag.com</a>, or visit <a href="https://bmelloag.com">bmelloag.com</a>.</p>
+</div>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var r = (q.get("r") || "").replace(/[^a-z0-9-]/gi, "");
+  var i = (q.get("i") || "").replace(/[^0-9-]/g, "");
+  var msg = document.getElementById("msg"), sub = document.getElementById("sub"), act = document.getElementById("act");
+
+  if (!r) { location.replace("/reports/"); return; }
+  var landing = "/reports/" + r + "/";
+  var target = i ? landing + i + "/" : "";
+
+  function exists(url) {
+    return fetch(url, { method: "GET", cache: "no-store" }).then(function (res) { return res.ok; }).catch(function () { return false; });
+  }
+
+  function latest() {
+    return fetch(landing, { cache: "no-store" }).then(function (res) { return res.ok ? res.text() : ""; }).then(function (html) {
+      var re = new RegExp('href="((?:https://bmelloag\\.com)?/reports/' + r + '/\\d{4}-\\d{2}(?:-\\d{2})?/?)"', "g");
+      var m, found = [];
+      while ((m = re.exec(html))) found.push(m[1].replace("https://bmelloag.com", ""));
+      found.sort().reverse();
+      return found[0] || "";
+    }).catch(function () { return ""; });
+  }
+
+  function go(url) {
+    if (url.slice(-1) !== "/") url += "/";
+    location.replace(url + "#listen");
+  }
+
+  function waitForIssue() {
+    msg.textContent = "This issue is being posted to our website now.";
+    sub.textContent = "It usually takes a few minutes. Keep this page open and it will start as soon as the issue is up.";
+    latest().then(function (l) {
+      act.innerHTML = l
+        ? '<a class="btn" href="' + l + '#listen">Listen to the last issue instead</a>'
+        : '<a class="btn" href="' + landing + '">See all issues</a>';
+    });
+    var tries = 0;
+    var t = setInterval(function () {
+      tries++;
+      exists(target).then(function (ok) {
+        if (ok) { clearInterval(t); go(target); }
+        else if (tries > 40) { clearInterval(t); sub.textContent = "It is taking longer than usual. Please check back later today."; }
+      });
+    }, 30000);
+  }
+
+  if (target) {
+    exists(target).then(function (ok) { ok ? go(target) : waitForIssue(); });
+  } else {
+    latest().then(function (l) { l ? go(l) : location.replace(landing); });
+  }
+})();
+</script>
+</body>
+</html>

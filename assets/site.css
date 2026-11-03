@@ -732,3 +732,17 @@ section.signup { padding:0; }
 /* Websites intro page: B Mello Digital logo on a dark tile so its white lettering reads */
 .dlogo{background:#0B0B08;border-radius:6px;padding:22px 26px;margin:0 0 22px;max-width:520px}
 .dlogo img{display:block;width:100%;height:auto}
+
+/* "Listen to this issue" button on newsletter issue pages. listen.js injects the
+   same rules when it loads; they live here too so the button is styled from the
+   first paint instead of flashing as a plain grey button. */
+.bml-open{display:inline-flex;align-items:center;gap:10px;margin:14px 0 18px;padding:12px 20px 12px 14px;background:#1a1a1a;color:#f5c400;border:0;border-radius:999px;font:700 14px/1 Arial,Helvetica,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 0 #f5c400}
+.bml-open:hover{background:#000}
+.bml-open:focus-visible{outline:3px solid #f5c400;outline-offset:2px}
+.bml-open .bml-dot{width:30px;height:30px;border-radius:50%;background:#f5c400;color:#1a1a1a;display:grid;place-items:center;font-size:12px}
+/* listen.js lays the player bar out as a one-column grid without sizing the column,
+   so a long paragraph in the one-line preview stretched the bar past the screen and
+   pushed Speed and Close out of reach. Pin the column to the bar's width, and keep
+   the controls, the preview line and Close on one row on a phone. */
+.bml-bar .bml-in{grid-template-columns:minmax(0,1fr)}
+.bml-bar .bml-row{flex-wrap:nowrap}

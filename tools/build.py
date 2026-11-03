@@ -4287,6 +4287,38 @@ def page_404(items):
 """ + footer()
 
 
+# ---------------------------------------------------------------- listen
+
+# "Listen to this issue": a free read-aloud player on every newsletter issue page
+# (added 2026-11-02). /assets/js/listen.js is the player and stays exactly as
+# supplied. /assets/js/listen-marks.js tags the parts of each email that should
+# never be read aloud (button rows, promo grid, footer and unsubscribe lines).
+# The button is written into the page head under the headline so it sits in the
+# same place on every title. Holiday cards are images, so they are left out.
+LISTEN_SERIES = {"field-report", "ag-crime", "economic-update", "energy",
+                 "fishing", "special", "ag-labor"}
+LISTEN_BUTTON = ('<button type="button" class="bml-open">'
+                 '<span class="bml-dot" aria-hidden="true">&#9654;</span>'
+                 'Listen to this issue</button>')
+_LISTEN_TAGS = re.compile(r'<script src="/assets/js/listen(?:-marks)?\.js[^"]*" defer></script>\n?')
+
+
+def add_listen(doc, series):
+    """Wire the read-aloud player into a finished issue page. Idempotent, and
+    rewrites the script tags each run so they carry the current asset version."""
+    if series not in LISTEN_SERIES or '<div class="emailbody"' not in doc:
+        return doc
+    doc = doc.replace('<div class="emailbody">', '<div class="emailbody" data-listen-root>', 1)
+    if 'class="bml-open"' not in doc:
+        doc = re.sub(r'(<header class="pagehead issuehead">.*?</h1>)',
+                     lambda m: m.group(1) + "\n    " + LISTEN_BUTTON, doc, count=1, flags=re.S)
+    doc = _LISTEN_TAGS.sub("", doc)
+    tags = (f'<script src="/assets/js/listen-marks.js{asset_ver("assets/js/listen-marks.js")}" defer></script>\n'
+            f'<script src="/assets/js/listen.js{asset_ver("assets/js/listen.js")}" defer></script>\n')
+    before, sep, tail = doc.rpartition("</body>")
+    return before + tags + sep + tail if sep else doc
+
+
 def refresh_asset_links():
     """Point every already-published page at the current stylesheet URL.
 
@@ -4300,6 +4332,10 @@ def refresh_asset_links():
     for f in sorted(ROOT.glob("reports/**/index.html")):
         old = f.read_text(encoding="utf-8")
         new = pat.sub('href="/assets/site.css%s"' % ver, old)
+        # reports/<series>/<issue>/index.html: give issue pages the Listen player
+        rel = f.relative_to(ROOT).parts
+        if len(rel) == 4:
+            new = add_listen(new, rel[1])
         if new != old:
             f.write_text(new, encoding="utf-8", newline="\n")
             touched += 1
@@ -4592,7 +4628,7 @@ def render_issue(entry, styles, body, items):
              extra_css=styles + "\n",
              image=img, og_type="article", lastmod=entry["date"],
              ld=[ld_org(), crumbs, article])
-    return h + masthead("/reports") + f'''
+    page = h + masthead("/reports") + f'''
 <header class="pagehead issuehead">
   <div class="wrap">
     <div class="eyebrow"><a href="/reports/{entry["series"]}" style="color:var(--gold)">{e(label)}</a></div>
@@ -4612,6 +4648,7 @@ def render_issue(entry, styles, body, items):
 </div>
 {signup_band()}
 ''' + footer()
+    return add_listen(page, entry["series"])
 
 
 def publish_one(entry, items, source_root):
