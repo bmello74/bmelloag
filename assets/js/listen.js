@@ -228,6 +228,10 @@
     ui.voice = bar.querySelector("#bml-voice");
     ui.rate = bar.querySelector("#bml-rate");
     ui.note = bar.querySelector(".bml-note");
+    if (DEBUG) {
+      ui.dbg = el("pre", { style: "margin:0;max-height:180px;overflow:auto;font:11px/1.4 Consolas,monospace;color:#f5c400;white-space:pre-wrap" });
+      bar.querySelector(".bml-in").appendChild(ui.dbg);
+    }
 
     var savedRate = store(STORE_RATE);
     if (savedRate) ui.rate.value = savedRate;
@@ -269,6 +273,7 @@
 
   function fillVoices() {
     voices = englishVoices();
+    if (synth) dbg(navigator.userAgent.replace(/^.*\) /, "") + " | voices: " + synth.getVoices().length + " total, " + voices.length + " English, " + voices.filter(function (v) { return v.localService !== false; }).length + " on device");
     var saved = store(STORE_VOICE);
     ui.voice.innerHTML = "";
     if (!voices.length) {
@@ -286,10 +291,10 @@
     });
   }
 
-  // House default: Daniel (Apple's UK voice on iPhone, iPad and Mac).
-  // Devices without Daniel get the most natural UK voice they have,
-  // then the most natural voice of any accent.
-  var DEFAULT_VOICE = [/^Daniel\b/i, /en[-_]GB/i];
+  // House default: Daniel (Apple's UK voice on iPhone, iPad and Mac), then
+  // Brian (Natural) in Microsoft Edge. Devices with neither get the most natural
+  // UK voice they have, then the most natural voice of any accent.
+  var DEFAULT_VOICE = [/^Daniel\b/i, /\bBrian\b.*Natural/i, /en[-_]GB/i];
   function defaultVoiceName() {
     for (var p = 0; p < DEFAULT_VOICE.length; p++) {
       var rule = DEFAULT_VOICE[p];
@@ -333,6 +338,19 @@
   //    start at all on some computers. A nudge keeps them going, and if a voice
   //    fails or stays silent the player switches to a voice built into the
   //    computer and carries on from the same spot.
+  // Diagnostic mode: add ?listen-debug to an issue address and the player shows
+  // what the browser's speech engine is doing, step by step.
+  var DEBUG = /listen-debug/.test(location.search + location.hash), dbgLines = [];
+  function dbg(m) {
+    if (!DEBUG) return;
+    var t = ((performance.now() / 1000).toFixed(1)) + "s " + m;
+    dbgLines.push(t);
+    try { console.log("[listen] " + t); } catch (e) {}
+    var show = dbgLines.length > 18 ? dbgLines.slice(0, 6).concat(["..."], dbgLines.slice(-11)) : dbgLines;
+    if (ui.dbg) ui.dbg.textContent = show.join("\n");
+  }
+  function vdesc(v) { return v ? v.name + " [" + v.lang + ", " + (v.localService === false ? "online" : "on device") + "]" : "none"; }
+
   var token = 0, current = null, watchdog = null, keepAlive = null, failed = {};
 
   function localFallback(bad) {
@@ -352,6 +370,7 @@
     var v = currentVoice();
     var name = v ? v.name : "";
     failed[name] = true;
+    dbg("voice failed: " + name);
     var alt = localFallback(name);
     if (alt) {
       ui.voice.value = alt.name;
@@ -376,9 +395,10 @@
     if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = "en-US"; }
     u.rate = parseFloat(ui.rate.value) || 1;
     var started = false;
-    u.onstart = function () { started = true; clearTimeout(watchdog); };
-    u.onend = function () { if (my === token && playing) speakFrom(idx + 1); };
+    u.onstart = function () { started = true; clearTimeout(watchdog); dbg("start #" + idx); };
+    u.onend = function () { dbg("end #" + idx); if (my === token && playing) speakFrom(idx + 1); };
     u.onerror = function (e) {
+      dbg("error #" + idx + ": " + (e && e.error));
       if (my !== token) return;
       if (e && (e.error === "interrupted" || e.error === "canceled")) return;
       if (!playing) return;
@@ -390,6 +410,7 @@
       if (my !== token) return;
       try { synth.resume(); } catch (e) {}
       synth.speak(u);
+      dbg("speak #" + idx + " with " + vdesc(v) + " (speaking=" + synth.speaking + " paused=" + synth.paused + ")");
       watchdog = setTimeout(function () { if (!started) voiceFailed(my); }, 6000);
     }, busy ? 80 : 0);
   }
