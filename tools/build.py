@@ -4518,6 +4518,11 @@ def clean_email(src_html, asset_dir, url_prefix, series=None):
     m = re.search(r"<body[^>]*>(.*)</body>", doc, re.S | re.I)
     body = m.group(1) if m else doc
 
+    # 2b. The email's own "Listen to this issue" button links here with #listen.
+    #     The issue page has the real player button under the headline, so the
+    #     email copy is dropped rather than shown twice.
+    body = re.sub(r"<!-- LISTEN-EMAIL -->.*?<!-- /LISTEN-EMAIL -->", "", body, flags=re.S)
+
     # 3. HTML comments — Outlook conditionals, and the production notes some
     #    issues carry (one of which hides a full base64 image). Scripts are
     #    masked first so a "<!--" inside JS is never touched.
