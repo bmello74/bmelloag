@@ -164,6 +164,36 @@
     }
   },
   {
+    "id": "ag-labor/2026-10",
+    "series": "ag-labor",
+    "slug": "2026-10",
+    "date": "2026-10-29",
+    "date_display": "Oct 29",
+    "title": "October 2026 Ag Labor Report",
+    "headline": "AB 2646 is law: $19.75 for H-2A work on January 1",
+    "summary": "AB 2646 is law: a $19.75 floor for H-2A and corresponding workers starts January 1. A court gave DOL until December 30 to replace the H-2A wage rule, and back-pay exposure keeps accruing.",
+    "meta": "Wages, Cal/OSHA, H-2A & compliance deadlines",
+    "source": "26 Ag Labor Report/B_Mello_October_2026_Ag_Labor_Report.html",
+    "path": "reports/ag-labor/2026-10.html",
+    "topics": [
+      "state minimum wage",
+      "overtime for farmworkers",
+      "H-2A program",
+      "Adverse Effect Wage Rate",
+      "piece rate pay",
+      "rest and recovery pay",
+      "heat illness prevention",
+      "Cal/OSHA",
+      "labor contractor licensing",
+      "I-9 and E-Verify",
+      "workers compensation",
+      "wage and hour claims",
+      "Labor Commissioner",
+      "Employment Development Department",
+      "Central Valley"
+    ]
+  },
+  {
     "id": "fishing/2026-10-28",
     "series": "fishing",
     "slug": "2026-10-28",
@@ -501,6 +531,39 @@
       "bonito",
       "barracuda",
       "shad"
+    ]
+  },
+  {
+    "id": "ag-crime/2026-10",
+    "series": "ag-crime",
+    "slug": "2026-10",
+    "date": "2026-10-13",
+    "date_display": "Oct 13",
+    "title": "October 2026 Ag Crime Report",
+    "headline": "$1 million in stolen harvest equipment found from the air",
+    "summary": "Fresno County deputies recovered more than $1 million in stolen harvest equipment from the air in five days, plus a $400,000 almond load, copper off irrigation pumps, and the county-by-county pressure levels.",
+    "meta": "County briefs, trends & statewide hotspots",
+    "source": "26 Rural Crime Newsletter/B_Mello_October_2026_Ag_Crime_Report.html",
+    "path": "reports/ag-crime/2026-10.html",
+    "topics": [
+      "Fresno County",
+      "Kings County",
+      "Tulare County",
+      "Kern County",
+      "Madera County",
+      "Merced County",
+      "Stanislaus County",
+      "San Joaquin County",
+      "Monterey County",
+      "Ventura County",
+      "Sacramento Valley",
+      "Salinas Valley",
+      "copper wire theft",
+      "solar panel theft",
+      "cattle rustling",
+      "irrigation pump theft",
+      "Ag Task Force",
+      "county sheriff reports"
     ]
   },
   {
